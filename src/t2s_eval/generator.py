@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 from pathlib import Path
 from typing import Any
@@ -10,11 +11,12 @@ from typing import Any
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from .anchor import render_anchor_md, resolve_anchor
-from .config import Config
+from .config import Config, Preset
 from .db import connect
+from .diagnostics import selection_diagnostics
 from .legend import load_legend, render_legend_md
 from .links import Link, LinkChecker, link_record
-from .meta import build_meta, list_docs
+from .meta import build_meta, list_docs, resolve_inputs, saved_inputs, show_path
 from .schema_card import build_schema_card, render_schema_card_md
 from .selection import GainSettings, NotEnoughCandidates, Scored, dedupe, greedy_select
 from .targets import build_targets, pool_sizes
@@ -44,24 +46,79 @@ def _anchor(cfg: Config, setting: str | None, db: Any) -> dict[str, Any]:
 def _docs_md(cfg: Config, docs: list[Path]) -> str:
     if not docs:
         return "**No docs supplied.** Work from the schema card alone. Avoid columns noted as coded, and use explicit metric wording (e.g. \"total order value\", not \"revenue\")."
-    return "Read every one of these documents in full:\n\n" + "\n".join(f"- `{p.relative_to(cfg.root)}`" for p in docs)
+    return "Read every one of these documents in full:\n\n" + "\n".join(f"- `{show_path(p, cfg.root)}`" for p in docs)
 
 
-def prepare(cfg: Config, n: int, out: Path, no_docs: bool, anchor_setting: str | None) -> str:
+def min_free_picks(preset: Preset, n: int) -> int:
+    return math.ceil(preset.min_free_share * n - 1e-9) if preset.min_free_share else 0
+
+
+def _preset_md(preset: Preset, n: int) -> str:
+    """The brief's preset section: how to write candidates under this preset."""
+    if preset.style == "natural":
+        k = min_free_picks(preset, n)
+        cap = preset.max_shapes
+        lines = [
+            f"**{preset.name}**: everyday questions.",
+            "",
+            "- **Write each question the way it would arrive in a ticket or a chat message** from a colleague: one ask, plainly worded.",
+            "- **Don't stack extra filters or conditions just to reach more columns.** A natural question that reuses common columns beats a contrived one.",
+        ]
+        if cap:
+            lines.append(
+                f"- **At most {cap} shapes per question.** Code drops candidates with more. The derived `multi_join` counts: "
+                f"a question that needs 3 or more tables already uses one of the {cap}."
+            )
+        if not preset.focus_tables:
+            lines.append("- **Targets name a shape only.** Choose whatever tables make the question natural.")
+        if k:
+            lines.append(
+                f"- **Free candidates carry extra weight:** at least {k} of the {n} picks must come from them. Make them the questions this business asks most often."
+            )
+        return "\n".join(lines)
+    return "\n".join(
+        [
+            f"**{preset.name}**: spread questions across the schema.",
+            "",
+            "- **Use as many different columns as possible across all candidates.** Prefer columns earlier candidates haven't used, "
+            "including less obvious ones (for example containers, shipping instructions, clerks, account balances, supply costs, "
+            "available quantities, sizes, tax).",
+            "- **Combine shapes only where a real analyst would ask it that way.**",
+        ]
+    )
+
+
+def prepare(
+    cfg: Config,
+    n: int,
+    out: Path,
+    no_docs: bool,
+    anchor_setting: str | None,
+    preset_name: str | None = None,
+    db_url: str | None = None,
+    docs: str | None = None,
+) -> str:
     if n < 1:
         raise ValueError("--n must be a positive integer")
+    db_url, docs_dir = resolve_inputs(cfg, db_url, docs, no_docs)
+    preset = cfg.get_preset(preset_name)
+    pool_settings = cfg.pool_for(preset)
     gen = out / "generation"
     gen.mkdir(parents=True, exist_ok=True)
     for old in gen.glob("candidates*.json"):
         old.unlink()
-    db = connect(cfg.db_url, cfg.root)
+    db = connect(db_url, cfg.root)
     legend = load_legend(cfg.shapes_path)
     card = build_schema_card(db, cfg.max_listed_values)
     anchor = _anchor(cfg, anchor_setting, db)
-    docs = list_docs(cfg, no_docs)
-    targets = build_targets(n, legend.ids, card, cfg.pool)
-    targeted, free = pool_sizes(n, cfg.pool)
-    _write_json(gen / "settings.json", {"n": n, "no_docs": no_docs, "anchor": anchor})
+    docs = list_docs(cfg, no_docs, docs_dir)
+    targets = build_targets(n, legend.ids, card, pool_settings, preset.focus_tables)
+    targeted, free = pool_sizes(n, pool_settings)
+    _write_json(
+        gen / "settings.json",
+        {"n": n, "db_url": db_url, "docs_dir": show_path(docs_dir, cfg.root), "no_docs": no_docs, "anchor": anchor,
+         "preset": preset.to_dict()},
+    )
     _write_json(gen / "schema_card.json", card)
     (gen / "schema_card.md").write_text(render_schema_card_md(card, docs_supplied=bool(docs)))
     _write_json(gen / "targets.json", targets)
@@ -77,6 +134,9 @@ Code will check every candidate, remove duplicates and select exactly {n}.
 ## Files to read
 - `{rel(gen / 'schema_card.md')}`: tables, columns, value ranges, listed values, joins.
 - Docs: {_docs_md(cfg, docs)}
+
+## Preset
+{_preset_md(preset, n)}
 
 ## Time anchor
 {render_anchor_md(anchor)}
@@ -96,7 +156,7 @@ Write all candidates to `{rel(gen / 'candidates.json')}`, then run:
     (gen / "brief.md").write_text(brief)
     db.close()
     return (
-        f"Prepared generation for N={n} in {rel(out)}.\n"
+        f"Prepared generation for N={n} in {rel(out)} with the {preset.name} preset.\n"
         f"Read {rel(gen / 'brief.md')} first. Then write {len(targets)} candidates "
         f"(one per target) to {rel(gen / 'candidates.json')} and run: uv run t2s gen-select --out {rel(out)}"
     )
@@ -119,15 +179,18 @@ def select(cfg: Config, out: Path) -> tuple[int, str]:
     gen = out / "generation"
     settings = json.loads((gen / "settings.json").read_text())
     n, no_docs, anchor = settings["n"], settings["no_docs"], settings["anchor"]
+    preset = Preset(**settings["preset"]) if "preset" in settings else Preset("coverage")
+    quota = min_free_picks(preset, n)
     card = json.loads((gen / "schema_card.json").read_text())
     targets = {t["id"]: t for t in json.loads((gen / "targets.json").read_text())}
     files = sorted(gen.glob("candidates*.json"), key=lambda p: (len(p.name), p.name))
     if not files:
         return 2, f"no candidates file found in {gen}"
-    db = connect(cfg.db_url, cfg.root)
+    db_url, docs_dir = saved_inputs(cfg, settings)  # the same inputs gen-prepare used
+    db = connect(db_url, cfg.root)
     legend = load_legend(cfg.shapes_path)
     checker = LinkChecker(card, db, legend)
-    docs = list_docs(cfg, no_docs)
+    docs = list_docs(cfg, no_docs, docs_dir)
     coded = checker.coded_columns() if not docs else set()
     column_names = {c["name"] for t in card["tables"] for c in t["columns"]}
 
@@ -170,6 +233,11 @@ def select(cfg: Config, out: Path) -> tuple[int, str]:
                 reason = "no table or column linked"
             if not reason and coded & a.columns:
                 reason = f"uses coded column without docs: {', '.join(sorted(coded & a.columns))}"
+            if not reason and preset.max_shapes and len(a.shapes) > preset.max_shapes:
+                reason = (
+                    f"{len(a.shapes)} shapes ({', '.join(sorted(a.shapes))}); the {preset.name} preset allows at most "
+                    f"{preset.max_shapes}, and the derived multi_join counts"
+                )
             if reason:
                 rec.update(status="dropped", reason=reason)
             else:
@@ -181,8 +249,11 @@ def select(cfg: Config, out: Path) -> tuple[int, str]:
     for rec in pool:
         if rec["id"] in dups:
             rec.update(status="duplicate", duplicate_of=dups[rec["id"]])
+    alpha = preset.alpha if preset.alpha is not None else legend.alpha
+    beta = preset.beta if preset.beta is not None else legend.beta
+    is_free = lambda c: targets.get(c.extra.get("target", ""), {}).get("kind") == "free"
     gs = GainSettings(
-        weights=legend.weights,
+        weights=legend.weights_for(alpha, beta),
         repeat_penalty=legend.repeat_penalty,
         lambda_shape=cfg.lambda_shape,
         lambda_table=cfg.lambda_table,
@@ -194,7 +265,7 @@ def select(cfg: Config, out: Path) -> tuple[int, str]:
     dropped = [r for r in pool if r["status"] == "dropped"]
     drop_lines = "\n".join(f"- {r['id']} ({r.get('target', '?')}): {r['reason']}" for r in dropped) or "- none"
     try:
-        picks, log = greedy_select(unique, n, gs)
+        picks, log = greedy_select(unique, n, gs, quota, is_free if quota else None)
     except NotEnoughCandidates as e:
         covered_targets = {c.extra["target"] for c in unique}
         missing_targets = [t for tid, t in targets.items() if tid not in covered_targets]
@@ -228,7 +299,16 @@ def select(cfg: Config, out: Path) -> tuple[int, str]:
         )
     _write_json(out / "questions.json", {"questions": questions})
     _write_json(gen / "pool.json", {"candidates": pool})
-    _write_json(gen / "pick_log.json", {"settings": {**gs.__dict__, "sum_weights": gs.sum_weights}, "rounds": log})
+    _write_json(
+        gen / "pick_log.json",
+        {
+            "settings": {**gs.__dict__, "sum_weights": gs.sum_weights, "alpha": alpha, "beta": beta,
+                         "preset": preset.name, "min_free_picks": quota, "max_shapes": preset.max_shapes},
+            "rounds": log,
+        },
+    )
+    diag = selection_diagnostics(unique, picks, gs, legend, alpha, beta, is_free, quota)
+    _write_json(gen / "diagnostics.json", {"preset": preset.name, "n": n, **diag})
     counts = {s: sum(1 for r in pool if r["status"] == s) for s in ("selected", "not selected", "duplicate", "dropped")}
     meta = build_meta(
         "generator",
@@ -236,7 +316,7 @@ def select(cfg: Config, out: Path) -> tuple[int, str]:
         db.fingerprint(),
         docs,
         anchor,
-        {"n": n, "pool_size": len(pool), "candidate_files": [f.name for f in files], **{f"candidates_{k.replace(' ', '_')}": v for k, v in counts.items()}},
+        {"n": n, "preset": preset.to_dict(), "pool_size": len(pool), "candidate_files": [f.name for f in files], **{f"candidates_{k.replace(' ', '_')}": v for k, v in counts.items()}},
     )
     _write_json(gen / "run.json", meta)
     db.close()
@@ -246,8 +326,11 @@ def select(cfg: Config, out: Path) -> tuple[int, str]:
         covered["columns"] |= p.columns
         covered["shapes"] |= p.shapes
     qlines = "\n".join(f"- {q['id']}: {q['text']}" for q in questions)
+    gb = diag["greedy_vs_best"]
     return 0, (
-        f"Selected {n} of {len(pool)} candidates ({counts['dropped']} dropped, {counts['duplicate']} duplicates). "
+        f"Selected {n} of {len(pool)} candidates ({counts['dropped']} dropped, {counts['duplicate']} duplicates), "
+        f"{preset.name} preset, {diag['free_form']['picks']} from free-form slots. "
+        f"Greedy reached {gb['greedy_over_best']:.1%} of the best subset ({gb['method'].split(',')[0]}). "
         f"Covers {len(covered['tables'])}/{gs.n_tables} tables, {len(covered['columns'])}/{gs.n_columns} columns, "
-        f"{len(covered['shapes'])}/{len(legend.ids)} shapes.\nWrote {out / 'questions.json'}\n{qlines}\nDropped:\n{drop_lines}"
+        f"{len(covered['shapes'])}/{len(legend.ids)} shapes.\nWrote {show_path(out / 'questions.json', cfg.root)}\n{qlines}\nDropped:\n{drop_lines}"
     )

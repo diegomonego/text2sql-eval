@@ -1,0 +1,45 @@
+{
+  "preset": "coverage",
+  "n": 5,
+  "pool_ceiling": {
+    "pool": {
+      "tables": 8,
+      "columns": 30,
+      "shapes": 8
+    },
+    "selected": {
+      "tables": 7,
+      "columns": 14,
+      "shapes": 7
+    },
+    "valid_unique_candidates": 21
+  },
+  "greedy_vs_best": {
+    "greedy_value": 0.8171,
+    "best_value": 0.8171,
+    "greedy_over_best": 1.0,
+    "method": "exact, over all 20,349 subsets",
+    "picks_that_differ": []
+  },
+  "sensitivity_picks_changed": {
+    "lambdas in equal thirds": 2,
+    "lambda_column = 0.5": 2,
+    "repeat factor 0.3": 0,
+    "repeat factor 0.7": 1,
+    "W = F x I / 9 (multiplied, not added)": 2,
+    "no F (alpha = 0)": 1,
+    "each F or I nudged by 1": {
+      "variants": 19,
+      "max_changed": 1,
+      "mean_changed": 0.21,
+      "unchanged": 15
+    }
+  },
+  "free_form": {
+    "picks": 1,
+    "of": 5,
+    "in_pool": 5,
+    "pool": 21,
+    "required": 0
+  }
+}

@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from t2s_eval.judges import CorrectnessItem, CoverageItem, evaluate_correctness, evaluate_coverage
@@ -109,3 +111,30 @@ def test_coverage_reports_failed_links_as_issues(checker, card, legend):
     report, issues = evaluate_coverage(QUESTIONS, items, checker, card, legend.ids, docs_supplied=True)
     assert any("c_age" in i for i in issues)
     assert "customer.c_age" not in report["dimensions"]["columns"]["covered"]
+
+
+def test_judges_take_db_and_docs_as_arguments(project, tmp_path, mini_db_path):
+    """judge-prepare records --db/--docs; judge-finalize reuses them even if the config's database is unusable."""
+    from dataclasses import replace
+
+    from t2s_eval import judges as J
+
+    cfg = replace(project, db_url="duckdb:///does/not/exist.duckdb")
+    docs = tmp_path / "judge_docs"
+    docs.mkdir()
+    (docs / "terms.md").write_text("# Terms\n\nOrder value = o_totalprice.\n")
+    qfile = tmp_path / "q.json"
+    qfile.write_text(json.dumps({"questions": [{"id": "a", "text": "What is the total order value per market segment?"}]}))
+    out = tmp_path / "run"
+    J.prepare(cfg, "coverage", qfile, out, no_docs=False, anchor_setting=None, db_url=f"duckdb:///{mini_db_path}", docs=str(docs))
+    settings = json.loads((out / "work" / "coverage" / "settings.json").read_text())
+    assert settings["db_url"] == f"duckdb:///{mini_db_path}" and settings["docs_dir"] == str(docs)
+    raw = {"results": [{"id": "a", "links": [
+        {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+        {"phrase": "order value", "kind": "column", "columns": ["orders.o_totalprice"]},
+        {"phrase": "market segment", "kind": "column", "columns": ["customer.c_mktsegment"]}]}]}
+    (out / "work" / "coverage" / "raw.json").write_text(json.dumps(raw))
+    code, msg = J.finalize(cfg, "coverage", qfile, out, accept_issues=False)
+    assert code == 0, msg
+    report = json.loads((out / "coverage.json").read_text())
+    assert report["meta"]["docs"][0]["path"] == str(docs / "terms.md")

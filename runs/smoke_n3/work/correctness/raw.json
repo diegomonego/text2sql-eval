@@ -1,0 +1,34 @@
+{"results": [
+  {"id": "q01", "verdict": "ANSWERABLE",
+   "rationale": "Profit is defined in the glossary (Money: Profit) as l_extendedprice × (1 − l_discount) − ps_supplycost × l_quantity, with partsupp joined on the line's part and supplier; 'shipped in 1997' filters lineitem.l_shipdate, and suppliers are ranked by summed profit.",
+   "links": [
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "5", "kind": "shape", "shape": "ranking"},
+     {"phrase": "highest", "kind": "shape", "shape": "ranking"},
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "profit", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount", "partsupp.ps_supplycost", "lineitem.l_quantity"], "source": "glossary: profit"},
+     {"phrase": "items", "kind": "table", "table": "lineitem"},
+     {"phrase": "shipped in 1997", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1997"}
+   ],
+   "readings": []},
+  {"id": "q02", "verdict": "ANSWERABLE",
+   "rationale": "Count customers whose nation belongs to region.r_name = 'MIDDLE EAST' (customer → nation → region) and who have no row in orders (anti-join on orders.o_custkey); spec clause 1.4 notes one-third of customers have no orders.",
+   "links": [
+     {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "MIDDLE EAST region", "kind": "column", "columns": ["region.r_name"], "value": "MIDDLE EAST"},
+     {"phrase": "never", "kind": "shape", "shape": "anti_join"},
+     {"phrase": "placed an order", "kind": "table", "table": "orders"}
+   ],
+   "readings": []},
+  {"id": "q03", "verdict": "ANSWERABLE",
+   "rationale": "Revenue is defined in the glossary as l_extendedprice × (1 − l_discount); the share is revenue of 1997 orders (orders.o_orderdate) from customers whose nation.n_name = 'UNITED STATES' divided by revenue of all 1997 orders.",
+   "links": [
+     {"phrase": "share", "kind": "shape", "shape": "ratio"},
+     {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+     {"phrase": "orders placed in 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1997"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "UNITED STATES", "kind": "column", "columns": ["nation.n_name"], "value": "UNITED STATES"}
+   ],
+   "readings": []}
+]}

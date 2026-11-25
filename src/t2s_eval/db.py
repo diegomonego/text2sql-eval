@@ -71,6 +71,21 @@ class Database(ABC):
     def file_path(self) -> Path | None:
         return None
 
+    def table_content_hash(self, table: str) -> str | None:
+        """An order-independent hash of a table's rows, or None if the engine doesn't provide one.
+        Lets a reviewer confirm a rebuilt database holds the same data even when the file bytes differ."""
+        return None
+
+    def data_fingerprint(self) -> str | None:
+        """SHA-256 over every table's name, row count and content hash; None if any table can't be hashed."""
+        parts = []
+        for t in self.tables():
+            h = self.table_content_hash(t)
+            if h is None:
+                return None
+            parts.append(f"{t}:{self.row_count(t)}:{h}")
+        return hashlib.sha256("|".join(parts).encode()).hexdigest()
+
     def fingerprint(self) -> dict[str, Any]:
         path = self.file_path()
         sha = None
@@ -86,6 +101,7 @@ class Database(ABC):
             "engine": self.engine,
             "engine_version": self.engine_version(),
             "file_sha256": sha,
+            "data_sha256": self.data_fingerprint(),
             "tables": len(tables),
             "columns": sum(len(self.columns(t)) for t in tables),
         }
@@ -143,6 +159,17 @@ class DuckDBDatabase(Database):
 
     def row_count(self, table: str) -> int:
         return self._con.execute(f"SELECT count(*) FROM {self._q(table)}").fetchone()[0]
+
+    # Tables larger than this are fingerprinted by row count only, so the check stays fast on big data.
+    HASH_ROW_LIMIT = 100_000_000
+
+    def table_content_hash(self, table: str) -> str | None:
+        """bit_xor of DuckDB's row hashes: independent of row order and file layout (same DuckDB version)."""
+        n = self.row_count(table)
+        if n > self.HASH_ROW_LIMIT:
+            return f"rows-only:{n}"
+        h = self._con.execute(f"SELECT bit_xor(hash(t)) FROM {self._q(table)} t").fetchone()[0]
+        return str(h)
 
     def profile_column(self, table: str, column: str, max_values: int) -> dict[str, Any]:
         t, c = self._q(table), self._q(table, column)

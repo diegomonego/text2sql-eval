@@ -1,0 +1,45 @@
+{
+  "preset": "coverage",
+  "n": 15,
+  "pool_ceiling": {
+    "pool": {
+      "tables": 8,
+      "columns": 35,
+      "shapes": 8
+    },
+    "selected": {
+      "tables": 8,
+      "columns": 26,
+      "shapes": 8
+    },
+    "valid_unique_candidates": 45
+  },
+  "greedy_vs_best": {
+    "greedy_value": 1.2184,
+    "best_value": 1.2184,
+    "greedy_over_best": 1.0,
+    "method": "best found by single swaps after greedy (344,867,425,584 subsets is too many to check)",
+    "picks_that_differ": []
+  },
+  "sensitivity_picks_changed": {
+    "lambdas in equal thirds": 4,
+    "lambda_column = 0.5": 4,
+    "repeat factor 0.3": 1,
+    "repeat factor 0.7": 4,
+    "W = F x I / 9 (multiplied, not added)": 4,
+    "no F (alpha = 0)": 5,
+    "each F or I nudged by 1": {
+      "variants": 19,
+      "max_changed": 6,
+      "mean_changed": 1.05,
+      "unchanged": 13
+    }
+  },
+  "free_form": {
+    "picks": 1,
+    "of": 15,
+    "in_pool": 15,
+    "pool": 45,
+    "required": 0
+  }
+}

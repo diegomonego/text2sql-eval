@@ -1,0 +1,104 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "text": "How did the number of late deliveries from suppliers in INDIA change year by year for items received between 1993 and 1997?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "nation",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_commitdate",
+          "lineitem.l_receiptdate",
+          "nation.n_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ]
+      }
+    },
+    {
+      "id": "q02",
+      "text": "List the names and addresses of customers in the EUROPE region who have never placed an order.",
+      "labels": {
+        "tables": [
+          "customer",
+          "orders",
+          "region"
+        ],
+        "columns": [
+          "customer.c_address",
+          "customer.c_name",
+          "region.r_name"
+        ],
+        "shapes": [
+          "anti_join",
+          "multi_join"
+        ]
+      }
+    },
+    {
+      "id": "q03",
+      "text": "Which 10 parts of size 50 have the lowest total available quantity across all suppliers?",
+      "labels": {
+        "tables": [
+          "part",
+          "partsupp"
+        ],
+        "columns": [
+          "part.p_size",
+          "partsupp.ps_availqty"
+        ],
+        "shapes": [
+          "aggregation",
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q04",
+      "text": "What percentage of the line items ordered by customers in FRANCE in 1994 were returned?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_returnflag",
+          "nation.n_name",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "multi_join",
+          "ratio"
+        ]
+      }
+    },
+    {
+      "id": "q05",
+      "text": "List the names and phone numbers of suppliers in the MIDDLE EAST region whose account balance is above the average for suppliers in that region.",
+      "labels": {
+        "tables": [
+          "region",
+          "supplier"
+        ],
+        "columns": [
+          "region.r_name",
+          "supplier.s_acctbal",
+          "supplier.s_name",
+          "supplier.s_phone"
+        ],
+        "shapes": [
+          "multi_join",
+          "vs_aggregate"
+        ]
+      }
+    }
+  ]
+}

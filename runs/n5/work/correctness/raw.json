@@ -1,0 +1,57 @@
+{"results": [
+  {"id": "q01", "verdict": "ANSWERABLE",
+   "rationale": "Profit is defined in the glossary as l_extendedprice*(1-l_discount) - ps_supplycost*l_quantity; the part filter is p_type = 'MEDIUM BRUSHED COPPER', customers are filtered by nation.n_name = 'JAPAN', and 'ordered during 1995' maps to o_orderdate in 1995.",
+   "links": [
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "profit", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount", "partsupp.ps_supplycost", "lineitem.l_quantity"], "source": "glossary: profit"},
+     {"phrase": "MEDIUM BRUSHED COPPER parts", "kind": "column", "columns": ["part.p_type"], "value": "MEDIUM BRUSHED COPPER"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "in JAPAN", "kind": "column", "columns": ["nation.n_name"], "value": "JAPAN"},
+     {"phrase": "ordered … during 1995", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1995"}
+   ],
+   "readings": []},
+  {"id": "q02", "verdict": "ANSWERABLE",
+   "rationale": "Late delivery is defined in the glossary as l_receiptdate > l_commitdate; suppliers are filtered by nation.n_name = 'BRAZIL', and 'delivered late in each year' groups by the delivery (receipt) year, l_receiptdate, over 1993-1997.",
+   "links": [
+     {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "line items", "kind": "table", "table": "lineitem"},
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "in BRAZIL", "kind": "column", "columns": ["nation.n_name"], "value": "BRAZIL"},
+     {"phrase": "delivered late", "kind": "column", "columns": ["lineitem.l_receiptdate", "lineitem.l_commitdate"], "source": "glossary: late delivery"},
+     {"phrase": "in each year", "kind": "shape", "shape": "time_trend"},
+     {"phrase": "from 1993 to 1997", "kind": "column", "columns": ["lineitem.l_receiptdate"], "value": "1993..1997"}
+   ],
+   "readings": []},
+  {"id": "q03", "verdict": "ANSWERABLE",
+   "rationale": "The glossary's coded-columns section defines l_returnflag = 'R' as returned; the share is R line items over all line items whose supplier's nation is in region.r_name = 'AMERICA'.",
+   "links": [
+     {"phrase": "percentage", "kind": "shape", "shape": "ratio"},
+     {"phrase": "line items", "kind": "table", "table": "lineitem"},
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "AMERICA region", "kind": "column", "columns": ["region.r_name"], "value": "AMERICA"},
+     {"phrase": "returned", "kind": "column", "columns": ["lineitem.l_returnflag"], "value": "R", "source": "glossary: coded columns (l_returnflag)"}
+   ],
+   "readings": []},
+  {"id": "q04", "verdict": "ANSWERABLE",
+   "rationale": "Group parts with p_size = 50 by p_brand, average p_retailprice, and take the top 3; all columns are in the part table.",
+   "links": [
+     {"phrase": "highest", "kind": "shape", "shape": "ranking"},
+     {"phrase": "brands", "kind": "column", "columns": ["part.p_brand"]},
+     {"phrase": "average", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "retail price", "kind": "column", "columns": ["part.p_retailprice"]},
+     {"phrase": "parts", "kind": "table", "table": "part"},
+     {"phrase": "size 50", "kind": "column", "columns": ["part.p_size"], "value": "50"}
+   ],
+   "readings": []},
+  {"id": "q05", "verdict": "ANSWERABLE",
+   "rationale": "Revenue is the glossary convention l_extendedprice*(1-l_discount); total it per customer nation (customer.c_nationkey -> nation) for orders with o_orderdate in 1996, then keep nations whose total exceeds the average of the per-nation totals.",
+   "links": [
+     {"phrase": "nations", "kind": "table", "table": "nation"},
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "orders in 1996", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1996"},
+     {"phrase": "above the average across all nations", "kind": "shape", "shape": "vs_aggregate"}
+   ],
+   "readings": []}
+]}

@@ -1,0 +1,174 @@
+{"candidates": [
+  {"target": "t01",
+   "question": "Show the quantity, gross value and receipt date of every line item shipped by REG AIR on 17 June 1995 with the shipping instruction TAKE BACK RETURN.",
+   "links": [
+     {"phrase": "Show", "kind": "shape", "shape": "lookup"},
+     {"phrase": "line item", "kind": "table", "table": "lineitem"},
+     {"phrase": "quantity", "kind": "column", "columns": ["lineitem.l_quantity"]},
+     {"phrase": "gross value", "kind": "column", "columns": ["lineitem.l_extendedprice"]},
+     {"phrase": "receipt date", "kind": "column", "columns": ["lineitem.l_receiptdate"]},
+     {"phrase": "shipped by REG AIR", "kind": "column", "columns": ["lineitem.l_shipmode"], "value": "REG AIR"},
+     {"phrase": "on 17 June 1995", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1995-06-17"},
+     {"phrase": "shipping instruction TAKE BACK RETURN", "kind": "column", "columns": ["lineitem.l_shipinstruct"], "value": "TAKE BACK RETURN"}
+   ]},
+  {"target": "t02",
+   "question": "How many orders were placed in 1996 for each order priority?",
+   "links": [
+     {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "orders", "kind": "table", "table": "orders"},
+     {"phrase": "placed in 1996", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1996"},
+     {"phrase": "order priority", "kind": "column", "columns": ["orders.o_orderpriority"]}
+   ]},
+  {"target": "t03",
+   "question": "What is the total available quantity of Brand#45 parts held by suppliers based in GERMANY?",
+   "links": [
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "available quantity", "kind": "column", "columns": ["partsupp.ps_availqty"]},
+     {"phrase": "Brand#45", "kind": "column", "columns": ["part.p_brand"], "value": "Brand#45"},
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "based in GERMANY", "kind": "column", "columns": ["nation.n_name"], "value": "GERMANY"}
+   ]},
+  {"target": "t04",
+   "question": "What are the top 5 part types by total revenue from items shipped in 1997?",
+   "links": [
+     {"phrase": "top 5", "kind": "shape", "shape": "ranking"},
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "part types", "kind": "column", "columns": ["part.p_type"]},
+     {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+     {"phrase": "shipped in 1997", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1997"}
+   ]},
+  {"target": "t05",
+   "question": "How did the number of orders placed by customers in the AUTOMOBILE segment change year by year from 1993 to 1997?",
+   "links": [
+     {"phrase": "number of", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "orders", "kind": "table", "table": "orders"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "AUTOMOBILE segment", "kind": "column", "columns": ["customer.c_mktsegment"], "value": "AUTOMOBILE"},
+     {"phrase": "year by year", "kind": "shape", "shape": "time_trend"},
+     {"phrase": "from 1993 to 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1993..1997"}
+   ]},
+  {"target": "t06",
+   "question": "What percentage of suppliers have a negative account balance?",
+   "links": [
+     {"phrase": "percentage", "kind": "shape", "shape": "ratio"},
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "negative account balance", "kind": "column", "columns": ["supplier.s_acctbal"]}
+   ]},
+  {"target": "t07",
+   "question": "Which nations have an above-average number of customers?",
+   "links": [
+     {"phrase": "nations", "kind": "table", "table": "nation"},
+     {"phrase": "above-average", "kind": "shape", "shape": "vs_aggregate"},
+     {"phrase": "number of", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "customers", "kind": "table", "table": "customer"}
+   ]},
+  {"target": "t08",
+   "question": "How many customers in the MIDDLE EAST region have never placed an order?",
+   "links": [
+     {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "MIDDLE EAST region", "kind": "column", "columns": ["region.r_name"], "value": "MIDDLE EAST"},
+     {"phrase": "never", "kind": "shape", "shape": "anti_join"},
+     {"phrase": "order", "kind": "table", "table": "orders"}
+   ]},
+  {"target": "t09",
+   "question": "List the order date and order value of every 1-URGENT order handled by Clerk#000000088 in 1997.",
+   "links": [
+     {"phrase": "List", "kind": "shape", "shape": "lookup"},
+     {"phrase": "order date", "kind": "column", "columns": ["orders.o_orderdate"]},
+     {"phrase": "order value", "kind": "column", "columns": ["orders.o_totalprice"]},
+     {"phrase": "1-URGENT", "kind": "column", "columns": ["orders.o_orderpriority"], "value": "1-URGENT"},
+     {"phrase": "handled by Clerk#000000088", "kind": "column", "columns": ["orders.o_clerk"], "value": "Clerk#000000088"},
+     {"phrase": "in 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1997"}
+   ]},
+  {"target": "t10",
+   "question": "What is the average supply cost of parts for each manufacturer?",
+   "links": [
+     {"phrase": "average", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "supply cost", "kind": "column", "columns": ["partsupp.ps_supplycost"]},
+     {"phrase": "manufacturer", "kind": "column", "columns": ["part.p_mfgr"]}
+   ]},
+  {"target": "t11",
+   "question": "What was the total revenue from COPPER parts sold to customers in JAPAN on orders placed in 1996?",
+   "links": [
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+     {"phrase": "COPPER parts", "kind": "column", "columns": ["part.p_type"], "value": "COPPER", "match": "contains"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "in JAPAN", "kind": "column", "columns": ["nation.n_name"], "value": "JAPAN"},
+     {"phrase": "orders placed in 1996", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1996"}
+   ]},
+  {"target": "t12",
+   "question": "Which 10 customers in CANADA had the highest total order value in 1996?",
+   "links": [
+     {"phrase": "highest", "kind": "shape", "shape": "ranking"},
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "in CANADA", "kind": "column", "columns": ["nation.n_name"], "value": "CANADA"},
+     {"phrase": "order value", "kind": "column", "columns": ["orders.o_totalprice"]},
+     {"phrase": "in 1996", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1996"}
+   ]},
+  {"target": "t13",
+   "question": "For suppliers in the AFRICA region, how many late deliveries were received in each year from 1993 to 1997?",
+   "links": [
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "AFRICA region", "kind": "column", "columns": ["region.r_name"], "value": "AFRICA"},
+     {"phrase": "how many", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "late deliveries", "kind": "column", "columns": ["lineitem.l_receiptdate", "lineitem.l_commitdate"], "source": "glossary: late delivery"},
+     {"phrase": "each year", "kind": "shape", "shape": "time_trend"},
+     {"phrase": "received … from 1993 to 1997", "kind": "column", "columns": ["lineitem.l_receiptdate"], "value": "1993..1997"}
+   ]},
+  {"target": "t14",
+   "question": "What share of revenue on orders placed in 1997 came from customers in the UNITED STATES?",
+   "links": [
+     {"phrase": "share", "kind": "shape", "shape": "ratio"},
+     {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+     {"phrase": "orders placed in 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1997"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "UNITED STATES", "kind": "column", "columns": ["nation.n_name"], "value": "UNITED STATES"}
+   ]},
+  {"target": "t15",
+   "question": "Which customers in the AMERICA region have an account balance above the average for that region?",
+   "links": [
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "AMERICA region", "kind": "column", "columns": ["region.r_name"], "value": "AMERICA"},
+     {"phrase": "account balance", "kind": "column", "columns": ["customer.c_acctbal"]},
+     {"phrase": "above the average", "kind": "shape", "shape": "vs_aggregate"}
+   ]},
+  {"target": "t16",
+   "question": "Which parts of size 1 packed in JUMBO containers had no shipments last quarter?",
+   "links": [
+     {"phrase": "parts", "kind": "table", "table": "part"},
+     {"phrase": "size 1", "kind": "column", "columns": ["part.p_size"], "value": 1},
+     {"phrase": "JUMBO containers", "kind": "column", "columns": ["part.p_container"], "value": "JUMBO", "match": "contains"},
+     {"phrase": "no shipments", "kind": "shape", "shape": "anti_join"},
+     {"phrase": "shipments", "kind": "table", "table": "lineitem"},
+     {"phrase": "last quarter", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1998-Q2"}
+   ]},
+  {"target": "f01",
+   "question": "What was the total charge of returned line items received in 1994?",
+   "links": [
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "charge", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount", "lineitem.l_tax"], "source": "glossary: charge"},
+     {"phrase": "returned", "kind": "column", "columns": ["lineitem.l_returnflag"], "value": "R"},
+     {"phrase": "line items", "kind": "table", "table": "lineitem"},
+     {"phrase": "received in 1994", "kind": "column", "columns": ["lineitem.l_receiptdate"], "value": "1994"}
+   ]},
+  {"target": "f02",
+   "question": "Which 5 suppliers earned the highest total profit on items shipped in 1997?",
+   "links": [
+     {"phrase": "highest", "kind": "shape", "shape": "ranking"},
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "profit", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount", "partsupp.ps_supplycost", "lineitem.l_quantity"], "source": "glossary: profit"},
+     {"phrase": "shipped in 1997", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1997"}
+   ]},
+  {"target": "f03",
+   "question": "What percentage of orders placed in 1995 were partially fulfilled?",
+   "links": [
+     {"phrase": "percentage", "kind": "shape", "shape": "ratio"},
+     {"phrase": "orders", "kind": "table", "table": "orders"},
+     {"phrase": "placed in 1995", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1995"},
+     {"phrase": "partially fulfilled", "kind": "column", "columns": ["orders.o_orderstatus"], "value": "P"}
+   ]}
+]}

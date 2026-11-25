@@ -1,0 +1,124 @@
+{
+  "source": {
+    "dataset": "BIRD Mini-Dev (SQLite), archived 2025-07-04 release (original difficulty labels, 30/50/20%)",
+    "url": "https://huggingface.co/datasets/birdsql/bird_mini_dev",
+    "revision": "5b256b5a9c17478f06ed6912612e9a14d17065c8",
+    "path": "archive/bird_mini_dev_2025-07-04/data/mini_dev_sqlite-00000-of-00001.json",
+    "why_not_current": "the 2026-10 'Mini-Dev 1024' release re-annotated questions for an agentic benchmark and labels 460/500 as challenging, so its labels can't separate shapes",
+    "license": "CC BY-SA 4.0",
+    "sha256": "88ceb0710163cae46a256ecea8f0a8c98286599530b60587fda5c3cfe57d45d2"
+  },
+  "questions": 500,
+  "unparsed": [],
+  "difficulty_split": {
+    "simple": 148,
+    "moderate": 250,
+    "challenging": 102
+  },
+  "shapes_per_question": {
+    "1": 302,
+    "2": 170,
+    "3": 25,
+    "4": 3
+  },
+  "method": "OLS difficulty(1-3) ~ 1 + has_shape (lookup = baseline); fitted_difficulty = b0 (+ b_shape); 95% bootstrap CI",
+  "r2": 0.156,
+  "per_shape": {
+    "lookup": {
+      "n": 180,
+      "share_of_questions": 0.36,
+      "mean_difficulty_when_present": 1.744,
+      "fitted_difficulty": 1.646,
+      "ci95": [
+        1.551,
+        1.742
+      ],
+      "proposed_I": 1.0,
+      "I_rule": "stretched to 1-3 over shapes with n >= 20"
+    },
+    "aggregation": {
+      "n": 241,
+      "share_of_questions": 0.482,
+      "mean_difficulty_when_present": 2.033,
+      "fitted_difficulty": 1.803,
+      "ci95": [
+        1.697,
+        1.911
+      ],
+      "proposed_I": 1.7,
+      "I_rule": "stretched to 1-3 over shapes with n >= 20"
+    },
+    "multi_join": {
+      "n": 100,
+      "share_of_questions": 0.2,
+      "mean_difficulty_when_present": 2.22,
+      "fitted_difficulty": 2.052,
+      "ci95": [
+        1.918,
+        2.184
+      ],
+      "proposed_I": 2.8,
+      "I_rule": "stretched to 1-3 over shapes with n >= 20"
+    },
+    "ranking": {
+      "n": 110,
+      "share_of_questions": 0.22,
+      "mean_difficulty_when_present": 1.9,
+      "fitted_difficulty": 1.72,
+      "ci95": [
+        1.607,
+        1.851
+      ],
+      "proposed_I": 1.3,
+      "I_rule": "stretched to 1-3 over shapes with n >= 20"
+    },
+    "time_trend": {
+      "n": 11,
+      "share_of_questions": 0.022,
+      "mean_difficulty_when_present": 2.364,
+      "fitted_difficulty": 1.832,
+      "ci95": [
+        1.346,
+        2.275
+      ],
+      "proposed_I": 3,
+      "I_rule": "prior kept (n < 20)"
+    },
+    "ratio": {
+      "n": 79,
+      "share_of_questions": 0.158,
+      "mean_difficulty_when_present": 2.329,
+      "fitted_difficulty": 2.093,
+      "ci95": [
+        1.93,
+        2.264
+      ],
+      "proposed_I": 3.0,
+      "I_rule": "stretched to 1-3 over shapes with n >= 20"
+    },
+    "vs_aggregate": {
+      "n": 6,
+      "share_of_questions": 0.012,
+      "mean_difficulty_when_present": 2.667,
+      "fitted_difficulty": 2.573,
+      "ci95": [
+        2.171,
+        2.948
+      ],
+      "proposed_I": 3,
+      "I_rule": "prior kept (n < 20)"
+    },
+    "anti_join": {
+      "n": 2,
+      "share_of_questions": 0.004,
+      "mean_difficulty_when_present": 2.5,
+      "fitted_difficulty": 2.422,
+      "ci95": [
+        1.598,
+        3.0
+      ],
+      "proposed_I": 3,
+      "I_rule": "prior kept (n < 20)"
+    }
+  }
+}

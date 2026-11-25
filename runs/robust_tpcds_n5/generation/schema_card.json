@@ -1,0 +1,7092 @@
+{
+  "database": {
+    "url": "duckdb:///data/tpcds_sf001.duckdb",
+    "engine": "duckdb",
+    "engine_version": "2.0.1"
+  },
+  "tables": [
+    {
+      "name": "call_center",
+      "rows": 1,
+      "columns": [
+        {
+          "name": "cc_call_center_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_call_center_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "values": [
+            "AAAAAAAABAAAAAAA"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_rec_start_date",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": "1998-01-01",
+          "max": "1998-01-01",
+          "values": [
+            "1998-01-01"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_rec_end_date",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 0,
+          "distinct_is_approximate": false,
+          "nulls": 1,
+          "min": null,
+          "max": null,
+          "values": [],
+          "notes": []
+        },
+        {
+          "name": "cc_closed_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 0,
+          "distinct_is_approximate": false,
+          "nulls": 1,
+          "min": null,
+          "max": null,
+          "values": [],
+          "notes": []
+        },
+        {
+          "name": "cc_open_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2450952,
+          "max": 2450952,
+          "values": [
+            2450952
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 8,
+          "max_length": 8,
+          "values": [
+            "NY Metro"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_class",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 5,
+          "values": [
+            "large"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_employees",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2,
+          "max": 2,
+          "values": [
+            2
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_sq_ft",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1138,
+          "max": 1138,
+          "values": [
+            1138
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_hours",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 7,
+          "values": [
+            "8AM-4PM"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_manager",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 11,
+          "max_length": 11,
+          "values": [
+            "Bob Belcher"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_mkt_id",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 6,
+          "max": 6,
+          "values": [
+            6
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_mkt_class",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 23,
+          "max_length": 23,
+          "values": [
+            "More than other authori"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_mkt_desc",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 59,
+          "max_length": 59,
+          "values": [
+            "Shared others could not count fully dollars. New members ca"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_market_manager",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 11,
+          "max_length": 11,
+          "values": [
+            "Julius Tran"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_division",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 3,
+          "max": 3,
+          "values": [
+            3
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_division_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 3,
+          "values": [
+            "pri"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_company",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 6,
+          "max": 6,
+          "values": [
+            6
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_company_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 5,
+          "values": [
+            "cally"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_street_number",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 3,
+          "values": [
+            "730"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_street_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 8,
+          "max_length": 8,
+          "values": [
+            "Ash Hill"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_street_type",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 9,
+          "max_length": 9,
+          "values": [
+            "Boulevard"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_suite_number",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 7,
+          "values": [
+            "Suite 0"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_city",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 6,
+          "max_length": 6,
+          "values": [
+            "Midway"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_county",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 17,
+          "max_length": 17,
+          "values": [
+            "Williamson County"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_state",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 2,
+          "max_length": 2,
+          "values": [
+            "TN"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "cc_zip",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 5,
+          "values": [
+            "31904"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_country",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 13,
+          "max_length": 13,
+          "values": [
+            "United States"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_gmt_offset",
+          "type": "DECIMAL(5,2)",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": -5.0,
+          "max": -5.0,
+          "values": [
+            -5.0
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cc_tax_percentage",
+          "type": "DECIMAL(5,2)",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0.11,
+          "max": 0.11,
+          "values": [
+            0.11
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "catalog_page",
+      "rows": 11718,
+      "columns": [
+        {
+          "name": "cp_catalog_page_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 11718,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 11718,
+          "notes": []
+        },
+        {
+          "name": "cp_catalog_page_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 11718,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "samples": [
+            "AAAAAAAAAAABAAAA",
+            "AAAAAAAAAAACAAAA",
+            "AAAAAAAAAABAAAAA"
+          ],
+          "notes": []
+        },
+        {
+          "name": "cp_start_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 91,
+          "distinct_is_approximate": false,
+          "nulls": 101,
+          "min": 2450815,
+          "max": 2453005,
+          "notes": []
+        },
+        {
+          "name": "cp_end_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 97,
+          "distinct_is_approximate": false,
+          "nulls": 108,
+          "min": 2450844,
+          "max": 2453186,
+          "notes": []
+        },
+        {
+          "name": "cp_department",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 120,
+          "min_length": 10,
+          "max_length": 10,
+          "values": [
+            "DEPARTMENT"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cp_catalog_number",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 109,
+          "distinct_is_approximate": false,
+          "nulls": 104,
+          "min": 1,
+          "max": 109,
+          "notes": []
+        },
+        {
+          "name": "cp_catalog_page_number",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 108,
+          "distinct_is_approximate": false,
+          "nulls": 116,
+          "min": 1,
+          "max": 108,
+          "notes": []
+        },
+        {
+          "name": "cp_description",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 11609,
+          "distinct_is_approximate": false,
+          "nulls": 109,
+          "min_length": 50,
+          "max_length": 99,
+          "samples": [
+            "A bit asleep rooms cannot feel short dry secondary leads. Ab",
+            "A bit black rocks ought to happen level, wise tools. Shows shall know modern pupils. Actually new",
+            "A bit immense forms must not hear afterwards for example powerful men. Parliamen"
+          ],
+          "notes": []
+        },
+        {
+          "name": "cp_type",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 110,
+          "min_length": 7,
+          "max_length": 9,
+          "values": [
+            "bi-annual",
+            "monthly",
+            "quarterly"
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "catalog_returns",
+      "rows": 1377,
+      "columns": [
+        {
+          "name": "cr_returned_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 890,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2450878,
+          "max": 2452490,
+          "notes": []
+        },
+        {
+          "name": "cr_returned_time_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1363,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 263,
+          "max": 86370,
+          "notes": []
+        },
+        {
+          "name": "cr_item_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 150,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 179,
+          "notes": []
+        },
+        {
+          "name": "cr_refunded_customer_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 593,
+          "distinct_is_approximate": false,
+          "nulls": 29,
+          "min": 3,
+          "max": 1000,
+          "notes": []
+        },
+        {
+          "name": "cr_refunded_cdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 894,
+          "distinct_is_approximate": false,
+          "nulls": 30,
+          "min": 9,
+          "max": 19179,
+          "notes": []
+        },
+        {
+          "name": "cr_refunded_hdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 866,
+          "distinct_is_approximate": false,
+          "nulls": 24,
+          "min": 2,
+          "max": 7193,
+          "notes": []
+        },
+        {
+          "name": "cr_refunded_addr_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 411,
+          "distinct_is_approximate": false,
+          "nulls": 27,
+          "min": 1,
+          "max": 500,
+          "notes": []
+        },
+        {
+          "name": "cr_returning_customer_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 733,
+          "distinct_is_approximate": false,
+          "nulls": 29,
+          "min": 2,
+          "max": 1000,
+          "notes": []
+        },
+        {
+          "name": "cr_returning_cdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1293,
+          "distinct_is_approximate": false,
+          "nulls": 33,
+          "min": 9,
+          "max": 19191,
+          "notes": []
+        },
+        {
+          "name": "cr_returning_hdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1216,
+          "distinct_is_approximate": false,
+          "nulls": 35,
+          "min": 7,
+          "max": 7199,
+          "notes": []
+        },
+        {
+          "name": "cr_returning_addr_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 465,
+          "distinct_is_approximate": false,
+          "nulls": 32,
+          "min": 1,
+          "max": 500,
+          "notes": []
+        },
+        {
+          "name": "cr_call_center_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 29,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cr_catalog_page_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1004,
+          "distinct_is_approximate": false,
+          "nulls": 31,
+          "min": 2,
+          "max": 6919,
+          "notes": []
+        },
+        {
+          "name": "cr_ship_mode_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 33,
+          "min": 1,
+          "max": 20,
+          "notes": []
+        },
+        {
+          "name": "cr_warehouse_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 25,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cr_reason_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 32,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cr_order_number",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 928,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2,
+          "max": 1600,
+          "notes": []
+        },
+        {
+          "name": "cr_return_quantity",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 93,
+          "distinct_is_approximate": false,
+          "nulls": 27,
+          "min": 1,
+          "max": 96,
+          "notes": []
+        },
+        {
+          "name": "cr_return_amount",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 1316,
+          "distinct_is_approximate": false,
+          "nulls": 37,
+          "min": 0.0,
+          "max": 15059.7,
+          "notes": []
+        },
+        {
+          "name": "cr_return_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 1069,
+          "distinct_is_approximate": false,
+          "nulls": 31,
+          "min": 0.0,
+          "max": 1054.17,
+          "notes": []
+        },
+        {
+          "name": "cr_return_amt_inc_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 1327,
+          "distinct_is_approximate": false,
+          "nulls": 33,
+          "min": 0.0,
+          "max": 16113.87,
+          "notes": []
+        },
+        {
+          "name": "cr_fee",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 1262,
+          "distinct_is_approximate": false,
+          "nulls": 32,
+          "min": 0.54,
+          "max": 99.99,
+          "notes": []
+        },
+        {
+          "name": "cr_return_ship_cost",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 1298,
+          "distinct_is_approximate": false,
+          "nulls": 28,
+          "min": 0.0,
+          "max": 8444.16,
+          "notes": []
+        },
+        {
+          "name": "cr_refunded_cash",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 1310,
+          "distinct_is_approximate": false,
+          "nulls": 27,
+          "min": 0.0,
+          "max": 13661.36,
+          "notes": []
+        },
+        {
+          "name": "cr_reversed_charge",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 1271,
+          "distinct_is_approximate": false,
+          "nulls": 30,
+          "min": 0.0,
+          "max": 6893.02,
+          "notes": []
+        },
+        {
+          "name": "cr_store_credit",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 1261,
+          "distinct_is_approximate": false,
+          "nulls": 28,
+          "min": 0.0,
+          "max": 5662.8,
+          "notes": []
+        },
+        {
+          "name": "cr_net_loss",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 1340,
+          "distinct_is_approximate": false,
+          "nulls": 32,
+          "min": 3.87,
+          "max": 8666.46,
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "catalog_sales",
+      "rows": 14313,
+      "columns": [
+        {
+          "name": "cs_sold_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1408,
+          "distinct_is_approximate": false,
+          "nulls": 80,
+          "min": 2450815,
+          "max": 2452225,
+          "notes": []
+        },
+        {
+          "name": "cs_sold_time_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1582,
+          "distinct_is_approximate": false,
+          "nulls": 86,
+          "min": 133,
+          "max": 86298,
+          "notes": []
+        },
+        {
+          "name": "cs_ship_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1486,
+          "distinct_is_approximate": false,
+          "nulls": 88,
+          "min": 2450820,
+          "max": 2452313,
+          "notes": []
+        },
+        {
+          "name": "cs_bill_customer_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 791,
+          "distinct_is_approximate": false,
+          "nulls": 81,
+          "min": 3,
+          "max": 1000,
+          "notes": []
+        },
+        {
+          "name": "cs_bill_cdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1542,
+          "distinct_is_approximate": false,
+          "nulls": 73,
+          "min": 9,
+          "max": 19197,
+          "notes": []
+        },
+        {
+          "name": "cs_bill_hdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1435,
+          "distinct_is_approximate": false,
+          "nulls": 70,
+          "min": 2,
+          "max": 7200,
+          "notes": []
+        },
+        {
+          "name": "cs_bill_addr_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 480,
+          "distinct_is_approximate": false,
+          "nulls": 79,
+          "min": 1,
+          "max": 500,
+          "notes": []
+        },
+        {
+          "name": "cs_ship_customer_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 795,
+          "distinct_is_approximate": false,
+          "nulls": 84,
+          "min": 3,
+          "max": 1000,
+          "notes": []
+        },
+        {
+          "name": "cs_ship_cdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1534,
+          "distinct_is_approximate": false,
+          "nulls": 81,
+          "min": 9,
+          "max": 19201,
+          "notes": []
+        },
+        {
+          "name": "cs_ship_hdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1430,
+          "distinct_is_approximate": false,
+          "nulls": 83,
+          "min": 2,
+          "max": 7200,
+          "notes": []
+        },
+        {
+          "name": "cs_ship_addr_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 478,
+          "distinct_is_approximate": false,
+          "nulls": 102,
+          "min": 1,
+          "max": 500,
+          "notes": []
+        },
+        {
+          "name": "cs_call_center_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 63,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cs_catalog_page_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 3426,
+          "distinct_is_approximate": false,
+          "nulls": 70,
+          "min": 1,
+          "max": 7020,
+          "notes": []
+        },
+        {
+          "name": "cs_ship_mode_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 83,
+          "min": 1,
+          "max": 20,
+          "notes": []
+        },
+        {
+          "name": "cs_warehouse_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 83,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cs_item_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 150,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 179,
+          "notes": []
+        },
+        {
+          "name": "cs_promo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 69,
+          "min": 1,
+          "max": 3,
+          "values": [
+            1,
+            2,
+            3
+          ],
+          "notes": []
+        },
+        {
+          "name": "cs_order_number",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1600,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1600,
+          "notes": []
+        },
+        {
+          "name": "cs_quantity",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 100,
+          "distinct_is_approximate": false,
+          "nulls": 68,
+          "min": 1,
+          "max": 100,
+          "notes": []
+        },
+        {
+          "name": "cs_wholesale_cost",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 7547,
+          "distinct_is_approximate": false,
+          "nulls": 70,
+          "min": 1.02,
+          "max": 100.0,
+          "notes": []
+        },
+        {
+          "name": "cs_list_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 10503,
+          "distinct_is_approximate": false,
+          "nulls": 85,
+          "min": 1.14,
+          "max": 297.39,
+          "notes": []
+        },
+        {
+          "name": "cs_sales_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 8263,
+          "distinct_is_approximate": false,
+          "nulls": 85,
+          "min": 0.0,
+          "max": 274.47,
+          "notes": []
+        },
+        {
+          "name": "cs_ext_discount_amt",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 13370,
+          "distinct_is_approximate": false,
+          "nulls": 76,
+          "min": 0.0,
+          "max": 24991.2,
+          "notes": []
+        },
+        {
+          "name": "cs_ext_sales_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 13395,
+          "distinct_is_approximate": false,
+          "nulls": 83,
+          "min": 0.0,
+          "max": 22732.08,
+          "notes": []
+        },
+        {
+          "name": "cs_ext_wholesale_cost",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 13687,
+          "distinct_is_approximate": false,
+          "nulls": 72,
+          "min": 1.49,
+          "max": 9892.08,
+          "notes": []
+        },
+        {
+          "name": "cs_ext_list_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 13957,
+          "distinct_is_approximate": false,
+          "nulls": 88,
+          "min": 1.66,
+          "max": 27457.0,
+          "notes": []
+        },
+        {
+          "name": "cs_ext_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 8713,
+          "distinct_is_approximate": false,
+          "nulls": 77,
+          "min": 0.0,
+          "max": 2043.2,
+          "notes": []
+        },
+        {
+          "name": "cs_coupon_amt",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 2825,
+          "distinct_is_approximate": false,
+          "nulls": 70,
+          "min": 0.0,
+          "max": 17947.34,
+          "notes": []
+        },
+        {
+          "name": "cs_ext_ship_cost",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 12718,
+          "distinct_is_approximate": false,
+          "nulls": 72,
+          "min": 0.0,
+          "max": 12452.0,
+          "notes": []
+        },
+        {
+          "name": "cs_net_paid",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 13437,
+          "distinct_is_approximate": false,
+          "nulls": 89,
+          "min": 0.0,
+          "max": 22732.08,
+          "notes": []
+        },
+        {
+          "name": "cs_net_paid_inc_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 13704,
+          "distinct_is_approximate": false,
+          "nulls": 94,
+          "min": 0.0,
+          "max": 24745.44,
+          "notes": []
+        },
+        {
+          "name": "cs_net_paid_inc_ship",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 13924,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0.0,
+          "max": 33107.36,
+          "notes": []
+        },
+        {
+          "name": "cs_net_paid_inc_ship_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 14146,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0.0,
+          "max": 35150.56,
+          "notes": []
+        },
+        {
+          "name": "cs_net_profit",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 13772,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": -9628.5,
+          "max": 14575.44,
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "customer",
+      "rows": 1000,
+      "columns": [
+        {
+          "name": "c_customer_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1000,
+          "notes": []
+        },
+        {
+          "name": "c_customer_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "samples": [
+            "AAAAAAAAAABAAAAA",
+            "AAAAAAAAAACAAAAA",
+            "AAAAAAAAAADAAAAA"
+          ],
+          "notes": []
+        },
+        {
+          "name": "c_current_cdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 949,
+          "distinct_is_approximate": false,
+          "nulls": 26,
+          "min": 24,
+          "max": 19179,
+          "notes": []
+        },
+        {
+          "name": "c_current_hdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 904,
+          "distinct_is_approximate": false,
+          "nulls": 28,
+          "min": 1,
+          "max": 7193,
+          "notes": []
+        },
+        {
+          "name": "c_current_addr_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 431,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 500,
+          "notes": []
+        },
+        {
+          "name": "c_first_shipto_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 858,
+          "distinct_is_approximate": false,
+          "nulls": 35,
+          "min": 2449032,
+          "max": 2452672,
+          "notes": []
+        },
+        {
+          "name": "c_first_sales_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 858,
+          "distinct_is_approximate": false,
+          "nulls": 30,
+          "min": 2449002,
+          "max": 2452642,
+          "notes": []
+        },
+        {
+          "name": "c_salutation",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 6,
+          "distinct_is_approximate": false,
+          "nulls": 30,
+          "min_length": 3,
+          "max_length": 4,
+          "values": [
+            "Dr.",
+            "Miss",
+            "Mr.",
+            "Mrs.",
+            "Ms.",
+            "Sir"
+          ],
+          "notes": []
+        },
+        {
+          "name": "c_first_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 517,
+          "distinct_is_approximate": false,
+          "nulls": 32,
+          "min_length": 2,
+          "max_length": 11,
+          "samples": [
+            "Aaron",
+            "Adam",
+            "Adela"
+          ],
+          "notes": []
+        },
+        {
+          "name": "c_last_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 667,
+          "distinct_is_approximate": false,
+          "nulls": 24,
+          "min_length": 3,
+          "max_length": 13,
+          "samples": [
+            "Adams",
+            "Aguilar",
+            "Ahrens"
+          ],
+          "notes": []
+        },
+        {
+          "name": "c_preferred_cust_flag",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 2,
+          "distinct_is_approximate": false,
+          "nulls": 29,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N",
+            "Y"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "c_birth_day",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 31,
+          "distinct_is_approximate": false,
+          "nulls": 38,
+          "min": 1,
+          "max": 31,
+          "notes": []
+        },
+        {
+          "name": "c_birth_month",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 12,
+          "distinct_is_approximate": false,
+          "nulls": 34,
+          "min": 1,
+          "max": 12,
+          "notes": []
+        },
+        {
+          "name": "c_birth_year",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 69,
+          "distinct_is_approximate": false,
+          "nulls": 31,
+          "min": 1924,
+          "max": 1992,
+          "notes": []
+        },
+        {
+          "name": "c_birth_country",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 210,
+          "distinct_is_approximate": false,
+          "nulls": 31,
+          "min_length": 4,
+          "max_length": 20,
+          "samples": [
+            "AFGHANISTAN",
+            "ALAND ISLANDS",
+            "ALBANIA"
+          ],
+          "notes": []
+        },
+        {
+          "name": "c_login",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 0,
+          "distinct_is_approximate": false,
+          "nulls": 1000,
+          "min_length": null,
+          "max_length": null,
+          "values": [],
+          "notes": []
+        },
+        {
+          "name": "c_email_address",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 969,
+          "distinct_is_approximate": false,
+          "nulls": 31,
+          "min_length": 15,
+          "max_length": 41,
+          "samples": [
+            "Aaron.Browder@iUpddkHI9z8.org",
+            "Aaron.Fuller@Y4M99U.com",
+            "Aaron.Labbe@0znR.com"
+          ],
+          "notes": []
+        },
+        {
+          "name": "c_last_review_date_sk",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 343,
+          "distinct_is_approximate": false,
+          "nulls": 25,
+          "min": 2452283,
+          "max": 2452648,
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "customer_address",
+      "rows": 500,
+      "columns": [
+        {
+          "name": "ca_address_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 500,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 500,
+          "notes": []
+        },
+        {
+          "name": "ca_address_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 500,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "samples": [
+            "AAAAAAAAAABAAAAA",
+            "AAAAAAAAABAAAAAA",
+            "AAAAAAAAABBAAAAA"
+          ],
+          "notes": []
+        },
+        {
+          "name": "ca_street_number",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 399,
+          "distinct_is_approximate": false,
+          "nulls": 14,
+          "min_length": 1,
+          "max_length": 3,
+          "samples": [
+            "10",
+            "102",
+            "103"
+          ],
+          "notes": []
+        },
+        {
+          "name": "ca_street_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 305,
+          "distinct_is_approximate": false,
+          "nulls": 16,
+          "min_length": 4,
+          "max_length": 18,
+          "samples": [
+            "10th ",
+            "10th 10th",
+            "10th Oak"
+          ],
+          "notes": []
+        },
+        {
+          "name": "ca_street_type",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 17,
+          "min_length": 2,
+          "max_length": 9,
+          "values": [
+            "Ave",
+            "Avenue",
+            "Blvd",
+            "Boulevard",
+            "Cir.",
+            "Circle",
+            "Court",
+            "Ct.",
+            "Dr.",
+            "Drive",
+            "Lane",
+            "Ln",
+            "Parkway",
+            "Pkwy",
+            "RD",
+            "Road",
+            "ST",
+            "Street",
+            "Way",
+            "Wy"
+          ],
+          "notes": []
+        },
+        {
+          "name": "ca_suite_number",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 75,
+          "distinct_is_approximate": false,
+          "nulls": 15,
+          "min_length": 7,
+          "max_length": 9,
+          "samples": [
+            "Suite 0",
+            "Suite 10",
+            "Suite 100"
+          ],
+          "notes": []
+        },
+        {
+          "name": "ca_city",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 151,
+          "distinct_is_approximate": false,
+          "nulls": 14,
+          "min_length": 4,
+          "max_length": 16,
+          "samples": [
+            "Allentown",
+            "Altamont",
+            "Antioch"
+          ],
+          "notes": []
+        },
+        {
+          "name": "ca_county",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 373,
+          "distinct_is_approximate": false,
+          "nulls": 14,
+          "min_length": 10,
+          "max_length": 28,
+          "samples": [
+            "Ada County",
+            "Adair County",
+            "Albany County"
+          ],
+          "notes": []
+        },
+        {
+          "name": "ca_state",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 49,
+          "distinct_is_approximate": false,
+          "nulls": 12,
+          "min_length": 2,
+          "max_length": 2,
+          "samples": [
+            "AK",
+            "AL",
+            "AR"
+          ],
+          "notes": []
+        },
+        {
+          "name": "ca_zip",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 388,
+          "distinct_is_approximate": false,
+          "nulls": 16,
+          "min_length": 5,
+          "max_length": 5,
+          "samples": [
+            "00791",
+            "00969",
+            "00999"
+          ],
+          "notes": []
+        },
+        {
+          "name": "ca_country",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 16,
+          "min_length": 13,
+          "max_length": 13,
+          "values": [
+            "United States"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "ca_gmt_offset",
+          "type": "DECIMAL(5,2)",
+          "category": "number",
+          "distinct": 6,
+          "distinct_is_approximate": false,
+          "nulls": 13,
+          "min": -10.0,
+          "max": -5.0,
+          "values": [
+            -10.0,
+            -9.0,
+            -8.0,
+            -7.0,
+            -6.0,
+            -5.0
+          ],
+          "notes": []
+        },
+        {
+          "name": "ca_location_type",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 15,
+          "min_length": 5,
+          "max_length": 13,
+          "values": [
+            "apartment",
+            "condo",
+            "single family"
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "customer_demographics",
+      "rows": 19208,
+      "columns": [
+        {
+          "name": "cd_demo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 19208,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 19208,
+          "notes": []
+        },
+        {
+          "name": "cd_gender",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 2,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "F",
+            "M"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "cd_marital_status",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 5,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "D",
+            "M",
+            "S",
+            "U",
+            "W"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "cd_education_status",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 7,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 15,
+          "values": [
+            "2 yr Degree",
+            "4 yr Degree",
+            "Advanced Degree",
+            "College",
+            "Primary",
+            "Secondary",
+            "Unknown"
+          ],
+          "notes": []
+        },
+        {
+          "name": "cd_purchase_estimate",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 500,
+          "max": 10000,
+          "notes": []
+        },
+        {
+          "name": "cd_credit_rating",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 4,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 4,
+          "max_length": 9,
+          "values": [
+            "Good",
+            "High Risk",
+            "Low Risk",
+            "Unknown"
+          ],
+          "notes": []
+        },
+        {
+          "name": "cd_dep_count",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 4,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 3,
+          "values": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "notes": []
+        },
+        {
+          "name": "cd_dep_employed_count",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 0,
+          "values": [
+            0
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "cd_dep_college_count",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 0,
+          "values": [
+            0
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "date_dim",
+      "rows": 73049,
+      "columns": [
+        {
+          "name": "d_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 73049,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2415022,
+          "max": 2488070,
+          "notes": []
+        },
+        {
+          "name": "d_date_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 73049,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "samples": [
+            "AAAAAAAAAAAAFCAA",
+            "AAAAAAAAAAABFCAA",
+            "AAAAAAAAAAACFCAA"
+          ],
+          "notes": []
+        },
+        {
+          "name": "d_date",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 73049,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": "1900-01-02",
+          "max": "2100-01-01",
+          "notes": []
+        },
+        {
+          "name": "d_month_seq",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 2401,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 2400,
+          "notes": []
+        },
+        {
+          "name": "d_week_seq",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 10436,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 10436,
+          "notes": []
+        },
+        {
+          "name": "d_quarter_seq",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 801,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 801,
+          "notes": []
+        },
+        {
+          "name": "d_year",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 201,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1900,
+          "max": 2100,
+          "notes": []
+        },
+        {
+          "name": "d_dow",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 7,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 6,
+          "values": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "notes": []
+        },
+        {
+          "name": "d_moy",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 12,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 12,
+          "notes": []
+        },
+        {
+          "name": "d_dom",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 31,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 31,
+          "notes": []
+        },
+        {
+          "name": "d_qoy",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 4,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 4,
+          "values": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "notes": []
+        },
+        {
+          "name": "d_fy_year",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 201,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1900,
+          "max": 2100,
+          "notes": []
+        },
+        {
+          "name": "d_fy_quarter_seq",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 801,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 801,
+          "notes": []
+        },
+        {
+          "name": "d_fy_week_seq",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 10436,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 10436,
+          "notes": []
+        },
+        {
+          "name": "d_day_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 7,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 6,
+          "max_length": 9,
+          "values": [
+            "Friday",
+            "Monday",
+            "Saturday",
+            "Sunday",
+            "Thursday",
+            "Tuesday",
+            "Wednesday"
+          ],
+          "notes": []
+        },
+        {
+          "name": "d_quarter_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 801,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 6,
+          "max_length": 6,
+          "samples": [
+            "1900Q1",
+            "1900Q2",
+            "1900Q3"
+          ],
+          "notes": []
+        },
+        {
+          "name": "d_holiday",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 2,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N",
+            "Y"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "d_weekend",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 2,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N",
+            "Y"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "d_following_holiday",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 2,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N",
+            "Y"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "d_first_dom",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 2401,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2415021,
+          "max": 2488070,
+          "notes": []
+        },
+        {
+          "name": "d_last_dom",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 2401,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2415020,
+          "max": 2488372,
+          "notes": []
+        },
+        {
+          "name": "d_same_day_ly",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 73000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2414657,
+          "max": 2487705,
+          "notes": []
+        },
+        {
+          "name": "d_same_day_lq",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 72698,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2414930,
+          "max": 2487978,
+          "notes": []
+        },
+        {
+          "name": "d_current_day",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "d_current_week",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "d_current_month",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 2,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N",
+            "Y"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "d_current_quarter",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 2,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N",
+            "Y"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "d_current_year",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 2,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N",
+            "Y"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "household_demographics",
+      "rows": 7200,
+      "columns": [
+        {
+          "name": "hd_demo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 7200,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 7200,
+          "notes": []
+        },
+        {
+          "name": "hd_income_band_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 20,
+          "notes": []
+        },
+        {
+          "name": "hd_buy_potential",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 6,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 10,
+          "values": [
+            "0-500",
+            "1001-5000",
+            "5001-10000",
+            "501-1000",
+            ">10000",
+            "Unknown"
+          ],
+          "notes": []
+        },
+        {
+          "name": "hd_dep_count",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 10,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 9,
+          "values": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "notes": []
+        },
+        {
+          "name": "hd_vehicle_count",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 6,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": -1,
+          "max": 4,
+          "values": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "income_band",
+      "rows": 20,
+      "columns": [
+        {
+          "name": "ib_income_band_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 20,
+          "notes": []
+        },
+        {
+          "name": "ib_lower_bound",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 190001,
+          "notes": []
+        },
+        {
+          "name": "ib_upper_bound",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 10000,
+          "max": 200000,
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "inventory",
+      "rows": 23490,
+      "columns": [
+        {
+          "name": "inv_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 261,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2450815,
+          "max": 2452635,
+          "notes": []
+        },
+        {
+          "name": "inv_item_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 180,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 180,
+          "notes": []
+        },
+        {
+          "name": "inv_warehouse_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "inv_quantity_on_hand",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 1001,
+          "distinct_is_approximate": false,
+          "nulls": 1162,
+          "min": 0,
+          "max": 1000,
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "item",
+      "rows": 180,
+      "columns": [
+        {
+          "name": "i_item_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 180,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 180,
+          "notes": []
+        },
+        {
+          "name": "i_item_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 90,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "samples": [
+            "AAAAAAAAABAAAAAA",
+            "AAAAAAAAACAAAAAA",
+            "AAAAAAAAAEAAAAAA"
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_rec_start_date",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 4,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": "1997-10-27",
+          "max": "2001-10-27",
+          "values": [
+            "1997-10-27",
+            "1999-10-28",
+            "2000-10-27",
+            "2001-10-27"
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_rec_end_date",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 90,
+          "min": "1999-10-27",
+          "max": "2001-10-26",
+          "values": [
+            "1999-10-27",
+            "2000-10-26",
+            "2001-10-26"
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_item_desc",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 136,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 198,
+          "samples": [
+            "A little special changes would not turn certainly terms. Big, immediate earn",
+            "Activities cover ",
+            "Again common customers should make hardly proposals. Close groups can prevent after a cars. Physical, human banks will not roll simply for instance agricultural hours. Northern centre"
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_current_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 169,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0.11,
+          "max": 98.66,
+          "notes": []
+        },
+        {
+          "name": "i_wholesale_cost",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 124,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0.06,
+          "max": 85.83,
+          "notes": []
+        },
+        {
+          "name": "i_brand_id",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 86,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1001001,
+          "max": 10016012,
+          "notes": []
+        },
+        {
+          "name": "i_brand",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 111,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 11,
+          "max_length": 21,
+          "samples": [
+            "amalgamalg #1",
+            "amalgamalgamalg #5",
+            "amalgamalgamalg #6"
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_class_id",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 16,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 16,
+          "notes": []
+        },
+        {
+          "name": "i_class",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 71,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 15,
+          "samples": [
+            "accessories",
+            "arts",
+            "athletic"
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_category_id",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 10,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 10,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_category",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 10,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 11,
+          "values": [
+            "Books",
+            "Children",
+            "Electronics",
+            "Home",
+            "Jewelry",
+            "Men",
+            "Music",
+            "Shoes",
+            "Sports",
+            "Women"
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_manufact_id",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 130,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2,
+          "max": 995,
+          "notes": []
+        },
+        {
+          "name": "i_manufact",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 106,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 15,
+          "samples": [
+            "ableablecally",
+            "ableablepri",
+            "ableanti"
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_size",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 7,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 11,
+          "values": [
+            "N/A",
+            "economy",
+            "extra large",
+            "large",
+            "medium",
+            "petite",
+            "small"
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_formulation",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 140,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 20,
+          "max_length": 20,
+          "samples": [
+            "01329slate7866063154",
+            "01882924064yellow241",
+            "027315130steel656106"
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_color",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 62,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 9,
+          "samples": [
+            "bisque",
+            "black",
+            "blue"
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_units",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 21,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 2,
+          "max_length": 7,
+          "values": [
+            "Box",
+            "Bunch",
+            "Bundle",
+            "Carton",
+            "Case",
+            "Cup",
+            "Dozen",
+            "Dram",
+            "Each",
+            "Gram",
+            "Gross",
+            "Lb",
+            "N/A",
+            "Ounce",
+            "Oz",
+            "Pallet",
+            "Pound",
+            "Tbl",
+            "Ton",
+            "Tsp",
+            "Unknown"
+          ],
+          "notes": []
+        },
+        {
+          "name": "i_container",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 7,
+          "values": [
+            "Unknown"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "i_manager_id",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 70,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 98,
+          "notes": []
+        },
+        {
+          "name": "i_product_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 180,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 15,
+          "samples": [
+            "able",
+            "ableable",
+            "ableableought"
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "promotion",
+      "rows": 3,
+      "columns": [
+        {
+          "name": "p_promo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 3,
+          "values": [
+            1,
+            2,
+            3
+          ],
+          "notes": []
+        },
+        {
+          "name": "p_promo_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "values": [
+            "AAAAAAAABAAAAAAA",
+            "AAAAAAAACAAAAAAA",
+            "AAAAAAAADAAAAAAA"
+          ],
+          "notes": []
+        },
+        {
+          "name": "p_start_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2450118,
+          "max": 2450675,
+          "values": [
+            2450118,
+            2450164,
+            2450675
+          ],
+          "notes": []
+        },
+        {
+          "name": "p_end_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2450150,
+          "max": 2450712,
+          "values": [
+            2450150,
+            2450185,
+            2450712
+          ],
+          "notes": []
+        },
+        {
+          "name": "p_item_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 43,
+          "max": 122,
+          "values": [
+            43,
+            70,
+            122
+          ],
+          "notes": []
+        },
+        {
+          "name": "p_cost",
+          "type": "DECIMAL(15,2)",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1000.0,
+          "max": 1000.0,
+          "values": [
+            1000.0
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "p_response_target",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "p_promo_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 5,
+          "values": [
+            "able",
+            "ought",
+            "pri"
+          ],
+          "notes": []
+        },
+        {
+          "name": "p_channel_dmail",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "Y"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "p_channel_email",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "p_channel_catalog",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "p_channel_tv",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "p_channel_radio",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "p_channel_press",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "p_channel_event",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "p_channel_demo",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "p_channel_details",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 22,
+          "max_length": 40,
+          "values": [
+            "Companies shall not pr",
+            "Men will not say merely. Old, available ",
+            "So willing buildings coul"
+          ],
+          "notes": []
+        },
+        {
+          "name": "p_purpose",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 7,
+          "values": [
+            "Unknown"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "p_discount_active",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "N"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "reason",
+      "rows": 1,
+      "columns": [
+        {
+          "name": "r_reason_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "r_reason_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "values": [
+            "AAAAAAAABAAAAAAA"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "r_reason_desc",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 19,
+          "max_length": 19,
+          "values": [
+            "Package was damaged"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ship_mode",
+      "rows": 20,
+      "columns": [
+        {
+          "name": "sm_ship_mode_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 20,
+          "notes": []
+        },
+        {
+          "name": "sm_ship_mode_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "values": [
+            "AAAAAAAAABAAAAAA",
+            "AAAAAAAABAAAAAAA",
+            "AAAAAAAABBAAAAAA",
+            "AAAAAAAACAAAAAAA",
+            "AAAAAAAACBAAAAAA",
+            "AAAAAAAADAAAAAAA",
+            "AAAAAAAADBAAAAAA",
+            "AAAAAAAAEAAAAAAA",
+            "AAAAAAAAEBAAAAAA",
+            "AAAAAAAAFAAAAAAA",
+            "AAAAAAAAGAAAAAAA",
+            "AAAAAAAAHAAAAAAA",
+            "AAAAAAAAIAAAAAAA",
+            "AAAAAAAAJAAAAAAA",
+            "AAAAAAAAKAAAAAAA",
+            "AAAAAAAALAAAAAAA",
+            "AAAAAAAAMAAAAAAA",
+            "AAAAAAAANAAAAAAA",
+            "AAAAAAAAOAAAAAAA",
+            "AAAAAAAAPAAAAAAA"
+          ],
+          "notes": []
+        },
+        {
+          "name": "sm_type",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 6,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 9,
+          "values": [
+            "EXPRESS",
+            "LIBRARY",
+            "NEXT DAY",
+            "OVERNIGHT",
+            "REGULAR",
+            "TWO DAY"
+          ],
+          "notes": []
+        },
+        {
+          "name": "sm_code",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 4,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 7,
+          "values": [
+            "AIR",
+            "BIKE",
+            "SEA",
+            "SURFACE"
+          ],
+          "notes": []
+        },
+        {
+          "name": "sm_carrier",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 14,
+          "values": [
+            "AIRBORNE",
+            "ALLIANCE",
+            "BARIAN",
+            "BOXBUNDLES",
+            "DHL",
+            "DIAMOND",
+            "FEDEX",
+            "GERMA",
+            "GREAT EASTERN",
+            "HARMSTORF",
+            "LATVIAN",
+            "MSC",
+            "ORIENTAL",
+            "PRIVATECARRIER",
+            "RUPEKSA",
+            "TBS",
+            "UPS",
+            "USPS",
+            "ZHOU",
+            "ZOUROS"
+          ],
+          "notes": []
+        },
+        {
+          "name": "sm_contract",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 2,
+          "max_length": 20,
+          "values": [
+            "2mM8l",
+            "5FKNB0j8aaqTB",
+            "6Hzzp4JkzjqD8MGXLCDa",
+            "A5BYO1qH8HGTTN",
+            "Ek",
+            "GNJr3g5i7oorKqtX",
+            "HVDFCcQ",
+            "I3uCelXtjP",
+            "O9V6oF8RJnLMmZYd1",
+            "OrDuVy2H",
+            "P7FBIt8yd",
+            "UaAJjKDnL4gTOqbpj",
+            "Xjy3ZPuiDjzHlRx14Z3",
+            "YvxVaJI10",
+            "fop0bcSd91J26IVpR",
+            "hGoF18SLDDPBj",
+            "ldhM8IvpzHgdbBgDfI",
+            "qENFQ",
+            "uukTktPYycct8",
+            "yVfotg7Tio3MVhBg6Bkn"
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "store",
+      "rows": 1,
+      "columns": [
+        {
+          "name": "s_store_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_store_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "values": [
+            "AAAAAAAABAAAAAAA"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_rec_start_date",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": "1997-03-13",
+          "max": "1997-03-13",
+          "values": [
+            "1997-03-13"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_rec_end_date",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 0,
+          "distinct_is_approximate": false,
+          "nulls": 1,
+          "min": null,
+          "max": null,
+          "values": [],
+          "notes": []
+        },
+        {
+          "name": "s_closed_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2451189,
+          "max": 2451189,
+          "values": [
+            2451189
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_store_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 5,
+          "values": [
+            "ought"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_number_employees",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 245,
+          "max": 245,
+          "values": [
+            245
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_floor_space",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 5250760,
+          "max": 5250760,
+          "values": [
+            5250760
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_hours",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 7,
+          "values": [
+            "8AM-4PM"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_manager",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 12,
+          "max_length": 12,
+          "values": [
+            "William Ward"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_market_id",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2,
+          "max": 2,
+          "values": [
+            2
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_geography_class",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 7,
+          "values": [
+            "Unknown"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_market_desc",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 56,
+          "max_length": 56,
+          "values": [
+            "Enough high areas stop expectations. Elaborate, local is"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_market_manager",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 15,
+          "max_length": 15,
+          "values": [
+            "Charles Bartley"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_division_id",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_division_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 7,
+          "values": [
+            "Unknown"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_company_id",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_company_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 7,
+          "values": [
+            "Unknown"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_street_number",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 3,
+          "values": [
+            "767"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_street_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 7,
+          "values": [
+            "Spring "
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_street_type",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 2,
+          "max_length": 2,
+          "values": [
+            "Wy"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "s_suite_number",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 9,
+          "max_length": 9,
+          "values": [
+            "Suite 250"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_city",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 6,
+          "max_length": 6,
+          "values": [
+            "Midway"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_county",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 17,
+          "max_length": 17,
+          "values": [
+            "Williamson County"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_state",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 2,
+          "max_length": 2,
+          "values": [
+            "TN"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "s_zip",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 5,
+          "values": [
+            "31904"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_country",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 13,
+          "max_length": 13,
+          "values": [
+            "United States"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_gmt_offset",
+          "type": "DECIMAL(5,2)",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": -5.0,
+          "max": -5.0,
+          "values": [
+            -5.0
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "s_tax_percentage",
+          "type": "DECIMAL(5,2)",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0.03,
+          "max": 0.03,
+          "values": [
+            0.03
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "store_returns",
+      "rows": 2829,
+      "columns": [
+        {
+          "name": "sr_returned_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1413,
+          "distinct_is_approximate": false,
+          "nulls": 109,
+          "min": 2450839,
+          "max": 2452814,
+          "notes": []
+        },
+        {
+          "name": "sr_return_time_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 2602,
+          "distinct_is_approximate": false,
+          "nulls": 97,
+          "min": 28799,
+          "max": 61187,
+          "notes": []
+        },
+        {
+          "name": "sr_item_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 180,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 180,
+          "notes": []
+        },
+        {
+          "name": "sr_customer_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 861,
+          "distinct_is_approximate": false,
+          "nulls": 100,
+          "min": 2,
+          "max": 1000,
+          "notes": []
+        },
+        {
+          "name": "sr_cdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 2533,
+          "distinct_is_approximate": false,
+          "nulls": 104,
+          "min": 6,
+          "max": 19206,
+          "notes": []
+        },
+        {
+          "name": "sr_hdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 2291,
+          "distinct_is_approximate": false,
+          "nulls": 101,
+          "min": 4,
+          "max": 7192,
+          "notes": []
+        },
+        {
+          "name": "sr_addr_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 500,
+          "distinct_is_approximate": false,
+          "nulls": 110,
+          "min": 1,
+          "max": 500,
+          "notes": []
+        },
+        {
+          "name": "sr_store_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 107,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "sr_reason_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 95,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "sr_ticket_number",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1699,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 2400,
+          "notes": []
+        },
+        {
+          "name": "sr_return_quantity",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 96,
+          "distinct_is_approximate": false,
+          "nulls": 113,
+          "min": 1,
+          "max": 96,
+          "notes": []
+        },
+        {
+          "name": "sr_return_amt",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 2604,
+          "distinct_is_approximate": false,
+          "nulls": 110,
+          "min": 0.0,
+          "max": 11614.59,
+          "notes": []
+        },
+        {
+          "name": "sr_return_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 1907,
+          "distinct_is_approximate": false,
+          "nulls": 106,
+          "min": 0.0,
+          "max": 728.37,
+          "notes": []
+        },
+        {
+          "name": "sr_return_amt_inc_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 2652,
+          "distinct_is_approximate": false,
+          "nulls": 100,
+          "min": 0.0,
+          "max": 11846.88,
+          "notes": []
+        },
+        {
+          "name": "sr_fee",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 2357,
+          "distinct_is_approximate": false,
+          "nulls": 102,
+          "min": 0.51,
+          "max": 100.0,
+          "notes": []
+        },
+        {
+          "name": "sr_return_ship_cost",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 2548,
+          "distinct_is_approximate": false,
+          "nulls": 115,
+          "min": 0.0,
+          "max": 6604.68,
+          "notes": []
+        },
+        {
+          "name": "sr_refunded_cash",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 2567,
+          "distinct_is_approximate": false,
+          "nulls": 105,
+          "min": 0.0,
+          "max": 7799.68,
+          "notes": []
+        },
+        {
+          "name": "sr_reversed_charge",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 2395,
+          "distinct_is_approximate": false,
+          "nulls": 112,
+          "min": 0.0,
+          "max": 5656.42,
+          "notes": []
+        },
+        {
+          "name": "sr_store_credit",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 2357,
+          "distinct_is_approximate": false,
+          "nulls": 103,
+          "min": 0.0,
+          "max": 7386.71,
+          "notes": []
+        },
+        {
+          "name": "sr_net_loss",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 2674,
+          "distinct_is_approximate": false,
+          "nulls": 104,
+          "min": 1.7,
+          "max": 6824.59,
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "store_sales",
+      "rows": 28810,
+      "columns": [
+        {
+          "name": "ss_sold_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1200,
+          "distinct_is_approximate": false,
+          "nulls": 1202,
+          "min": 2450816,
+          "max": 2452642,
+          "notes": []
+        },
+        {
+          "name": "ss_sold_time_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 2336,
+          "distinct_is_approximate": false,
+          "nulls": 1228,
+          "min": 28873,
+          "max": 75573,
+          "notes": []
+        },
+        {
+          "name": "ss_item_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 180,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 180,
+          "notes": []
+        },
+        {
+          "name": "ss_customer_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 914,
+          "distinct_is_approximate": false,
+          "nulls": 1224,
+          "min": 1,
+          "max": 1000,
+          "notes": []
+        },
+        {
+          "name": "ss_cdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 2257,
+          "distinct_is_approximate": false,
+          "nulls": 1242,
+          "min": 12,
+          "max": 19208,
+          "notes": []
+        },
+        {
+          "name": "ss_hdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 2039,
+          "distinct_is_approximate": false,
+          "nulls": 1277,
+          "min": 5,
+          "max": 7200,
+          "notes": []
+        },
+        {
+          "name": "ss_addr_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 499,
+          "distinct_is_approximate": false,
+          "nulls": 1229,
+          "min": 1,
+          "max": 500,
+          "notes": []
+        },
+        {
+          "name": "ss_store_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 1256,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "ss_promo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 1226,
+          "min": 1,
+          "max": 3,
+          "values": [
+            1,
+            2,
+            3
+          ],
+          "notes": []
+        },
+        {
+          "name": "ss_ticket_number",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 2400,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 2400,
+          "notes": []
+        },
+        {
+          "name": "ss_quantity",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 100,
+          "distinct_is_approximate": false,
+          "nulls": 1284,
+          "min": 1,
+          "max": 100,
+          "notes": []
+        },
+        {
+          "name": "ss_wholesale_cost",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 9298,
+          "distinct_is_approximate": false,
+          "nulls": 1229,
+          "min": 1.0,
+          "max": 100.0,
+          "notes": []
+        },
+        {
+          "name": "ss_list_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 13498,
+          "distinct_is_approximate": false,
+          "nulls": 1254,
+          "min": 1.03,
+          "max": 199.72,
+          "notes": []
+        },
+        {
+          "name": "ss_sales_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 9832,
+          "distinct_is_approximate": false,
+          "nulls": 1245,
+          "min": 0.0,
+          "max": 188.67,
+          "notes": []
+        },
+        {
+          "name": "ss_ext_discount_amt",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 5209,
+          "distinct_is_approximate": false,
+          "nulls": 1194,
+          "min": 0.0,
+          "max": 15389.98,
+          "notes": []
+        },
+        {
+          "name": "ss_ext_sales_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 24314,
+          "distinct_is_approximate": false,
+          "nulls": 1229,
+          "min": 0.0,
+          "max": 17255.7,
+          "notes": []
+        },
+        {
+          "name": "ss_ext_wholesale_cost",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 25652,
+          "distinct_is_approximate": false,
+          "nulls": 1243,
+          "min": 1.16,
+          "max": 9993.0,
+          "notes": []
+        },
+        {
+          "name": "ss_ext_list_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 26253,
+          "distinct_is_approximate": false,
+          "nulls": 1209,
+          "min": 1.29,
+          "max": 18888.52,
+          "notes": []
+        },
+        {
+          "name": "ss_ext_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 12724,
+          "distinct_is_approximate": false,
+          "nulls": 1228,
+          "min": 0.0,
+          "max": 1530.0,
+          "notes": []
+        },
+        {
+          "name": "ss_coupon_amt",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 5209,
+          "distinct_is_approximate": false,
+          "nulls": 1194,
+          "min": 0.0,
+          "max": 15389.98,
+          "notes": []
+        },
+        {
+          "name": "ss_net_paid",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 24560,
+          "distinct_is_approximate": false,
+          "nulls": 1242,
+          "min": 0.0,
+          "max": 17255.7,
+          "notes": []
+        },
+        {
+          "name": "ss_net_paid_inc_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 25590,
+          "distinct_is_approximate": false,
+          "nulls": 1259,
+          "min": 0.0,
+          "max": 17943.1,
+          "notes": []
+        },
+        {
+          "name": "ss_net_profit",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 25318,
+          "distinct_is_approximate": false,
+          "nulls": 1261,
+          "min": -9538.98,
+          "max": 7987.0,
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "time_dim",
+      "rows": 86400,
+      "columns": [
+        {
+          "name": "t_time_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 86400,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 86399,
+          "notes": []
+        },
+        {
+          "name": "t_time_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 86400,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "samples": [
+            "AAAAAAAAAAAABAAA",
+            "AAAAAAAAAAABAAAA",
+            "AAAAAAAAAAABBAAA"
+          ],
+          "notes": []
+        },
+        {
+          "name": "t_time",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 86400,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 86399,
+          "notes": []
+        },
+        {
+          "name": "t_hour",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 24,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 23,
+          "notes": []
+        },
+        {
+          "name": "t_minute",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 60,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 59,
+          "notes": []
+        },
+        {
+          "name": "t_second",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 60,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 59,
+          "notes": []
+        },
+        {
+          "name": "t_am_pm",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 2,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 2,
+          "max_length": 2,
+          "values": [
+            "AM",
+            "PM"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "t_shift",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 6,
+          "values": [
+            "first",
+            "second",
+            "third"
+          ],
+          "notes": []
+        },
+        {
+          "name": "t_sub_shift",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 4,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 9,
+          "values": [
+            "afternoon",
+            "evening",
+            "morning",
+            "night"
+          ],
+          "notes": []
+        },
+        {
+          "name": "t_meal_time",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 50400,
+          "min_length": 5,
+          "max_length": 9,
+          "values": [
+            "breakfast",
+            "dinner",
+            "lunch"
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "warehouse",
+      "rows": 1,
+      "columns": [
+        {
+          "name": "w_warehouse_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "w_warehouse_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "values": [
+            "AAAAAAAABAAAAAAA"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "w_warehouse_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 19,
+          "max_length": 19,
+          "values": [
+            "Conventional childr"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "w_warehouse_sq_ft",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 977787,
+          "max": 977787,
+          "values": [
+            977787
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "w_street_number",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 3,
+          "values": [
+            "651"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "w_street_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 4,
+          "max_length": 4,
+          "values": [
+            "6th "
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "w_street_type",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 7,
+          "values": [
+            "Parkway"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "w_suite_number",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 9,
+          "max_length": 9,
+          "values": [
+            "Suite 470"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "w_city",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 6,
+          "max_length": 6,
+          "values": [
+            "Midway"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "w_county",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 17,
+          "max_length": 17,
+          "values": [
+            "Williamson County"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "w_state",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 2,
+          "max_length": 2,
+          "values": [
+            "TN"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "w_zip",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 5,
+          "values": [
+            "31904"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "w_country",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 13,
+          "max_length": 13,
+          "values": [
+            "United States"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "w_gmt_offset",
+          "type": "DECIMAL(5,2)",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": -5.0,
+          "max": -5.0,
+          "values": [
+            -5.0
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "web_page",
+      "rows": 1,
+      "columns": [
+        {
+          "name": "wp_web_page_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wp_web_page_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "values": [
+            "AAAAAAAABAAAAAAA"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wp_rec_start_date",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": "1997-09-03",
+          "max": "1997-09-03",
+          "values": [
+            "1997-09-03"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wp_rec_end_date",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 0,
+          "distinct_is_approximate": false,
+          "nulls": 1,
+          "min": null,
+          "max": null,
+          "values": [],
+          "notes": []
+        },
+        {
+          "name": "wp_creation_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2450810,
+          "max": 2450810,
+          "values": [
+            2450810
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wp_access_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2452620,
+          "max": 2452620,
+          "values": [
+            2452620
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wp_autogen_flag",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "Y"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "wp_customer_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 539,
+          "max": 539,
+          "values": [
+            539
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wp_url",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 18,
+          "max_length": 18,
+          "values": [
+            "http://www.foo.com"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wp_type",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 7,
+          "values": [
+            "welcome"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wp_char_count",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2531,
+          "max": 2531,
+          "values": [
+            2531
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wp_link_count",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 8,
+          "max": 8,
+          "values": [
+            8
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wp_image_count",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 3,
+          "max": 3,
+          "values": [
+            3
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wp_max_ad_count",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 4,
+          "max": 4,
+          "values": [
+            4
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "web_returns",
+      "rows": 685,
+      "columns": [
+        {
+          "name": "wr_returned_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 551,
+          "distinct_is_approximate": false,
+          "nulls": 30,
+          "min": 2450911,
+          "max": 2452965,
+          "notes": []
+        },
+        {
+          "name": "wr_returned_time_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 648,
+          "distinct_is_approximate": false,
+          "nulls": 31,
+          "min": 53,
+          "max": 85139,
+          "notes": []
+        },
+        {
+          "name": "wr_item_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 167,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 180,
+          "notes": []
+        },
+        {
+          "name": "wr_refunded_customer_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 482,
+          "distinct_is_approximate": false,
+          "nulls": 39,
+          "min": 5,
+          "max": 1000,
+          "notes": []
+        },
+        {
+          "name": "wr_refunded_cdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 646,
+          "distinct_is_approximate": false,
+          "nulls": 30,
+          "min": 7,
+          "max": 19179,
+          "notes": []
+        },
+        {
+          "name": "wr_refunded_hdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 620,
+          "distinct_is_approximate": false,
+          "nulls": 29,
+          "min": 8,
+          "max": 7188,
+          "notes": []
+        },
+        {
+          "name": "wr_refunded_addr_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 356,
+          "distinct_is_approximate": false,
+          "nulls": 36,
+          "min": 2,
+          "max": 500,
+          "notes": []
+        },
+        {
+          "name": "wr_returning_customer_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 488,
+          "distinct_is_approximate": false,
+          "nulls": 25,
+          "min": 5,
+          "max": 1000,
+          "notes": []
+        },
+        {
+          "name": "wr_returning_cdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 647,
+          "distinct_is_approximate": false,
+          "nulls": 27,
+          "min": 7,
+          "max": 19179,
+          "notes": []
+        },
+        {
+          "name": "wr_returning_hdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 613,
+          "distinct_is_approximate": false,
+          "nulls": 36,
+          "min": 8,
+          "max": 7188,
+          "notes": []
+        },
+        {
+          "name": "wr_returning_addr_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 359,
+          "distinct_is_approximate": false,
+          "nulls": 33,
+          "min": 2,
+          "max": 500,
+          "notes": []
+        },
+        {
+          "name": "wr_web_page_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 33,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wr_reason_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 21,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "wr_order_number",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 425,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 600,
+          "notes": []
+        },
+        {
+          "name": "wr_return_quantity",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 86,
+          "distinct_is_approximate": false,
+          "nulls": 32,
+          "min": 1,
+          "max": 93,
+          "notes": []
+        },
+        {
+          "name": "wr_return_amt",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 648,
+          "distinct_is_approximate": false,
+          "nulls": 28,
+          "min": 0.0,
+          "max": 20323.94,
+          "notes": []
+        },
+        {
+          "name": "wr_return_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 555,
+          "distinct_is_approximate": false,
+          "nulls": 29,
+          "min": 0.0,
+          "max": 860.17,
+          "notes": []
+        },
+        {
+          "name": "wr_return_amt_inc_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 643,
+          "distinct_is_approximate": false,
+          "nulls": 32,
+          "min": 0.0,
+          "max": 20323.94,
+          "notes": []
+        },
+        {
+          "name": "wr_fee",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 638,
+          "distinct_is_approximate": false,
+          "nulls": 28,
+          "min": 0.57,
+          "max": 99.75,
+          "notes": []
+        },
+        {
+          "name": "wr_return_ship_cost",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 635,
+          "distinct_is_approximate": false,
+          "nulls": 35,
+          "min": 0.0,
+          "max": 8129.03,
+          "notes": []
+        },
+        {
+          "name": "wr_refunded_cash",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 631,
+          "distinct_is_approximate": false,
+          "nulls": 34,
+          "min": 0.0,
+          "max": 17275.34,
+          "notes": []
+        },
+        {
+          "name": "wr_reversed_charge",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 622,
+          "distinct_is_approximate": false,
+          "nulls": 32,
+          "min": 0.0,
+          "max": 6174.26,
+          "notes": []
+        },
+        {
+          "name": "wr_account_credit",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 624,
+          "distinct_is_approximate": false,
+          "nulls": 32,
+          "min": 0.0,
+          "max": 8698.28,
+          "notes": []
+        },
+        {
+          "name": "wr_net_loss",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 652,
+          "distinct_is_approximate": false,
+          "nulls": 33,
+          "min": 11.52,
+          "max": 8707.16,
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "web_sales",
+      "rows": 7212,
+      "columns": [
+        {
+          "name": "ws_sold_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 497,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 2450818,
+          "max": 2452642,
+          "notes": []
+        },
+        {
+          "name": "ws_sold_time_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 598,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 791,
+          "max": 85015,
+          "notes": []
+        },
+        {
+          "name": "ws_ship_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1807,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 2450824,
+          "max": 2452758,
+          "notes": []
+        },
+        {
+          "name": "ws_item_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 180,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 180,
+          "notes": []
+        },
+        {
+          "name": "ws_bill_customer_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 461,
+          "distinct_is_approximate": false,
+          "nulls": 3,
+          "min": 1,
+          "max": 999,
+          "notes": []
+        },
+        {
+          "name": "ws_bill_cdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 593,
+          "distinct_is_approximate": false,
+          "nulls": 3,
+          "min": 23,
+          "max": 19202,
+          "notes": []
+        },
+        {
+          "name": "ws_bill_hdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 581,
+          "distinct_is_approximate": false,
+          "nulls": 3,
+          "min": 1,
+          "max": 7163,
+          "notes": []
+        },
+        {
+          "name": "ws_bill_addr_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 331,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 2,
+          "max": 500,
+          "notes": []
+        },
+        {
+          "name": "ws_ship_customer_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 439,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2,
+          "max": 998,
+          "notes": []
+        },
+        {
+          "name": "ws_ship_cdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 591,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 7,
+          "max": 19207,
+          "notes": []
+        },
+        {
+          "name": "ws_ship_hdemo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 580,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 32,
+          "max": 7187,
+          "notes": []
+        },
+        {
+          "name": "ws_ship_addr_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 352,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 1,
+          "max": 500,
+          "notes": []
+        },
+        {
+          "name": "ws_web_page_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "ws_web_site_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "ws_ship_mode_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 20,
+          "distinct_is_approximate": false,
+          "nulls": 4,
+          "min": 1,
+          "max": 20,
+          "notes": []
+        },
+        {
+          "name": "ws_warehouse_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 3,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "ws_promo_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 1,
+          "max": 3,
+          "values": [
+            1,
+            2,
+            3
+          ],
+          "notes": []
+        },
+        {
+          "name": "ws_order_number",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 600,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 600,
+          "notes": []
+        },
+        {
+          "name": "ws_quantity",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 100,
+          "distinct_is_approximate": false,
+          "nulls": 3,
+          "min": 1,
+          "max": 100,
+          "notes": []
+        },
+        {
+          "name": "ws_wholesale_cost",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 5074,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 1.0,
+          "max": 100.0,
+          "notes": []
+        },
+        {
+          "name": "ws_list_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 6206,
+          "distinct_is_approximate": false,
+          "nulls": 3,
+          "min": 1.07,
+          "max": 292.73,
+          "notes": []
+        },
+        {
+          "name": "ws_sales_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 5338,
+          "distinct_is_approximate": false,
+          "nulls": 1,
+          "min": 0.0,
+          "max": 285.59,
+          "notes": []
+        },
+        {
+          "name": "ws_ext_discount_amt",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 6948,
+          "distinct_is_approximate": false,
+          "nulls": 4,
+          "min": 0.0,
+          "max": 28179.47,
+          "notes": []
+        },
+        {
+          "name": "ws_ext_sales_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 6956,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 0.0,
+          "max": 25512.0,
+          "notes": []
+        },
+        {
+          "name": "ws_ext_wholesale_cost",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 7061,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 2.76,
+          "max": 9867.0,
+          "notes": []
+        },
+        {
+          "name": "ws_ext_list_price",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 7123,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 7.14,
+          "max": 28179.47,
+          "notes": []
+        },
+        {
+          "name": "ws_ext_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 5132,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 0.0,
+          "max": 1910.07,
+          "notes": []
+        },
+        {
+          "name": "ws_coupon_amt",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 1384,
+          "distinct_is_approximate": false,
+          "nulls": 2,
+          "min": 0.0,
+          "max": 20673.1,
+          "notes": []
+        },
+        {
+          "name": "ws_ext_ship_cost",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 6749,
+          "distinct_is_approximate": false,
+          "nulls": 3,
+          "min": 0.0,
+          "max": 12530.43,
+          "notes": []
+        },
+        {
+          "name": "ws_net_paid",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 6969,
+          "distinct_is_approximate": false,
+          "nulls": 3,
+          "min": 0.0,
+          "max": 25100.36,
+          "notes": []
+        },
+        {
+          "name": "ws_net_paid_inc_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 7046,
+          "distinct_is_approximate": false,
+          "nulls": 3,
+          "min": 0.0,
+          "max": 26857.38,
+          "notes": []
+        },
+        {
+          "name": "ws_net_paid_inc_ship",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 7116,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0.0,
+          "max": 35641.72,
+          "notes": []
+        },
+        {
+          "name": "ws_net_paid_inc_ship_tax",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 7176,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0.0,
+          "max": 37398.74,
+          "notes": []
+        },
+        {
+          "name": "ws_net_profit",
+          "type": "DECIMAL(7,2)",
+          "category": "number",
+          "distinct": 7065,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": -9650.53,
+          "max": 16199.36,
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "web_site",
+      "rows": 1,
+      "columns": [
+        {
+          "name": "web_site_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1,
+          "values": [
+            1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_site_id",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 16,
+          "values": [
+            "AAAAAAAABAAAAAAA"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_rec_start_date",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": "1997-08-16",
+          "max": "1997-08-16",
+          "values": [
+            "1997-08-16"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_rec_end_date",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 0,
+          "distinct_is_approximate": false,
+          "nulls": 1,
+          "min": null,
+          "max": null,
+          "values": [],
+          "notes": []
+        },
+        {
+          "name": "web_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 6,
+          "max_length": 6,
+          "values": [
+            "site_0"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_open_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 2450807,
+          "max": 2450807,
+          "values": [
+            2450807
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_close_date_sk",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 0,
+          "distinct_is_approximate": false,
+          "nulls": 1,
+          "min": null,
+          "max": null,
+          "values": [],
+          "notes": []
+        },
+        {
+          "name": "web_class",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 7,
+          "max_length": 7,
+          "values": [
+            "Unknown"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_manager",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 14,
+          "max_length": 14,
+          "values": [
+            "Ronald Shaffer"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_mkt_id",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 4,
+          "max": 4,
+          "values": [
+            4
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_mkt_class",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 46,
+          "max_length": 46,
+          "values": [
+            "Grey lines ought to result indeed centres. Tod"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_mkt_desc",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 75,
+          "max_length": 75,
+          "values": [
+            "Well similar decisions used to keep hardly democratic, personal priorities."
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_market_manager",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 10,
+          "max_length": 10,
+          "values": [
+            "Joe George"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_company_id",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 6,
+          "max": 6,
+          "values": [
+            6
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_company_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 5,
+          "values": [
+            "cally"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_street_number",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 2,
+          "max_length": 2,
+          "values": [
+            "51"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "web_street_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 14,
+          "max_length": 14,
+          "values": [
+            "Dogwood Sunset"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_street_type",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 2,
+          "max_length": 2,
+          "values": [
+            "Ln"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "web_suite_number",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 9,
+          "max_length": 9,
+          "values": [
+            "Suite 330"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_city",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 6,
+          "max_length": 6,
+          "values": [
+            "Midway"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_county",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 17,
+          "max_length": 17,
+          "values": [
+            "Williamson County"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_state",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 2,
+          "max_length": 2,
+          "values": [
+            "TN"
+          ],
+          "notes": [
+            "constant in this data",
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "web_zip",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 5,
+          "values": [
+            "31904"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_country",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 13,
+          "max_length": 13,
+          "values": [
+            "United States"
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_gmt_offset",
+          "type": "DECIMAL(5,2)",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": -5.0,
+          "max": -5.0,
+          "values": [
+            -5.0
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "web_tax_percentage",
+          "type": "DECIMAL(5,2)",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0.1,
+          "max": 0.1,
+          "values": [
+            0.1
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        }
+      ]
+    }
+  ],
+  "joins": [
+    {
+      "from": "call_center.cc_city",
+      "to": "store.s_city",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_city",
+      "to": "warehouse.w_city",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_city",
+      "to": "web_site.web_city",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_closed_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_closed_date_sk",
+      "to": "store.s_closed_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_company_name",
+      "to": "web_site.web_company_name",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_country",
+      "to": "store.s_country",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_country",
+      "to": "warehouse.w_country",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_country",
+      "to": "web_site.web_country",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_county",
+      "to": "store.s_county",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_county",
+      "to": "warehouse.w_county",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_county",
+      "to": "web_site.web_county",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_gmt_offset",
+      "to": "store.s_gmt_offset",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_gmt_offset",
+      "to": "warehouse.w_gmt_offset",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_gmt_offset",
+      "to": "web_site.web_gmt_offset",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_hours",
+      "to": "store.s_hours",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_open_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_rec_end_date",
+      "to": "date_dim.d_date",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_rec_start_date",
+      "to": "date_dim.d_date",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_state",
+      "to": "store.s_state",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_state",
+      "to": "warehouse.w_state",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_state",
+      "to": "web_site.web_state",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_zip",
+      "to": "store.s_zip",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_zip",
+      "to": "warehouse.w_zip",
+      "source": "inferred"
+    },
+    {
+      "from": "call_center.cc_zip",
+      "to": "web_site.web_zip",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_page.cp_end_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_page.cp_start_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_call_center_sk",
+      "to": "call_center.cc_call_center_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_catalog_page_sk",
+      "to": "catalog_page.cp_catalog_page_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_item_sk",
+      "to": "item.i_item_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_reason_sk",
+      "to": "reason.r_reason_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_refunded_cdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_refunded_customer_sk",
+      "to": "customer.c_customer_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_refunded_hdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_refunded_hdemo_sk",
+      "to": "household_demographics.hd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_returned_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_returned_time_sk",
+      "to": "time_dim.t_time_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_returning_cdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_returning_customer_sk",
+      "to": "customer.c_customer_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_returning_hdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_returning_hdemo_sk",
+      "to": "household_demographics.hd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_ship_mode_sk",
+      "to": "ship_mode.sm_ship_mode_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_returns.cr_warehouse_sk",
+      "to": "warehouse.w_warehouse_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_bill_cdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_bill_customer_sk",
+      "to": "customer.c_customer_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_bill_hdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_bill_hdemo_sk",
+      "to": "household_demographics.hd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_call_center_sk",
+      "to": "call_center.cc_call_center_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_catalog_page_sk",
+      "to": "catalog_page.cp_catalog_page_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_item_sk",
+      "to": "item.i_item_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_promo_sk",
+      "to": "promotion.p_promo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_ship_cdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_ship_customer_sk",
+      "to": "customer.c_customer_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_ship_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_ship_hdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_ship_hdemo_sk",
+      "to": "household_demographics.hd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_ship_mode_sk",
+      "to": "ship_mode.sm_ship_mode_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_sold_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_sold_time_sk",
+      "to": "time_dim.t_time_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "catalog_sales.cs_warehouse_sk",
+      "to": "warehouse.w_warehouse_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "customer.c_current_cdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "customer.c_current_hdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "customer.c_current_hdemo_sk",
+      "to": "household_demographics.hd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "customer.c_first_sales_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "customer.c_first_shipto_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "customer.c_last_review_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "customer_address.ca_country",
+      "to": "call_center.cc_country",
+      "source": "inferred"
+    },
+    {
+      "from": "customer_address.ca_country",
+      "to": "store.s_country",
+      "source": "inferred"
+    },
+    {
+      "from": "customer_address.ca_country",
+      "to": "warehouse.w_country",
+      "source": "inferred"
+    },
+    {
+      "from": "customer_address.ca_country",
+      "to": "web_site.web_country",
+      "source": "inferred"
+    },
+    {
+      "from": "household_demographics.hd_demo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "household_demographics.hd_income_band_sk",
+      "to": "income_band.ib_income_band_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "inventory.inv_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "inventory.inv_item_sk",
+      "to": "item.i_item_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "inventory.inv_warehouse_sk",
+      "to": "warehouse.w_warehouse_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "item.i_rec_end_date",
+      "to": "date_dim.d_date",
+      "source": "inferred"
+    },
+    {
+      "from": "item.i_rec_start_date",
+      "to": "date_dim.d_date",
+      "source": "inferred"
+    },
+    {
+      "from": "promotion.p_end_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "promotion.p_item_sk",
+      "to": "item.i_item_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "promotion.p_start_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_city",
+      "to": "call_center.cc_city",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_city",
+      "to": "warehouse.w_city",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_city",
+      "to": "web_site.web_city",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_closed_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_country",
+      "to": "call_center.cc_country",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_country",
+      "to": "warehouse.w_country",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_country",
+      "to": "web_site.web_country",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_county",
+      "to": "call_center.cc_county",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_county",
+      "to": "warehouse.w_county",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_county",
+      "to": "web_site.web_county",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_geography_class",
+      "to": "web_site.web_class",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_gmt_offset",
+      "to": "call_center.cc_gmt_offset",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_gmt_offset",
+      "to": "warehouse.w_gmt_offset",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_gmt_offset",
+      "to": "web_site.web_gmt_offset",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_hours",
+      "to": "call_center.cc_hours",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_rec_end_date",
+      "to": "date_dim.d_date",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_rec_start_date",
+      "to": "date_dim.d_date",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_state",
+      "to": "call_center.cc_state",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_state",
+      "to": "warehouse.w_state",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_state",
+      "to": "web_site.web_state",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_zip",
+      "to": "call_center.cc_zip",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_zip",
+      "to": "warehouse.w_zip",
+      "source": "inferred"
+    },
+    {
+      "from": "store.s_zip",
+      "to": "web_site.web_zip",
+      "source": "inferred"
+    },
+    {
+      "from": "store_returns.sr_cdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_returns.sr_customer_sk",
+      "to": "customer.c_customer_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_returns.sr_hdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_returns.sr_hdemo_sk",
+      "to": "household_demographics.hd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_returns.sr_item_sk",
+      "to": "item.i_item_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_returns.sr_reason_sk",
+      "to": "reason.r_reason_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_returns.sr_return_time_sk",
+      "to": "time_dim.t_time_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_returns.sr_returned_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_returns.sr_store_sk",
+      "to": "store.s_store_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_sales.ss_cdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_sales.ss_customer_sk",
+      "to": "customer.c_customer_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_sales.ss_hdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_sales.ss_hdemo_sk",
+      "to": "household_demographics.hd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_sales.ss_item_sk",
+      "to": "item.i_item_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_sales.ss_promo_sk",
+      "to": "promotion.p_promo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_sales.ss_sold_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_sales.ss_sold_time_sk",
+      "to": "time_dim.t_time_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "store_sales.ss_store_sk",
+      "to": "store.s_store_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_city",
+      "to": "call_center.cc_city",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_city",
+      "to": "store.s_city",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_city",
+      "to": "web_site.web_city",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_country",
+      "to": "call_center.cc_country",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_country",
+      "to": "store.s_country",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_country",
+      "to": "web_site.web_country",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_county",
+      "to": "call_center.cc_county",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_county",
+      "to": "store.s_county",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_county",
+      "to": "web_site.web_county",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_gmt_offset",
+      "to": "call_center.cc_gmt_offset",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_gmt_offset",
+      "to": "store.s_gmt_offset",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_gmt_offset",
+      "to": "web_site.web_gmt_offset",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_state",
+      "to": "call_center.cc_state",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_state",
+      "to": "store.s_state",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_state",
+      "to": "web_site.web_state",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_zip",
+      "to": "call_center.cc_zip",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_zip",
+      "to": "store.s_zip",
+      "source": "inferred"
+    },
+    {
+      "from": "warehouse.w_zip",
+      "to": "web_site.web_zip",
+      "source": "inferred"
+    },
+    {
+      "from": "web_page.wp_access_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_page.wp_creation_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_page.wp_customer_sk",
+      "to": "customer.c_customer_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_page.wp_rec_end_date",
+      "to": "date_dim.d_date",
+      "source": "inferred"
+    },
+    {
+      "from": "web_page.wp_rec_start_date",
+      "to": "date_dim.d_date",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_item_sk",
+      "to": "item.i_item_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_reason_sk",
+      "to": "reason.r_reason_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_refunded_cdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_refunded_customer_sk",
+      "to": "customer.c_customer_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_refunded_hdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_refunded_hdemo_sk",
+      "to": "household_demographics.hd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_returned_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_returned_time_sk",
+      "to": "time_dim.t_time_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_returning_cdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_returning_customer_sk",
+      "to": "customer.c_customer_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_returning_hdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_returning_hdemo_sk",
+      "to": "household_demographics.hd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_returns.wr_web_page_sk",
+      "to": "web_page.wp_web_page_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_bill_cdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_bill_customer_sk",
+      "to": "customer.c_customer_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_bill_hdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_bill_hdemo_sk",
+      "to": "household_demographics.hd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_item_sk",
+      "to": "item.i_item_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_promo_sk",
+      "to": "promotion.p_promo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_ship_cdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_ship_customer_sk",
+      "to": "customer.c_customer_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_ship_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_ship_hdemo_sk",
+      "to": "customer_demographics.cd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_ship_hdemo_sk",
+      "to": "household_demographics.hd_demo_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_ship_mode_sk",
+      "to": "ship_mode.sm_ship_mode_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_sold_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_sold_time_sk",
+      "to": "time_dim.t_time_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_warehouse_sk",
+      "to": "warehouse.w_warehouse_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_web_page_sk",
+      "to": "web_page.wp_web_page_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_sales.ws_web_site_sk",
+      "to": "web_site.web_site_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_city",
+      "to": "call_center.cc_city",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_city",
+      "to": "store.s_city",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_city",
+      "to": "warehouse.w_city",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_close_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_company_name",
+      "to": "call_center.cc_company_name",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_country",
+      "to": "call_center.cc_country",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_country",
+      "to": "store.s_country",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_country",
+      "to": "warehouse.w_country",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_county",
+      "to": "call_center.cc_county",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_county",
+      "to": "store.s_county",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_county",
+      "to": "warehouse.w_county",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_gmt_offset",
+      "to": "call_center.cc_gmt_offset",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_gmt_offset",
+      "to": "store.s_gmt_offset",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_gmt_offset",
+      "to": "warehouse.w_gmt_offset",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_open_date_sk",
+      "to": "date_dim.d_date_sk",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_rec_end_date",
+      "to": "date_dim.d_date",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_rec_start_date",
+      "to": "date_dim.d_date",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_state",
+      "to": "call_center.cc_state",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_state",
+      "to": "store.s_state",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_state",
+      "to": "warehouse.w_state",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_zip",
+      "to": "call_center.cc_zip",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_zip",
+      "to": "store.s_zip",
+      "source": "inferred"
+    },
+    {
+      "from": "web_site.web_zip",
+      "to": "warehouse.w_zip",
+      "source": "inferred"
+    }
+  ],
+  "eligible": {
+    "tables": 24,
+    "columns": 425
+  }
+}

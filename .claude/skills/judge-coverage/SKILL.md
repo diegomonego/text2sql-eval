@@ -1,7 +1,7 @@
 ---
 name: judge-coverage
 description: Measure how well a saved question file covers the database's tables, columns and query shapes, with checked links, repetition and an overall coverage score. Use only when explicitly asked to run the coverage judge.
-argument-hint: --questions <questions.json> --out <run-dir> [--no-docs] [--anchor auto|off|YYYY-MM-DD]
+argument-hint: --questions <questions.json> --out <run-dir> [--db <url>] [--docs <dir> | --no-docs] [--anchor auto|off|YYYY-MM-DD]
 disable-model-invocation: true
 model: claude-opus-5-5
 allowed-tools: Read, Write, Bash(uv run t2s *)
@@ -35,7 +35,7 @@ Link what each question **actually asks for**: every entity, measure, attribute 
 mentions, plus the words that trigger each shape it exercises. Be faithful, not generous:
 
 - Don't add tables or columns a query might need but the question doesn't mention (join keys earn nothing; code finds the join path).
-- If a phrase could reasonably mean two or more different columns or definitions that the docs don't settle, give the main reading in `columns` and the others in `alternatives`. Ambiguous phrases earn no credit.
+- **Check every column link for other columns that fit just as well.** Examples: "date" on a line item could be the ship, commit or receipt date; "price" could be the retail price, the line's value or the order total; "country" could be the customer's or the supplier's. If a phrase could reasonably mean two or more columns or definitions that the docs don't settle, give the main reading in `columns` and the others in `alternatives`. Ambiguous phrases earn no credit.
 - If a concept has no data in the database, add a `missing` link. A question with a missing concept earns no credit.
 - If the question isn't about this business at all, give it no links and say so in `note`.
 - Time: if the brief says the time anchor is OFF, a relative period ("last quarter") is ambiguous: use `alternatives`. If it's ON, use the brief's resolved value.

@@ -1,0 +1,43 @@
+{"results": [
+  {"id": "q01", "links": [
+    {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "line items", "kind": "table", "table": "lineitem"},
+    {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+    {"phrase": "UNITED KINGDOM", "kind": "column", "columns": ["nation.n_name"], "value": "UNITED KINGDOM"},
+    {"phrase": "received late", "kind": "column", "columns": ["lineitem.l_receiptdate", "lineitem.l_commitdate"], "source": "glossary: late delivery"},
+    {"phrase": "each year", "kind": "shape", "shape": "time_trend"},
+    {"phrase": "received … from 1993 to 1997", "kind": "column", "columns": ["lineitem.l_receiptdate"], "value": "1993..1997"}
+  ], "note": "Year is read as the receipt year, since 'in each year' attaches to 'received late'."},
+  {"id": "q02", "links": [
+    {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "customers", "kind": "table", "table": "customer"},
+    {"phrase": "MIDDLE EAST", "kind": "column", "columns": ["region.r_name"], "value": "MIDDLE EAST"},
+    {"phrase": "never", "kind": "shape", "shape": "anti_join"},
+    {"phrase": "placed an order", "kind": "table", "table": "orders"}
+  ]},
+  {"id": "q03", "links": [
+    {"phrase": "What percentage", "kind": "shape", "shape": "ratio"},
+    {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+    {"phrase": "orders", "kind": "table", "table": "orders"},
+    {"phrase": "customers", "kind": "table", "table": "customer"},
+    {"phrase": "INDONESIA", "kind": "column", "columns": ["nation.n_name"], "value": "INDONESIA"},
+    {"phrase": "placed … last year", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1997"},
+    {"phrase": "items", "kind": "table", "table": "lineitem"},
+    {"phrase": "shipped by TRUCK", "kind": "column", "columns": ["lineitem.l_shipmode"], "value": "TRUCK"}
+  ]},
+  {"id": "q04", "links": [
+    {"phrase": "Which 3 … largest", "kind": "shape", "shape": "ranking"},
+    {"phrase": "container types", "kind": "column", "columns": ["part.p_container"]},
+    {"phrase": "accounted for", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "quantity of units", "kind": "column", "columns": ["lineitem.l_quantity"]},
+    {"phrase": "shipped this year", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1998"}
+  ]},
+  {"id": "q05", "links": [
+    {"phrase": "names", "kind": "column", "columns": ["supplier.s_name"]},
+    {"phrase": "phone numbers", "kind": "column", "columns": ["supplier.s_phone"]},
+    {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+    {"phrase": "ASIA", "kind": "column", "columns": ["region.r_name"], "value": "ASIA"},
+    {"phrase": "account balance", "kind": "column", "columns": ["supplier.s_acctbal"]},
+    {"phrase": "above that region's supplier average", "kind": "shape", "shape": "vs_aggregate"}
+  ]}
+]}

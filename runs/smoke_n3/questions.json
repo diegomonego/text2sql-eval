@@ -1,0 +1,68 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "text": "Which 5 suppliers earned the highest total profit on items shipped in 1997?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "partsupp",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "lineitem.l_quantity",
+          "lineitem.l_shipdate",
+          "partsupp.ps_supplycost"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q02",
+      "text": "How many customers in the MIDDLE EAST region have never placed an order?",
+      "labels": {
+        "tables": [
+          "customer",
+          "orders",
+          "region"
+        ],
+        "columns": [
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "anti_join",
+          "multi_join"
+        ]
+      }
+    },
+    {
+      "id": "q03",
+      "text": "What share of revenue on orders placed in 1997 came from customers in the UNITED STATES?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "nation.n_name",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "multi_join",
+          "ratio"
+        ]
+      }
+    }
+  ]
+}

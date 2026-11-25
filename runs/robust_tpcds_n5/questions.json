@@ -1,0 +1,104 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "text": "How did the total quantity bought in stores by customers with an Advanced Degree change year by year from 1998 to 2002?",
+      "labels": {
+        "tables": [
+          "customer_demographics",
+          "date_dim",
+          "store_sales"
+        ],
+        "columns": [
+          "customer_demographics.cd_education_status",
+          "date_dim.d_year",
+          "store_sales.ss_quantity"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ]
+      }
+    },
+    {
+      "id": "q02",
+      "text": "What share of the total catalog shipping cost in 2000 was spent on orders shipped OVERNIGHT?",
+      "labels": {
+        "tables": [
+          "catalog_sales",
+          "date_dim",
+          "ship_mode"
+        ],
+        "columns": [
+          "catalog_sales.cs_ext_ship_cost",
+          "date_dim.d_year",
+          "ship_mode.sm_type"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ratio"
+        ]
+      }
+    },
+    {
+      "id": "q03",
+      "text": "Which 10 products had the highest average quantity on hand in inventory during 2001?",
+      "labels": {
+        "tables": [
+          "date_dim",
+          "inventory",
+          "item"
+        ],
+        "columns": [
+          "date_dim.d_year",
+          "inventory.inv_quantity_on_hand",
+          "item.i_product_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q04",
+      "text": "Which income bands, shown by lower and upper bound, have more customers than the average across all income bands?",
+      "labels": {
+        "tables": [
+          "customer",
+          "income_band"
+        ],
+        "columns": [
+          "income_band.ib_lower_bound",
+          "income_band.ib_upper_bound"
+        ],
+        "shapes": [
+          "multi_join",
+          "vs_aggregate"
+        ]
+      }
+    },
+    {
+      "id": "q05",
+      "text": "Which shipping carriers were not used for any catalog returns in the first quarter of 2001?",
+      "labels": {
+        "tables": [
+          "catalog_returns",
+          "date_dim",
+          "ship_mode"
+        ],
+        "columns": [
+          "date_dim.d_date",
+          "ship_mode.sm_carrier"
+        ],
+        "shapes": [
+          "anti_join",
+          "multi_join"
+        ]
+      }
+    }
+  ]
+}

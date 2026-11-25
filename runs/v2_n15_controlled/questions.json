@@ -1,0 +1,258 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "text": "How did the average line item discount for customers in the UNITED KINGDOM change by year for orders placed between 1992 and 1997?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "nation.n_name",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ]
+      }
+    },
+    {
+      "id": "q02",
+      "text": "List the name, supply cost and available quantity of every part offered by Supplier#000000137.",
+      "labels": {
+        "tables": [
+          "part",
+          "partsupp",
+          "supplier"
+        ],
+        "columns": [
+          "part.p_name",
+          "partsupp.ps_availqty",
+          "partsupp.ps_supplycost",
+          "supplier.s_name"
+        ],
+        "shapes": [
+          "lookup",
+          "multi_join"
+        ]
+      }
+    },
+    {
+      "id": "q03",
+      "text": "How many parts have never been sold to customers in the EUROPE region?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "part",
+          "region"
+        ],
+        "columns": [
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "anti_join",
+          "multi_join"
+        ]
+      }
+    },
+    {
+      "id": "q04",
+      "text": "How many orders were cancelled in 1997?"
+    },
+    {
+      "id": "q05",
+      "text": "Which 5 nations had the highest total charge, including tax, on orders their customers placed in 1996?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "lineitem.l_tax",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q06",
+      "text": "Which nations have an average customer account balance above the average across all customers?",
+      "labels": {
+        "tables": [
+          "customer",
+          "nation"
+        ],
+        "columns": [
+          "customer.c_acctbal"
+        ],
+        "shapes": [
+          "aggregation",
+          "vs_aggregate"
+        ]
+      }
+    },
+    {
+      "id": "q07",
+      "text": "How did the average shipping time to customers in the ASIA region change by year for line items shipped between 1993 and 1997?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "region"
+        ],
+        "columns": [
+          "lineitem.l_receiptdate",
+          "lineitem.l_shipdate",
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ]
+      }
+    },
+    {
+      "id": "q08",
+      "text": "List the order value, clerk and status of every 1-URGENT order placed on 1998-08-02.",
+      "labels": {
+        "tables": [
+          "orders"
+        ],
+        "columns": [
+          "orders.o_clerk",
+          "orders.o_orderdate",
+          "orders.o_orderpriority",
+          "orders.o_orderstatus",
+          "orders.o_totalprice"
+        ],
+        "shapes": [
+          "lookup"
+        ]
+      }
+    },
+    {
+      "id": "q09",
+      "text": "What percentage of suppliers have a negative account balance?",
+      "labels": {
+        "tables": [
+          "supplier"
+        ],
+        "columns": [
+          "supplier.s_acctbal"
+        ],
+        "shapes": [
+          "ratio"
+        ]
+      }
+    },
+    {
+      "id": "q10",
+      "text": "How many orders placed in 1994 had no returned line items?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_returnflag",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "anti_join"
+        ]
+      }
+    },
+    {
+      "id": "q11",
+      "text": "Which 5 parts in LG CASE containers have the highest retail price?",
+      "labels": {
+        "tables": [
+          "part"
+        ],
+        "columns": [
+          "part.p_container",
+          "part.p_retailprice"
+        ],
+        "shapes": [
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q12",
+      "text": "How many supplier offers for Brand#33 parts have a supply cost above the average supply cost for the same part?",
+      "labels": {
+        "tables": [
+          "part",
+          "partsupp"
+        ],
+        "columns": [
+          "part.p_brand",
+          "partsupp.ps_supplycost"
+        ],
+        "shapes": [
+          "aggregation",
+          "vs_aggregate"
+        ]
+      }
+    },
+    {
+      "id": "q13",
+      "text": "How did the number of orders from customers in the AUTOMOBILE segment change year by year between 1993 and 1997?",
+      "labels": {
+        "tables": [
+          "customer",
+          "orders"
+        ],
+        "columns": [
+          "customer.c_mktsegment",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "time_trend"
+        ]
+      }
+    },
+    {
+      "id": "q14",
+      "text": "List the quantity, ship mode and shipping instruction of every line item shipped on 1998-12-01.",
+      "labels": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [
+          "lineitem.l_quantity",
+          "lineitem.l_shipdate",
+          "lineitem.l_shipinstruct",
+          "lineitem.l_shipmode"
+        ],
+        "shapes": [
+          "lookup"
+        ]
+      }
+    },
+    {
+      "id": "q15",
+      "text": "Between 1993 and 1997, how many orders did customers in the AUTOMOBILE segment place each year?"
+    }
+  ]
+}

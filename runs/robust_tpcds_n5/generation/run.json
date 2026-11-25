@@ -1,0 +1,53 @@
+{
+  "run": {
+    "timestamp_utc": "2026-11-25T13:39:46+00:00",
+    "component": "generator",
+    "git": {
+      "commit": "not a git repository",
+      "uncommitted_changes": null
+    },
+    "claude_code_version": "2.1.331 (Claude Code)",
+    "model": "claude-opus-5-5",
+    "skill_sha256": "501d956e47ff8bcfb32061767852c6925f6d1aa8e41b06be66d9f31e807a2594"
+  },
+  "database": {
+    "url": "duckdb:///data/tpcds_sf001.duckdb",
+    "engine": "duckdb",
+    "engine_version": "2.0.1",
+    "file_sha256": "9fbcc4bbbedf18d78d2cd9859808468d7ce41cbe79e790fe1584eb12ac62b681",
+    "tables": 24,
+    "columns": 425
+  },
+  "docs": "none",
+  "config": {
+    "shapes_toml_sha256": "b292990befb8d8a3611e95253c2a16e9232ef84feb35a7b12825c4a929e97629",
+    "eval_toml_sha256": "5981f43e9de0da77f5ac381cd7f9308b290436c66f8ea476f15e6adc9de8e915",
+    "eval_toml": "config/eval_tpcds.toml",
+    "time_anchor": {
+      "setting": "off",
+      "mode": "off",
+      "date": null
+    }
+  },
+  "input": {
+    "n": 5,
+    "preset": {
+      "name": "coverage",
+      "style": "coverage",
+      "free_per_n": null,
+      "focus_tables": true,
+      "min_free_share": 0.0,
+      "max_shapes": null,
+      "alpha": null,
+      "beta": null
+    },
+    "pool_size": 21,
+    "candidate_files": [
+      "candidates.json"
+    ],
+    "candidates_selected": 5,
+    "candidates_not_selected": 16,
+    "candidates_duplicate": 0,
+    "candidates_dropped": 0
+  }
+}

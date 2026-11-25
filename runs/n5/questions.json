@@ -1,0 +1,111 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "text": "What was the total profit on MEDIUM BRUSHED COPPER parts ordered by customers in JAPAN during 1995?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders",
+          "part",
+          "partsupp"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "lineitem.l_quantity",
+          "nation.n_name",
+          "orders.o_orderdate",
+          "part.p_type",
+          "partsupp.ps_supplycost"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join"
+        ]
+      }
+    },
+    {
+      "id": "q02",
+      "text": "How many line items from suppliers in BRAZIL were delivered late in each year from 1993 to 1997?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "nation",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_commitdate",
+          "lineitem.l_receiptdate",
+          "nation.n_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ]
+      }
+    },
+    {
+      "id": "q03",
+      "text": "What percentage of line items from suppliers in the AMERICA region were returned?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "region",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_returnflag",
+          "region.r_name"
+        ],
+        "shapes": [
+          "multi_join",
+          "ratio"
+        ]
+      }
+    },
+    {
+      "id": "q04",
+      "text": "Which 3 brands have the highest average retail price among parts of size 50?",
+      "labels": {
+        "tables": [
+          "part"
+        ],
+        "columns": [
+          "part.p_brand",
+          "part.p_retailprice",
+          "part.p_size"
+        ],
+        "shapes": [
+          "aggregation",
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q05",
+      "text": "Which nations had total revenue from their customers' orders in 1996 above the average across all nations?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "vs_aggregate"
+        ]
+      }
+    }
+  ]
+}

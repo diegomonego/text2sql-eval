@@ -1,0 +1,24 @@
+{"results": [
+  {"id": "q01", "links": [
+    {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+    {"phrase": "5 … highest", "kind": "shape", "shape": "ranking"},
+    {"phrase": "total profit", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "profit", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount", "partsupp.ps_supplycost", "lineitem.l_quantity"], "source": "glossary: profit"},
+    {"phrase": "items", "kind": "table", "table": "lineitem"},
+    {"phrase": "shipped in 1997", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1997"}
+  ]},
+  {"id": "q02", "links": [
+    {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "customers", "kind": "table", "table": "customer"},
+    {"phrase": "MIDDLE EAST region", "kind": "column", "columns": ["region.r_name"], "value": "MIDDLE EAST"},
+    {"phrase": "never", "kind": "shape", "shape": "anti_join"},
+    {"phrase": "placed an order", "kind": "table", "table": "orders"}
+  ]},
+  {"id": "q03", "links": [
+    {"phrase": "share", "kind": "shape", "shape": "ratio"},
+    {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+    {"phrase": "orders placed in 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1997"},
+    {"phrase": "customers", "kind": "table", "table": "customer"},
+    {"phrase": "UNITED STATES", "kind": "column", "columns": ["nation.n_name"], "value": "UNITED STATES"}
+  ]}
+]}

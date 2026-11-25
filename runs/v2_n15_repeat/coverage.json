@@ -1,0 +1,1986 @@
+{
+  "meta": {
+    "run": {
+      "timestamp_utc": "2026-11-25T14:50:19+00:00",
+      "component": "coverage_judge",
+      "git": {
+        "commit": "8336fc3a2fd163ba4c9a16399c054d17e9393a68",
+        "uncommitted_changes": true
+      },
+      "claude_code_version": "2.1.331 (Claude Code)",
+      "model": "claude-opus-5-5",
+      "skill_sha256": "c998efb5d7dc81b4868b37778d329e5a48300f72734243c6801834f37a562c8f"
+    },
+    "database": {
+      "url": "duckdb:///data/tpch_sf01.duckdb",
+      "engine": "duckdb",
+      "engine_version": "2.0.1",
+      "file_sha256": "9a6859c7dad2fbf6fea4085b95ce1d453e29582b55d11bf2625ef5ce0ba734ee",
+      "tables": 8,
+      "columns": 61
+    },
+    "docs": [
+      {
+        "path": "semantic_docs/tpch/glossary.md",
+        "sha256": "09b524aabe1802cd6fec34505f2d8b8965293e34c6717080e3239fe3e1dd0b37"
+      },
+      {
+        "path": "semantic_docs/tpch/spec/clause1_database_design.md",
+        "sha256": "6fc1cb6613cb1f5c7bf76fa776ed37db47e270e2dfa0f104f0b4c3075e53e9df"
+      },
+      {
+        "path": "semantic_docs/tpch/spec/clause4_data_generation.md",
+        "sha256": "e781343888e0673ca99844444a36de3de5ecb8612b2e41935c3fb1203cffa115"
+      }
+    ],
+    "config": {
+      "shapes_toml_sha256": "b292990befb8d8a3611e95253c2a16e9232ef84feb35a7b12825c4a929e97629",
+      "eval_toml_sha256": "949fff8732841bcc406bd78cfd2edf2acc52e2697937c30bef995fa02b24f7cf",
+      "eval_toml": "config/eval.toml",
+      "time_anchor": {
+        "setting": "auto",
+        "mode": "auto",
+        "date": "1998-08-02"
+      }
+    },
+    "input": {
+      "questions_file": "runs/v2_n15_repeat/questions.json",
+      "questions_sha256": "62bc445cf9e8903d2edb2ed42f203e75c8c008c8178e24e27de74d79c17c07b7",
+      "n": 15,
+      "issues_accepted": 0
+    }
+  },
+  "per_question": [
+    {
+      "id": "q01",
+      "text": "How did the average line item discount for customers in the UNITED KINGDOM change by year for orders placed between 1992 and 1997?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "nation.n_name",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "line item discount",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_discount"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "UNITED KINGDOM",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "value": "UNITED KINGDOM",
+          "check": "pass"
+        },
+        {
+          "phrase": "change by year",
+          "kind": "shape",
+          "shape": "time_trend",
+          "check": "pass"
+        },
+        {
+          "phrase": "orders placed between 1992 and 1997",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1992..1997",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "customer",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "nation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "orders",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_discount",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "nation.n_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_orderdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "time_trend",
+          "status": "confirmed"
+        }
+      ],
+      "unique": []
+    },
+    {
+      "id": "q02",
+      "text": "List the name, supply cost and available quantity of every part offered by Supplier#000000137.",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "part",
+          "partsupp",
+          "supplier"
+        ],
+        "columns": [
+          "part.p_name",
+          "partsupp.ps_availqty",
+          "partsupp.ps_supplycost",
+          "supplier.s_name"
+        ],
+        "shapes": [
+          "lookup",
+          "multi_join"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "List",
+          "kind": "shape",
+          "shape": "lookup",
+          "check": "pass"
+        },
+        {
+          "phrase": "name",
+          "kind": "column",
+          "columns": [
+            "part.p_name"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "supply cost",
+          "kind": "column",
+          "columns": [
+            "partsupp.ps_supplycost"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "available quantity",
+          "kind": "column",
+          "columns": [
+            "partsupp.ps_availqty"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "part",
+          "kind": "table",
+          "table": "part",
+          "check": "pass"
+        },
+        {
+          "phrase": "offered",
+          "kind": "table",
+          "table": "partsupp",
+          "check": "pass"
+        },
+        {
+          "phrase": "Supplier#000000137",
+          "kind": "column",
+          "columns": [
+            "supplier.s_name"
+          ],
+          "value": "Supplier#000000137",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "part",
+        "partsupp",
+        "supplier"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "part",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "partsupp",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "supplier",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "part.p_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "partsupp.ps_availqty",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "partsupp.ps_supplycost",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "supplier.s_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "lookup",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:part.p_name",
+        "columns:partsupp.ps_availqty",
+        "columns:supplier.s_name"
+      ]
+    },
+    {
+      "id": "q03",
+      "text": "How many parts have never been sold to customers in the EUROPE region?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "part",
+          "region"
+        ],
+        "columns": [
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "anti_join",
+          "multi_join"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "How many",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "parts",
+          "kind": "table",
+          "table": "part",
+          "check": "pass"
+        },
+        {
+          "phrase": "never",
+          "kind": "shape",
+          "shape": "anti_join",
+          "check": "pass"
+        },
+        {
+          "phrase": "sold",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "EUROPE region",
+          "kind": "column",
+          "columns": [
+            "region.r_name"
+          ],
+          "value": "EUROPE",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders",
+        "part",
+        "region"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "customer",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "part",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "region",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "region.r_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "anti_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        }
+      ],
+      "unique": []
+    },
+    {
+      "id": "q04",
+      "text": "For customers in the MIDDLE EAST region, what percentage of line items shipped in 1997 went by AIR?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "region"
+        ],
+        "columns": [
+          "lineitem.l_shipdate",
+          "lineitem.l_shipmode",
+          "region.r_name"
+        ],
+        "shapes": [
+          "multi_join",
+          "ratio"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "MIDDLE EAST region",
+          "kind": "column",
+          "columns": [
+            "region.r_name"
+          ],
+          "value": "MIDDLE EAST",
+          "check": "pass"
+        },
+        {
+          "phrase": "percentage",
+          "kind": "shape",
+          "shape": "ratio",
+          "check": "pass"
+        },
+        {
+          "phrase": "line items",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "shipped in 1997",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipdate"
+          ],
+          "value": "1997",
+          "check": "pass"
+        },
+        {
+          "phrase": "by AIR",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipmode"
+          ],
+          "value": "AIR",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders",
+        "region"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "customer",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "region",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_shipdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_shipmode",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "region.r_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "ratio",
+          "status": "confirmed"
+        }
+      ],
+      "unique": []
+    },
+    {
+      "id": "q05",
+      "text": "Which 5 nations had the highest total charge, including tax, on orders their customers placed in 1996?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "lineitem.l_tax",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ranking"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "5 … highest",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "nations",
+          "kind": "table",
+          "table": "nation",
+          "check": "pass"
+        },
+        {
+          "phrase": "total",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "charge, including tax",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_extendedprice",
+            "lineitem.l_discount",
+            "lineitem.l_tax"
+          ],
+          "source": "glossary: charge",
+          "check": "pass"
+        },
+        {
+          "phrase": "orders",
+          "kind": "table",
+          "table": "orders",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "placed in 1996",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1996",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders"
+      ],
+      "note": "Summing o_totalprice gives the same total, since the glossary defines it as the sum of the order's line charges.",
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "customer",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "nation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "orders",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_discount",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_extendedprice",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_tax",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_orderdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "ranking",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:lineitem.l_tax"
+      ]
+    },
+    {
+      "id": "q06",
+      "text": "Which nations have an average customer account balance above the average across all customers?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "customer",
+          "nation"
+        ],
+        "columns": [
+          "customer.c_acctbal"
+        ],
+        "shapes": [
+          "aggregation",
+          "vs_aggregate"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "nations",
+          "kind": "table",
+          "table": "nation",
+          "check": "pass"
+        },
+        {
+          "phrase": "an average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "customer account balance",
+          "kind": "column",
+          "columns": [
+            "customer.c_acctbal"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "above the average across all customers",
+          "kind": "shape",
+          "shape": "vs_aggregate",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "customer",
+        "nation"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "customer",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "nation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "customer.c_acctbal",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "vs_aggregate",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:customer.c_acctbal"
+      ]
+    },
+    {
+      "id": "q07",
+      "text": "How did the average shipping time to customers in the ASIA region change by year for line items shipped between 1993 and 1997?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "region"
+        ],
+        "columns": [
+          "lineitem.l_receiptdate",
+          "lineitem.l_shipdate",
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "shipping time",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate",
+            "lineitem.l_shipdate"
+          ],
+          "source": "glossary: shipping time",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "ASIA region",
+          "kind": "column",
+          "columns": [
+            "region.r_name"
+          ],
+          "value": "ASIA",
+          "check": "pass"
+        },
+        {
+          "phrase": "change by year",
+          "kind": "shape",
+          "shape": "time_trend",
+          "check": "pass"
+        },
+        {
+          "phrase": "line items shipped between 1993 and 1997",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipdate"
+          ],
+          "value": "1993..1997",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders",
+        "region"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "customer",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "region",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_receiptdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_shipdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "region.r_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "time_trend",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:lineitem.l_receiptdate"
+      ]
+    },
+    {
+      "id": "q08",
+      "text": "List the order value, clerk and status of every 1-URGENT order placed on 1998-08-02.",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "orders"
+        ],
+        "columns": [
+          "orders.o_clerk",
+          "orders.o_orderdate",
+          "orders.o_orderpriority",
+          "orders.o_orderstatus",
+          "orders.o_totalprice"
+        ],
+        "shapes": [
+          "lookup"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "List",
+          "kind": "shape",
+          "shape": "lookup",
+          "check": "pass"
+        },
+        {
+          "phrase": "order value",
+          "kind": "column",
+          "columns": [
+            "orders.o_totalprice"
+          ],
+          "source": "glossary: order value",
+          "check": "pass"
+        },
+        {
+          "phrase": "clerk",
+          "kind": "column",
+          "columns": [
+            "orders.o_clerk"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "status",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderstatus"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "1-URGENT",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderpriority"
+          ],
+          "value": "1-URGENT",
+          "check": "pass"
+        },
+        {
+          "phrase": "placed on 1998-08-02",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1998-08-02",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "orders"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "orders",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_clerk",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_orderdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_orderpriority",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_orderstatus",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_totalprice",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "lookup",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:orders.o_clerk",
+        "columns:orders.o_orderpriority",
+        "columns:orders.o_orderstatus",
+        "columns:orders.o_totalprice"
+      ]
+    },
+    {
+      "id": "q09",
+      "text": "What percentage of suppliers have a negative account balance?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "supplier"
+        ],
+        "columns": [
+          "supplier.s_acctbal"
+        ],
+        "shapes": [
+          "ratio"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "percentage",
+          "kind": "shape",
+          "shape": "ratio",
+          "check": "pass"
+        },
+        {
+          "phrase": "suppliers",
+          "kind": "table",
+          "table": "supplier",
+          "check": "pass"
+        },
+        {
+          "phrase": "negative account balance",
+          "kind": "column",
+          "columns": [
+            "supplier.s_acctbal"
+          ],
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "supplier"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "supplier",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "supplier.s_acctbal",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "ratio",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:supplier.s_acctbal"
+      ]
+    },
+    {
+      "id": "q10",
+      "text": "How many orders placed in 1994 had no returned line items?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "lineitem",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_returnflag",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "anti_join"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "How many",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "orders placed in 1994",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1994",
+          "check": "pass"
+        },
+        {
+          "phrase": "no",
+          "kind": "shape",
+          "shape": "anti_join",
+          "check": "pass"
+        },
+        {
+          "phrase": "returned",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_returnflag"
+          ],
+          "value": "R",
+          "source": "glossary: l_returnflag R = returned",
+          "check": "pass"
+        },
+        {
+          "phrase": "line items",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "lineitem",
+        "orders"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "orders",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_returnflag",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_orderdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "anti_join",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:lineitem.l_returnflag"
+      ]
+    },
+    {
+      "id": "q11",
+      "text": "Which 5 parts in LG CASE containers have the highest retail price?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "part"
+        ],
+        "columns": [
+          "part.p_container",
+          "part.p_retailprice"
+        ],
+        "shapes": [
+          "ranking"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "5 … highest",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "parts",
+          "kind": "table",
+          "table": "part",
+          "check": "pass"
+        },
+        {
+          "phrase": "LG CASE containers",
+          "kind": "column",
+          "columns": [
+            "part.p_container"
+          ],
+          "value": "LG CASE",
+          "check": "pass"
+        },
+        {
+          "phrase": "retail price",
+          "kind": "column",
+          "columns": [
+            "part.p_retailprice"
+          ],
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "part"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "part",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "part.p_container",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "part.p_retailprice",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "ranking",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:part.p_container",
+        "columns:part.p_retailprice"
+      ]
+    },
+    {
+      "id": "q12",
+      "text": "How many supplier offers for Brand#33 parts have a supply cost above the average supply cost for the same part?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "part",
+          "partsupp"
+        ],
+        "columns": [
+          "part.p_brand",
+          "partsupp.ps_supplycost"
+        ],
+        "shapes": [
+          "aggregation",
+          "vs_aggregate"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "How many",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "supplier offers",
+          "kind": "table",
+          "table": "partsupp",
+          "check": "pass"
+        },
+        {
+          "phrase": "Brand#33",
+          "kind": "column",
+          "columns": [
+            "part.p_brand"
+          ],
+          "value": "Brand#33",
+          "check": "pass"
+        },
+        {
+          "phrase": "parts",
+          "kind": "table",
+          "table": "part",
+          "check": "pass"
+        },
+        {
+          "phrase": "supply cost",
+          "kind": "column",
+          "columns": [
+            "partsupp.ps_supplycost"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "above the average supply cost for the same part",
+          "kind": "shape",
+          "shape": "vs_aggregate",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "part",
+        "partsupp"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "part",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "partsupp",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "part.p_brand",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "partsupp.ps_supplycost",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "vs_aggregate",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:part.p_brand"
+      ]
+    },
+    {
+      "id": "q13",
+      "text": "How did the number of orders from customers in the AUTOMOBILE segment change year by year between 1993 and 1997?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "customer",
+          "orders"
+        ],
+        "columns": [
+          "customer.c_mktsegment",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "time_trend"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "number of",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "orders",
+          "kind": "table",
+          "table": "orders",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "AUTOMOBILE segment",
+          "kind": "column",
+          "columns": [
+            "customer.c_mktsegment"
+          ],
+          "value": "AUTOMOBILE",
+          "check": "pass"
+        },
+        {
+          "phrase": "change year by year",
+          "kind": "shape",
+          "shape": "time_trend",
+          "check": "pass"
+        },
+        {
+          "phrase": "between 1993 and 1997",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1993..1997",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "customer",
+        "orders"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "customer",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "orders",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "customer.c_mktsegment",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_orderdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "time_trend",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:customer.c_mktsegment"
+      ]
+    },
+    {
+      "id": "q14",
+      "text": "List the quantity, ship mode and shipping instruction of every line item shipped on 1998-12-01.",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [
+          "lineitem.l_quantity",
+          "lineitem.l_shipdate",
+          "lineitem.l_shipinstruct",
+          "lineitem.l_shipmode"
+        ],
+        "shapes": [
+          "lookup"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "List",
+          "kind": "shape",
+          "shape": "lookup",
+          "check": "pass"
+        },
+        {
+          "phrase": "quantity",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_quantity"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "ship mode",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipmode"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "shipping instruction",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipinstruct"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "line item",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "shipped on 1998-12-01",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipdate"
+          ],
+          "value": "1998-12-01",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "lineitem"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_quantity",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_shipdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_shipinstruct",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_shipmode",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "lookup",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:lineitem.l_quantity",
+        "columns:lineitem.l_shipinstruct"
+      ]
+    },
+    {
+      "id": "q15",
+      "text": "What share of revenue from orders placed in 1997 came from customers in CHINA?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "nation.n_name",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "multi_join",
+          "ratio"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "share",
+          "kind": "shape",
+          "shape": "ratio",
+          "check": "pass"
+        },
+        {
+          "phrase": "revenue",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_extendedprice",
+            "lineitem.l_discount"
+          ],
+          "source": "glossary: revenue",
+          "check": "pass"
+        },
+        {
+          "phrase": "orders placed in 1997",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1997",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "CHINA",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "value": "CHINA",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "customer",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "nation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "orders",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_discount",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_extendedprice",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "nation.n_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_orderdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "ratio",
+          "status": "confirmed"
+        }
+      ],
+      "unique": []
+    }
+  ],
+  "dimensions": {
+    "tables": {
+      "eligible": 8,
+      "covered_count": 8,
+      "pct": 100.0,
+      "covered": {
+        "customer": [
+          "q01",
+          "q03",
+          "q04",
+          "q05",
+          "q06",
+          "q07",
+          "q13",
+          "q15"
+        ],
+        "lineitem": [
+          "q01",
+          "q03",
+          "q04",
+          "q05",
+          "q07",
+          "q10",
+          "q14",
+          "q15"
+        ],
+        "nation": [
+          "q01",
+          "q05",
+          "q06",
+          "q15"
+        ],
+        "orders": [
+          "q01",
+          "q05",
+          "q08",
+          "q10",
+          "q13",
+          "q15"
+        ],
+        "part": [
+          "q02",
+          "q03",
+          "q11",
+          "q12"
+        ],
+        "partsupp": [
+          "q02",
+          "q12"
+        ],
+        "region": [
+          "q03",
+          "q04",
+          "q07"
+        ],
+        "supplier": [
+          "q02",
+          "q09"
+        ]
+      },
+      "uncovered": {}
+    },
+    "columns": {
+      "eligible": 61,
+      "covered_count": 26,
+      "pct": 42.62,
+      "covered": {
+        "customer.c_acctbal": [
+          "q06"
+        ],
+        "customer.c_mktsegment": [
+          "q13"
+        ],
+        "lineitem.l_quantity": [
+          "q14"
+        ],
+        "lineitem.l_extendedprice": [
+          "q05",
+          "q15"
+        ],
+        "lineitem.l_discount": [
+          "q01",
+          "q05",
+          "q15"
+        ],
+        "lineitem.l_tax": [
+          "q05"
+        ],
+        "lineitem.l_returnflag": [
+          "q10"
+        ],
+        "lineitem.l_shipdate": [
+          "q04",
+          "q07",
+          "q14"
+        ],
+        "lineitem.l_receiptdate": [
+          "q07"
+        ],
+        "lineitem.l_shipinstruct": [
+          "q14"
+        ],
+        "lineitem.l_shipmode": [
+          "q04",
+          "q14"
+        ],
+        "nation.n_name": [
+          "q01",
+          "q15"
+        ],
+        "orders.o_orderstatus": [
+          "q08"
+        ],
+        "orders.o_totalprice": [
+          "q08"
+        ],
+        "orders.o_orderdate": [
+          "q01",
+          "q05",
+          "q08",
+          "q10",
+          "q13",
+          "q15"
+        ],
+        "orders.o_orderpriority": [
+          "q08"
+        ],
+        "orders.o_clerk": [
+          "q08"
+        ],
+        "part.p_name": [
+          "q02"
+        ],
+        "part.p_brand": [
+          "q12"
+        ],
+        "part.p_container": [
+          "q11"
+        ],
+        "part.p_retailprice": [
+          "q11"
+        ],
+        "partsupp.ps_availqty": [
+          "q02"
+        ],
+        "partsupp.ps_supplycost": [
+          "q02",
+          "q12"
+        ],
+        "region.r_name": [
+          "q03",
+          "q04",
+          "q07"
+        ],
+        "supplier.s_name": [
+          "q02"
+        ],
+        "supplier.s_acctbal": [
+          "q09"
+        ]
+      },
+      "uncovered": {
+        "customer.c_custkey": "not asked",
+        "customer.c_name": "not asked",
+        "customer.c_address": "not asked",
+        "customer.c_nationkey": "not asked",
+        "customer.c_phone": "not asked",
+        "customer.c_comment": "not asked",
+        "lineitem.l_orderkey": "not asked",
+        "lineitem.l_partkey": "not asked",
+        "lineitem.l_suppkey": "not asked",
+        "lineitem.l_linenumber": "not asked",
+        "lineitem.l_linestatus": "not asked",
+        "lineitem.l_commitdate": "not asked",
+        "lineitem.l_comment": "not asked",
+        "nation.n_nationkey": "not asked",
+        "nation.n_regionkey": "not asked",
+        "nation.n_comment": "not asked",
+        "orders.o_orderkey": "not asked",
+        "orders.o_custkey": "not asked",
+        "orders.o_shippriority": "not asked (constant in this data)",
+        "orders.o_comment": "not asked",
+        "part.p_partkey": "not asked",
+        "part.p_mfgr": "not asked",
+        "part.p_type": "not asked",
+        "part.p_size": "not asked",
+        "part.p_comment": "not asked",
+        "partsupp.ps_partkey": "not asked",
+        "partsupp.ps_suppkey": "not asked",
+        "partsupp.ps_comment": "not asked",
+        "region.r_regionkey": "not asked",
+        "region.r_comment": "not asked",
+        "supplier.s_suppkey": "not asked",
+        "supplier.s_address": "not asked",
+        "supplier.s_nationkey": "not asked",
+        "supplier.s_phone": "not asked",
+        "supplier.s_comment": "not asked"
+      }
+    },
+    "shapes": {
+      "eligible": 8,
+      "covered_count": 8,
+      "pct": 100.0,
+      "covered": {
+        "lookup": [
+          "q02",
+          "q08",
+          "q14"
+        ],
+        "aggregation": [
+          "q01",
+          "q03",
+          "q05",
+          "q06",
+          "q07",
+          "q10",
+          "q12",
+          "q13"
+        ],
+        "multi_join": [
+          "q01",
+          "q02",
+          "q03",
+          "q04",
+          "q05",
+          "q07",
+          "q15"
+        ],
+        "ranking": [
+          "q05",
+          "q11"
+        ],
+        "time_trend": [
+          "q01",
+          "q07",
+          "q13"
+        ],
+        "ratio": [
+          "q04",
+          "q09",
+          "q15"
+        ],
+        "vs_aggregate": [
+          "q06",
+          "q12"
+        ],
+        "anti_join": [
+          "q03",
+          "q10"
+        ]
+      },
+      "uncovered": {}
+    }
+  },
+  "repetition": {
+    "duplicate_pairs": [],
+    "nothing_unique": [
+      "q01",
+      "q03",
+      "q04",
+      "q15"
+    ],
+    "no_credit": []
+  },
+  "summary": {
+    "n": 15,
+    "tables_pct": 100.0,
+    "columns_pct": 42.62,
+    "shapes_pct": 100.0,
+    "score": 80.87,
+    "formula": "(table % + column % + shape %) / 3",
+    "calculation": "(100.0 + 42.62 + 100.0) / 3 = 80.87",
+    "duplicate_pairs": 0,
+    "questions_covering_nothing_unique": 4,
+    "questions_without_credit": 0
+  },
+  "budget_note": "N = 15. There are 8 tables, 61 columns and 8 shapes. A few questions that each combine several tables and shapes can cover all tables and shapes; columns can't be covered that way. Credited questions here link 2.7 columns on average, so even with no repetition at most about 41 of 61 columns (67%) could be covered at this N; 26 were. Read column coverage relative to N. 0 question(s) earned no credit (a concept not in the database, or tables that don't connect) and 0 ambiguous phrase(s) earned nothing."
+}

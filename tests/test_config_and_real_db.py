@@ -57,15 +57,38 @@ def test_one_model_for_all_components_and_missing_models(tmp_path):
         load_config(root)
 
 
+def test_config_file_can_be_switched_with_an_environment_variable(tmp_path, monkeypatch):
+    root = tmp_path / "proj"
+    shutil.copytree(ROOT / "config", root / "config")
+    alt = (root / "config" / "eval.toml").read_text().replace("data/tpch_sf01.duckdb", "data/other.duckdb")
+    (root / "config" / "alt.toml").write_text(alt)
+    assert load_config(root).db_url.endswith("tpch_sf01.duckdb")
+    monkeypatch.setenv("T2S_CONFIG", "config/alt.toml")
+    cfg = load_config(root)
+    assert cfg.db_url.endswith("other.duckdb") and cfg.config_path == root / "config" / "alt.toml"
+    monkeypatch.setenv("T2S_CONFIG", "config/missing.toml")
+    with pytest.raises(FileNotFoundError, match="T2S_CONFIG"):
+        load_config(root)
+
+
 def test_legend_weights():
     lg = load_legend(ROOT / "config" / "shapes.toml")
     assert len(lg.shapes) == 8 and lg.derived_ids == {"multi_join"}
     w = lg.weights
+    # I calibrated from BIRD Mini-Dev (calibration/bird_i.py); W = (0.4 F + 0.6 I) / 3
     assert w["lookup"] == pytest.approx(0.6)
-    assert w["aggregation"] == pytest.approx(0.8)
-    assert w["multi_join"] == pytest.approx(2.6 / 3)
+    assert w["aggregation"] == pytest.approx((0.4 * 3 + 0.6 * 1.7) / 3)
+    assert w["ranking"] == pytest.approx((0.4 * 3 + 0.6 * 1.3) / 3)
+    assert w["multi_join"] == pytest.approx((0.4 * 2 + 0.6 * 2.8) / 3)
     assert w["anti_join"] == pytest.approx(2.2 / 3)
-    assert lg.sum_weights == pytest.approx(6.2667, abs=1e-3)
+    assert lg.sum_weights == pytest.approx(6.0267, abs=1e-3)
+
+
+def test_legend_rejects_scores_outside_1_to_3(tmp_path):
+    text = (ROOT / "config" / "shapes.toml").read_text().replace("I = 1.3", "I = 4", 1)
+    (tmp_path / "shapes.toml").write_text(text)
+    with pytest.raises(ValueError, match="ranking: I must be between 1 and 3"):
+        load_legend(tmp_path / "shapes.toml")
 
 
 REAL_DB = ROOT / "data" / "tpch_sf01.duckdb"

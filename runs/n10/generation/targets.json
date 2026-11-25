@@ -1,0 +1,162 @@
+[
+  {
+    "id": "t01",
+    "kind": "targeted",
+    "shape": "lookup",
+    "focus_table": "lineitem"
+  },
+  {
+    "id": "t02",
+    "kind": "targeted",
+    "shape": "aggregation",
+    "focus_table": "orders"
+  },
+  {
+    "id": "t03",
+    "kind": "targeted",
+    "shape": "multi_join",
+    "focus_table": "partsupp"
+  },
+  {
+    "id": "t04",
+    "kind": "targeted",
+    "shape": "ranking",
+    "focus_table": "part"
+  },
+  {
+    "id": "t05",
+    "kind": "targeted",
+    "shape": "time_trend",
+    "focus_table": "customer"
+  },
+  {
+    "id": "t06",
+    "kind": "targeted",
+    "shape": "ratio",
+    "focus_table": "supplier"
+  },
+  {
+    "id": "t07",
+    "kind": "targeted",
+    "shape": "vs_aggregate",
+    "focus_table": "nation"
+  },
+  {
+    "id": "t08",
+    "kind": "targeted",
+    "shape": "anti_join",
+    "focus_table": "region"
+  },
+  {
+    "id": "t09",
+    "kind": "targeted",
+    "shape": "lookup",
+    "focus_table": "orders"
+  },
+  {
+    "id": "t10",
+    "kind": "targeted",
+    "shape": "aggregation",
+    "focus_table": "partsupp"
+  },
+  {
+    "id": "t11",
+    "kind": "targeted",
+    "shape": "multi_join",
+    "focus_table": "part"
+  },
+  {
+    "id": "t12",
+    "kind": "targeted",
+    "shape": "ranking",
+    "focus_table": "customer"
+  },
+  {
+    "id": "t13",
+    "kind": "targeted",
+    "shape": "time_trend",
+    "focus_table": "supplier"
+  },
+  {
+    "id": "t14",
+    "kind": "targeted",
+    "shape": "ratio",
+    "focus_table": "nation"
+  },
+  {
+    "id": "t15",
+    "kind": "targeted",
+    "shape": "vs_aggregate",
+    "focus_table": "region"
+  },
+  {
+    "id": "t16",
+    "kind": "targeted",
+    "shape": "anti_join",
+    "focus_table": "lineitem"
+  },
+  {
+    "id": "t17",
+    "kind": "targeted",
+    "shape": "lookup",
+    "focus_table": "partsupp"
+  },
+  {
+    "id": "t18",
+    "kind": "targeted",
+    "shape": "aggregation",
+    "focus_table": "part"
+  },
+  {
+    "id": "t19",
+    "kind": "targeted",
+    "shape": "multi_join",
+    "focus_table": "customer"
+  },
+  {
+    "id": "t20",
+    "kind": "targeted",
+    "shape": "ranking",
+    "focus_table": "supplier"
+  },
+  {
+    "id": "f01",
+    "kind": "free"
+  },
+  {
+    "id": "f02",
+    "kind": "free"
+  },
+  {
+    "id": "f03",
+    "kind": "free"
+  },
+  {
+    "id": "f04",
+    "kind": "free"
+  },
+  {
+    "id": "f05",
+    "kind": "free"
+  },
+  {
+    "id": "f06",
+    "kind": "free"
+  },
+  {
+    "id": "f07",
+    "kind": "free"
+  },
+  {
+    "id": "f08",
+    "kind": "free"
+  },
+  {
+    "id": "f09",
+    "kind": "free"
+  },
+  {
+    "id": "f10",
+    "kind": "free"
+  }
+]

@@ -1,0 +1,158 @@
+{"results": [
+  {"id": "q01", "verdict": "ANSWERABLE",
+   "rationale": "Average of lineitem.l_discount per year of orders.o_orderdate (1992..1997), for lines on orders whose customer's nation (customer.c_nationkey -> nation.n_name) is UNITED KINGDOM. A price-weighted discount is a less natural reading of 'average line item discount' and was rejected.",
+   "links": [
+     {"phrase": "change by year", "kind": "shape", "shape": "time_trend"},
+     {"phrase": "average", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "line item discount", "kind": "column", "columns": ["lineitem.l_discount"]},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "UNITED KINGDOM", "kind": "column", "columns": ["nation.n_name"], "value": "UNITED KINGDOM"},
+     {"phrase": "orders placed between 1992 and 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1992..1997"}
+   ],
+   "readings": []},
+  {"id": "q02", "verdict": "ANSWERABLE",
+   "rationale": "Lookup on partsupp for the supplier with s_name Supplier#000000137, returning part.p_name, partsupp.ps_supplycost and partsupp.ps_availqty. 'name' attaches to 'every part', so it is the part name, not the supplier name.",
+   "links": [
+     {"phrase": "List", "kind": "shape", "shape": "lookup"},
+     {"phrase": "name", "kind": "column", "columns": ["part.p_name"]},
+     {"phrase": "supply cost", "kind": "column", "columns": ["partsupp.ps_supplycost"]},
+     {"phrase": "available quantity", "kind": "column", "columns": ["partsupp.ps_availqty"]},
+     {"phrase": "part offered by", "kind": "table", "table": "partsupp"},
+     {"phrase": "Supplier#000000137", "kind": "column", "columns": ["supplier.s_name"], "value": "Supplier#000000137"}
+   ],
+   "readings": []},
+  {"id": "q03", "verdict": "ANSWERABLE",
+   "rationale": "Count parts with no lineitem row on an order whose customer's region (customer -> nation -> region.r_name) is EUROPE. The question names the customers' region explicitly, so the supplier's region is not a competing reading; 'sold' means appearing in lineitem.",
+   "links": [
+     {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "parts", "kind": "table", "table": "part"},
+     {"phrase": "never", "kind": "shape", "shape": "anti_join"},
+     {"phrase": "sold", "kind": "table", "table": "lineitem"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "EUROPE region", "kind": "column", "columns": ["region.r_name"], "value": "EUROPE"}
+   ],
+   "readings": []},
+  {"id": "q04", "verdict": "MISSING_DATA",
+   "rationale": "No column records cancellations: orders.o_orderstatus is F/O/P (fulfilled, open, partially fulfilled per the glossary) and lineitem.l_returnflag records returns, not cancellations.",
+   "links": [
+     {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "orders", "kind": "table", "table": "orders"},
+     {"phrase": "cancelled", "kind": "missing", "concept": "order cancellation", "closest": ["orders.o_orderstatus", "lineitem.l_returnflag"], "why_not": "o_orderstatus only codes fulfilled/open/partial and l_returnflag codes returns; no cancellation status exists"},
+     {"phrase": "in 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1997"}
+   ],
+   "readings": []},
+  {"id": "q05", "verdict": "ANSWERABLE",
+   "rationale": "Top 5 customer nations by summed charge (glossary: l_extendedprice x (1 - l_discount) x (1 + l_tax)) on orders with o_orderdate in 1996. Summing orders.o_totalprice gives the same result since the spec defines it as the sum of the line charges, so stored vs computed is not a material difference.",
+   "links": [
+     {"phrase": "Which 5 … highest", "kind": "shape", "shape": "ranking"},
+     {"phrase": "nations", "kind": "table", "table": "nation"},
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "charge, including tax", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount", "lineitem.l_tax"], "source": "glossary: charge"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "placed in 1996", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1996"}
+   ],
+   "readings": []},
+  {"id": "q06", "verdict": "ANSWERABLE",
+   "rationale": "Per nation, average customer.c_acctbal, compared with the mean c_acctbal over all customers. 'across all customers' rules out the average of nation averages.",
+   "links": [
+     {"phrase": "nations", "kind": "table", "table": "nation"},
+     {"phrase": "average customer account balance", "kind": "column", "columns": ["customer.c_acctbal"]},
+     {"phrase": "average", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "above the average across all customers", "kind": "shape", "shape": "vs_aggregate"}
+   ],
+   "readings": []},
+  {"id": "q07", "verdict": "ANSWERABLE",
+   "rationale": "Shipping time is defined in the glossary as l_receiptdate - l_shipdate; average it per year of l_shipdate (1993..1997) for lines on orders of customers in region ASIA. Grouping by order year was considered, but the only period named is the ship date.",
+   "links": [
+     {"phrase": "change by year", "kind": "shape", "shape": "time_trend"},
+     {"phrase": "average", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "shipping time", "kind": "column", "columns": ["lineitem.l_receiptdate", "lineitem.l_shipdate"], "source": "glossary: shipping time"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "ASIA region", "kind": "column", "columns": ["region.r_name"], "value": "ASIA"},
+     {"phrase": "line items shipped between 1993 and 1997", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1993..1997"}
+   ],
+   "readings": []},
+  {"id": "q08", "verdict": "ANSWERABLE",
+   "rationale": "Lookup on orders with o_orderpriority = 1-URGENT and o_orderdate = 1998-08-02, returning o_totalprice (glossary: order value), o_clerk and o_orderstatus.",
+   "links": [
+     {"phrase": "List", "kind": "shape", "shape": "lookup"},
+     {"phrase": "order value", "kind": "column", "columns": ["orders.o_totalprice"], "source": "glossary: order value"},
+     {"phrase": "clerk", "kind": "column", "columns": ["orders.o_clerk"]},
+     {"phrase": "status", "kind": "column", "columns": ["orders.o_orderstatus"]},
+     {"phrase": "1-URGENT", "kind": "column", "columns": ["orders.o_orderpriority"], "value": "1-URGENT"},
+     {"phrase": "placed on 1998-08-02", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1998-08-02"}
+   ],
+   "readings": []},
+  {"id": "q09", "verdict": "ANSWERABLE",
+   "rationale": "Share of supplier rows with supplier.s_acctbal < 0 over all suppliers; the glossary notes balances can be negative.",
+   "links": [
+     {"phrase": "percentage", "kind": "shape", "shape": "ratio"},
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "negative account balance", "kind": "column", "columns": ["supplier.s_acctbal"]}
+   ],
+   "readings": []},
+  {"id": "q10", "verdict": "ANSWERABLE",
+   "rationale": "Count orders with o_orderdate in 1994 that have no lineitem with l_returnflag = 'R' (glossary: R = returned). All 1994 lines are received before 1995-06-17, so the N code does not blur the population.",
+   "links": [
+     {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "orders", "kind": "table", "table": "orders"},
+     {"phrase": "placed in 1994", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1994"},
+     {"phrase": "had no", "kind": "shape", "shape": "anti_join"},
+     {"phrase": "returned line items", "kind": "column", "columns": ["lineitem.l_returnflag"], "value": "R", "source": "glossary: l_returnflag"}
+   ],
+   "readings": []},
+  {"id": "q11", "verdict": "ANSWERABLE",
+   "rationale": "Top 5 parts with p_container = 'LG CASE' by part.p_retailprice. The glossary ties retail price to the part (l_extendedprice is quantity x retail price), so there is no competing column.",
+   "links": [
+     {"phrase": "Which 5 … highest", "kind": "shape", "shape": "ranking"},
+     {"phrase": "parts", "kind": "table", "table": "part"},
+     {"phrase": "LG CASE containers", "kind": "column", "columns": ["part.p_container"], "value": "LG CASE"},
+     {"phrase": "retail price", "kind": "column", "columns": ["part.p_retailprice"]}
+   ],
+   "readings": []},
+  {"id": "q12", "verdict": "ANSWERABLE",
+   "rationale": "Count partsupp rows for parts with p_brand = Brand#33 whose ps_supplycost exceeds the average ps_supplycost of that same ps_partkey.",
+   "links": [
+     {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "supplier offers", "kind": "table", "table": "partsupp"},
+     {"phrase": "Brand#33", "kind": "column", "columns": ["part.p_brand"], "value": "Brand#33"},
+     {"phrase": "parts", "kind": "table", "table": "part"},
+     {"phrase": "supply cost", "kind": "column", "columns": ["partsupp.ps_supplycost"]},
+     {"phrase": "above the average supply cost for the same part", "kind": "shape", "shape": "vs_aggregate"}
+   ],
+   "readings": []},
+  {"id": "q13", "verdict": "ANSWERABLE",
+   "rationale": "Count of orders per year of o_orderdate (1993..1997) for customers with c_mktsegment = AUTOMOBILE; o_orderdate is the only order-level date.",
+   "links": [
+     {"phrase": "number of orders", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "orders", "kind": "table", "table": "orders"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "AUTOMOBILE segment", "kind": "column", "columns": ["customer.c_mktsegment"], "value": "AUTOMOBILE"},
+     {"phrase": "change year by year", "kind": "shape", "shape": "time_trend"},
+     {"phrase": "between 1993 and 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1993..1997"}
+   ],
+   "readings": []},
+  {"id": "q14", "verdict": "ANSWERABLE",
+   "rationale": "Lookup on lineitem with l_shipdate = 1998-12-01 (the latest ship date in the data), returning l_quantity, l_shipmode and l_shipinstruct.",
+   "links": [
+     {"phrase": "List", "kind": "shape", "shape": "lookup"},
+     {"phrase": "quantity", "kind": "column", "columns": ["lineitem.l_quantity"]},
+     {"phrase": "ship mode", "kind": "column", "columns": ["lineitem.l_shipmode"]},
+     {"phrase": "shipping instruction", "kind": "column", "columns": ["lineitem.l_shipinstruct"]},
+     {"phrase": "line item", "kind": "table", "table": "lineitem"},
+     {"phrase": "shipped on 1998-12-01", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1998-12-01"}
+   ],
+   "readings": []},
+  {"id": "q15", "verdict": "ANSWERABLE",
+   "rationale": "Count of orders per year of o_orderdate (1993..1997) placed by customers with c_mktsegment = AUTOMOBILE.",
+   "links": [
+     {"phrase": "Between 1993 and 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1993..1997"},
+     {"phrase": "how many orders", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "orders", "kind": "table", "table": "orders"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "AUTOMOBILE segment", "kind": "column", "columns": ["customer.c_mktsegment"], "value": "AUTOMOBILE"},
+     {"phrase": "each year", "kind": "shape", "shape": "time_trend"}
+   ],
+   "readings": []}
+]}

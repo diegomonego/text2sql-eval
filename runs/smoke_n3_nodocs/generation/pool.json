@@ -1,0 +1,1264 @@
+{
+  "candidates": [
+    {
+      "id": "c001",
+      "file": "candidates.json",
+      "target": "t01",
+      "question": "List the quantity, extended price and receipt date of the order lines shipped by REG AIR with the instruction TAKE BACK RETURN on March 1, 1996.",
+      "links": [
+        {
+          "phrase": "List",
+          "kind": "shape",
+          "shape": "lookup",
+          "check": "pass"
+        },
+        {
+          "phrase": "order lines",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "quantity",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_quantity"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "extended price",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_extendedprice"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "receipt date",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "shipped by REG AIR",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipmode"
+          ],
+          "value": "REG AIR",
+          "check": "pass"
+        },
+        {
+          "phrase": "instruction TAKE BACK RETURN",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipinstruct"
+          ],
+          "value": "TAKE BACK RETURN",
+          "check": "pass"
+        },
+        {
+          "phrase": "on March 1, 1996",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipdate"
+          ],
+          "value": "1996-03-01",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [
+          "lineitem.l_extendedprice",
+          "lineitem.l_quantity",
+          "lineitem.l_receiptdate",
+          "lineitem.l_shipdate",
+          "lineitem.l_shipinstruct",
+          "lineitem.l_shipmode"
+        ],
+        "shapes": [
+          "lookup"
+        ],
+        "join_path": [
+          "lineitem"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c002",
+      "file": "candidates.json",
+      "target": "t02",
+      "question": "What is the average order value per order priority for orders placed in 1995?",
+      "links": [
+        {
+          "phrase": "average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "order value",
+          "kind": "column",
+          "columns": [
+            "orders.o_totalprice"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "order priority",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderpriority"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "orders placed in 1995",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1995",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "orders"
+        ],
+        "columns": [
+          "orders.o_orderdate",
+          "orders.o_orderpriority",
+          "orders.o_totalprice"
+        ],
+        "shapes": [
+          "aggregation"
+        ],
+        "join_path": [
+          "orders"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c003",
+      "file": "candidates.json",
+      "target": "t03",
+      "question": "What is the average supply cost charged by suppliers in the ASIA region?",
+      "links": [
+        {
+          "phrase": "average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "supply cost",
+          "kind": "column",
+          "columns": [
+            "partsupp.ps_supplycost"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "suppliers in the ASIA region",
+          "kind": "column",
+          "columns": [
+            "region.r_name"
+          ],
+          "value": "ASIA",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "partsupp",
+          "region"
+        ],
+        "columns": [
+          "partsupp.ps_supplycost",
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join"
+        ],
+        "join_path": [
+          "nation",
+          "partsupp",
+          "region",
+          "supplier"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c004",
+      "file": "candidates.json",
+      "target": "t04",
+      "question": "Which 5 brands have the highest average retail price among parts packed in a JUMBO BOX?",
+      "links": [
+        {
+          "phrase": "5 … highest",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "brands",
+          "kind": "column",
+          "columns": [
+            "part.p_brand"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "retail price",
+          "kind": "column",
+          "columns": [
+            "part.p_retailprice"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "parts packed in a JUMBO BOX",
+          "kind": "column",
+          "columns": [
+            "part.p_container"
+          ],
+          "value": "JUMBO BOX",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "part"
+        ],
+        "columns": [
+          "part.p_brand",
+          "part.p_container",
+          "part.p_retailprice"
+        ],
+        "shapes": [
+          "aggregation",
+          "ranking"
+        ],
+        "join_path": [
+          "part"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c005",
+      "file": "candidates.json",
+      "target": "t05",
+      "question": "How many orders did customers in the HOUSEHOLD segment place in each quarter of 1996?",
+      "links": [
+        {
+          "phrase": "How many",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "orders",
+          "kind": "table",
+          "table": "orders",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers in the HOUSEHOLD segment",
+          "kind": "column",
+          "columns": [
+            "customer.c_mktsegment"
+          ],
+          "value": "HOUSEHOLD",
+          "check": "pass"
+        },
+        {
+          "phrase": "each quarter",
+          "kind": "shape",
+          "shape": "time_trend",
+          "check": "pass"
+        },
+        {
+          "phrase": "1996",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1996",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "customer",
+          "orders"
+        ],
+        "columns": [
+          "customer.c_mktsegment",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "time_trend"
+        ],
+        "join_path": [
+          "customer",
+          "orders"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c006",
+      "file": "candidates.json",
+      "target": "t06",
+      "question": "What share of the total account balance of all suppliers is held by suppliers based in JAPAN?",
+      "links": [
+        {
+          "phrase": "share",
+          "kind": "shape",
+          "shape": "ratio",
+          "check": "pass"
+        },
+        {
+          "phrase": "total account balance",
+          "kind": "column",
+          "columns": [
+            "supplier.s_acctbal"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "all suppliers",
+          "kind": "table",
+          "table": "supplier",
+          "check": "pass"
+        },
+        {
+          "phrase": "suppliers based in JAPAN",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "value": "JAPAN",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "nation",
+          "supplier"
+        ],
+        "columns": [
+          "nation.n_name",
+          "supplier.s_acctbal"
+        ],
+        "shapes": [
+          "ratio"
+        ],
+        "join_path": [
+          "nation",
+          "supplier"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c007",
+      "file": "candidates.json",
+      "target": "t07",
+      "question": "Which nations have more customers than the average number of customers per nation?",
+      "links": [
+        {
+          "phrase": "nations",
+          "kind": "table",
+          "table": "nation",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "more … than the average",
+          "kind": "shape",
+          "shape": "vs_aggregate",
+          "check": "pass"
+        },
+        {
+          "phrase": "number of",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "customer",
+          "nation"
+        ],
+        "columns": [],
+        "shapes": [
+          "aggregation",
+          "vs_aggregate"
+        ],
+        "join_path": [
+          "customer",
+          "nation"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c008",
+      "file": "candidates.json",
+      "target": "t08",
+      "question": "Which regions had no customers place an order worth more than 450,000 in 1997?",
+      "links": [
+        {
+          "phrase": "regions",
+          "kind": "table",
+          "table": "region",
+          "check": "pass"
+        },
+        {
+          "phrase": "had no",
+          "kind": "shape",
+          "shape": "anti_join",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "order worth more than 450,000",
+          "kind": "column",
+          "columns": [
+            "orders.o_totalprice"
+          ],
+          "value": 450000,
+          "check": "pass"
+        },
+        {
+          "phrase": "in 1997",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1997",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "customer",
+          "orders",
+          "region"
+        ],
+        "columns": [
+          "orders.o_orderdate",
+          "orders.o_totalprice"
+        ],
+        "shapes": [
+          "anti_join",
+          "multi_join"
+        ],
+        "join_path": [
+          "customer",
+          "nation",
+          "orders",
+          "region"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c009",
+      "file": "candidates.json",
+      "target": "t09",
+      "question": "List the order date, order value and priority of every order handled by Clerk#000000001 in 1995.",
+      "links": [
+        {
+          "phrase": "List",
+          "kind": "shape",
+          "shape": "lookup",
+          "check": "pass"
+        },
+        {
+          "phrase": "order date",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "order value",
+          "kind": "column",
+          "columns": [
+            "orders.o_totalprice"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "priority",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderpriority"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "every order",
+          "kind": "table",
+          "table": "orders",
+          "check": "pass"
+        },
+        {
+          "phrase": "handled by Clerk#000000001",
+          "kind": "column",
+          "columns": [
+            "orders.o_clerk"
+          ],
+          "value": "Clerk#000000001",
+          "check": "pass"
+        },
+        {
+          "phrase": "in 1995",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1995",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "orders"
+        ],
+        "columns": [
+          "orders.o_clerk",
+          "orders.o_orderdate",
+          "orders.o_orderpriority",
+          "orders.o_totalprice"
+        ],
+        "shapes": [
+          "lookup"
+        ],
+        "join_path": [
+          "orders"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c010",
+      "file": "candidates.json",
+      "target": "t10",
+      "question": "What is the total inventory value, calculated as available quantity times supply cost, for parts made by Manufacturer#3?",
+      "links": [
+        {
+          "phrase": "total",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "inventory value",
+          "kind": "column",
+          "columns": [
+            "partsupp.ps_availqty",
+            "partsupp.ps_supplycost"
+          ],
+          "source": "question: available quantity times supply cost",
+          "check": "pass"
+        },
+        {
+          "phrase": "available quantity",
+          "kind": "column",
+          "columns": [
+            "partsupp.ps_availqty"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "supply cost",
+          "kind": "column",
+          "columns": [
+            "partsupp.ps_supplycost"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "parts made by Manufacturer#3",
+          "kind": "column",
+          "columns": [
+            "part.p_mfgr"
+          ],
+          "value": "Manufacturer#3",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "part",
+          "partsupp"
+        ],
+        "columns": [
+          "part.p_mfgr",
+          "partsupp.ps_availqty",
+          "partsupp.ps_supplycost"
+        ],
+        "shapes": [
+          "aggregation"
+        ],
+        "join_path": [
+          "part",
+          "partsupp"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c011",
+      "file": "candidates.json",
+      "target": "t11",
+      "question": "What is the total quantity of BRASS parts ordered by customers in the MACHINERY segment in 1996?",
+      "links": [
+        {
+          "phrase": "total",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "quantity",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_quantity"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "BRASS parts",
+          "kind": "column",
+          "columns": [
+            "part.p_type"
+          ],
+          "value": "BRASS",
+          "match": "contains",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers in the MACHINERY segment",
+          "kind": "column",
+          "columns": [
+            "customer.c_mktsegment"
+          ],
+          "value": "MACHINERY",
+          "check": "pass"
+        },
+        {
+          "phrase": "ordered … in 1996",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1996",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "orders",
+          "part"
+        ],
+        "columns": [
+          "customer.c_mktsegment",
+          "lineitem.l_quantity",
+          "orders.o_orderdate",
+          "part.p_type"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join"
+        ],
+        "join_path": [
+          "customer",
+          "lineitem",
+          "orders",
+          "part"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c012",
+      "file": "candidates.json",
+      "target": "t12",
+      "question": "Which 10 customers received the largest total discount amount, measured as extended price times discount rate, on orders placed in 1997?",
+      "links": [
+        {
+          "phrase": "10 … largest",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "total",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "discount amount",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_extendedprice",
+            "lineitem.l_discount"
+          ],
+          "source": "question: extended price times discount rate",
+          "check": "pass"
+        },
+        {
+          "phrase": "extended price",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_extendedprice"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "discount rate",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_discount"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "orders placed in 1997",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1997",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ranking"
+        ],
+        "join_path": [
+          "customer",
+          "lineitem",
+          "orders"
+        ]
+      },
+      "status": "selected",
+      "question_id": "q01"
+    },
+    {
+      "id": "c013",
+      "file": "candidates.json",
+      "target": "t13",
+      "question": "How many units did suppliers based in CANADA ship in each year from 1993 to 1997?",
+      "links": [
+        {
+          "phrase": "How many",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "units",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_quantity"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "suppliers based in CANADA",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "value": "CANADA",
+          "check": "pass"
+        },
+        {
+          "phrase": "in each year",
+          "kind": "shape",
+          "shape": "time_trend",
+          "check": "pass"
+        },
+        {
+          "phrase": "ship … from 1993 to 1997",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipdate"
+          ],
+          "value": "1993..1997",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "lineitem",
+          "nation"
+        ],
+        "columns": [
+          "lineitem.l_quantity",
+          "lineitem.l_shipdate",
+          "nation.n_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ],
+        "join_path": [
+          "lineitem",
+          "nation",
+          "supplier"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c014",
+      "file": "candidates.json",
+      "target": "t14",
+      "question": "For each nation in the AFRICA region, what percentage of its customers belong to the BUILDING segment?",
+      "links": [
+        {
+          "phrase": "each nation",
+          "kind": "table",
+          "table": "nation",
+          "check": "pass"
+        },
+        {
+          "phrase": "AFRICA region",
+          "kind": "column",
+          "columns": [
+            "region.r_name"
+          ],
+          "value": "AFRICA",
+          "check": "pass"
+        },
+        {
+          "phrase": "percentage",
+          "kind": "shape",
+          "shape": "ratio",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "BUILDING segment",
+          "kind": "column",
+          "columns": [
+            "customer.c_mktsegment"
+          ],
+          "value": "BUILDING",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "customer",
+          "nation",
+          "region"
+        ],
+        "columns": [
+          "customer.c_mktsegment",
+          "region.r_name"
+        ],
+        "shapes": [
+          "multi_join",
+          "ratio"
+        ],
+        "join_path": [
+          "customer",
+          "nation",
+          "region"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c015",
+      "file": "candidates.json",
+      "target": "t15",
+      "question": "Which nations in the AMERICA region have an average customer account balance above the average for the region as a whole?",
+      "links": [
+        {
+          "phrase": "nations",
+          "kind": "table",
+          "table": "nation",
+          "check": "pass"
+        },
+        {
+          "phrase": "AMERICA region",
+          "kind": "column",
+          "columns": [
+            "region.r_name"
+          ],
+          "value": "AMERICA",
+          "check": "pass"
+        },
+        {
+          "phrase": "an average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "customer account balance",
+          "kind": "column",
+          "columns": [
+            "customer.c_acctbal"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "above the average for the region as a whole",
+          "kind": "shape",
+          "shape": "vs_aggregate",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "customer",
+          "nation",
+          "region"
+        ],
+        "columns": [
+          "customer.c_acctbal",
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "vs_aggregate"
+        ],
+        "join_path": [
+          "customer",
+          "nation",
+          "region"
+        ]
+      },
+      "status": "selected",
+      "question_id": "q03"
+    },
+    {
+      "id": "c016",
+      "file": "candidates.json",
+      "target": "t16",
+      "question": "How many customers in the AUTOMOBILE segment have never had an order shipped by RAIL?",
+      "links": [
+        {
+          "phrase": "How many",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "AUTOMOBILE segment",
+          "kind": "column",
+          "columns": [
+            "customer.c_mktsegment"
+          ],
+          "value": "AUTOMOBILE",
+          "check": "pass"
+        },
+        {
+          "phrase": "never",
+          "kind": "shape",
+          "shape": "anti_join",
+          "check": "pass"
+        },
+        {
+          "phrase": "shipped by RAIL",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipmode"
+          ],
+          "value": "RAIL",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "customer",
+          "lineitem"
+        ],
+        "columns": [
+          "customer.c_mktsegment",
+          "lineitem.l_shipmode"
+        ],
+        "shapes": [
+          "aggregation",
+          "anti_join",
+          "multi_join"
+        ],
+        "join_path": [
+          "customer",
+          "lineitem",
+          "orders"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c017",
+      "file": "candidates.json",
+      "target": "f01",
+      "question": "What percentage of line items shipped by TRUCK in 1995 were received after their committed delivery date?",
+      "links": [
+        {
+          "phrase": "percentage",
+          "kind": "shape",
+          "shape": "ratio",
+          "check": "pass"
+        },
+        {
+          "phrase": "line items",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "shipped by TRUCK",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipmode"
+          ],
+          "value": "TRUCK",
+          "check": "pass"
+        },
+        {
+          "phrase": "in 1995",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipdate"
+          ],
+          "value": "1995",
+          "check": "pass"
+        },
+        {
+          "phrase": "received after their committed delivery date",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate",
+            "lineitem.l_commitdate"
+          ],
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [
+          "lineitem.l_commitdate",
+          "lineitem.l_receiptdate",
+          "lineitem.l_shipdate",
+          "lineitem.l_shipmode"
+        ],
+        "shapes": [
+          "ratio"
+        ],
+        "join_path": [
+          "lineitem"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c018",
+      "file": "candidates.json",
+      "target": "f02",
+      "question": "What is the average tax rate on line items with the shipping instruction DELIVER IN PERSON that shipped in 1994?",
+      "links": [
+        {
+          "phrase": "average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "tax rate",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_tax"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "line items",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "shipping instruction DELIVER IN PERSON",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipinstruct"
+          ],
+          "value": "DELIVER IN PERSON",
+          "check": "pass"
+        },
+        {
+          "phrase": "shipped in 1994",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipdate"
+          ],
+          "value": "1994",
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [
+          "lineitem.l_shipdate",
+          "lineitem.l_shipinstruct",
+          "lineitem.l_tax"
+        ],
+        "shapes": [
+          "aggregation"
+        ],
+        "join_path": [
+          "lineitem"
+        ]
+      },
+      "status": "not selected"
+    },
+    {
+      "id": "c019",
+      "file": "candidates.json",
+      "target": "f03",
+      "question": "Which 5 suppliers hold the largest total available quantity of parts of size 50?",
+      "links": [
+        {
+          "phrase": "5 … largest",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "suppliers",
+          "kind": "table",
+          "table": "supplier",
+          "check": "pass"
+        },
+        {
+          "phrase": "total",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "available quantity",
+          "kind": "column",
+          "columns": [
+            "partsupp.ps_availqty"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "parts of size 50",
+          "kind": "column",
+          "columns": [
+            "part.p_size"
+          ],
+          "value": 50,
+          "check": "pass"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "part",
+          "partsupp",
+          "supplier"
+        ],
+        "columns": [
+          "part.p_size",
+          "partsupp.ps_availqty"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ranking"
+        ],
+        "join_path": [
+          "part",
+          "partsupp",
+          "supplier"
+        ]
+      },
+      "status": "selected",
+      "question_id": "q02"
+    }
+  ]
+}

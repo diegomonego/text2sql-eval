@@ -108,11 +108,16 @@ def test_judges_finalize_and_run_check(project, tmp_path):
     (out / "work" / "coverage" / "raw.json").write_text(json.dumps({"results": [{"id": q["id"], "links": links[q["text"]]} for q in qs]}))
     code, msg = judges.finalize(project, "coverage", qfile, out, accept_issues=False)
     assert code == 0, msg
-    assert (out / "coverage.md").read_text().startswith("# Coverage report")
+    md = (out / "coverage.md").read_text()
+    assert md.startswith("# Coverage report")
+    # dimensions and uncovered items come first, the summary score last
+    assert md.index("## Coverage by dimension") < md.index("## Repetition") < md.index("## Summary score")
+    assert "**Uncovered columns (" in md and "mostly tracks column coverage" in md
 
     code, msg = check_run(out)
     assert code == 0, msg
     assert "no run log" in msg  # no claude -p logs in this test
+    assert "claimed vs verified columns: generator" in msg
     # a run log showing a different model than the metadata is a mismatch
     (out / "logs").mkdir()
     (out / "logs" / "correctness.json").write_text(json.dumps({"modelUsage": {

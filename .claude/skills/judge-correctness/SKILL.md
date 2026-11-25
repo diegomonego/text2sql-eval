@@ -1,7 +1,7 @@
 ---
 name: judge-correctness
 description: Judge whether each question in a saved question file is relevant, answerable from the database, or ambiguous, with checked evidence and an overall correctness score. Use only when explicitly asked to run the correctness judge.
-argument-hint: --questions <questions.json> --out <run-dir> [--no-docs] [--anchor auto|off|YYYY-MM-DD]
+argument-hint: --questions <questions.json> --out <run-dir> [--db <url>] [--docs <dir> | --no-docs] [--anchor auto|off|YYYY-MM-DD]
 disable-model-invocation: true
 model: claude-opus-5-5
 allowed-tools: Read, Write, Bash(uv run t2s *)
@@ -46,6 +46,22 @@ order; the first that applies wins:**
 - **No docs:** if the brief says no docs are supplied, a question that relies on what a coded column's values mean is `AMBIGUOUS`.
 - **Rationale:** one or two sentences, grounded in the schema or docs (name the columns or doc section).
 
+### Ambiguity checklist
+
+Readers tend to settle on one reading too quickly. **Before choosing `ANSWERABLE`, go through this list.**
+A question is `AMBIGUOUS` only if a second reading is reasonable, the docs don't settle it, and it would
+change the answer.
+
+1. **Which column or table:** for every column link, ask whether another column fits the phrase just as well. Examples: "date" on a line item could be the ship, commit or receipt date; "price" could be the retail price, the line's value or the order total; "country" could be the customer's or the supplier's. If one does, put it in `alternatives`.
+2. **Stored or computed:** is there a stored value that answers it, and also a way to compute it from detail rows, with different results?
+3. **Join or not:** does answering it with or without a join change who is counted? For example, all customers vs customers who placed orders.
+4. **Scope:** which population or period is meant? For example, all orders or only shipped ones, per year or overall.
+5. **Attachment:** what does each modifier attach to? In "suppliers in EUROPE with the highest revenue", is it revenue from European customers, or revenue of European suppliers?
+6. **Vague filters:** "large", "recent", "top", "late" and similar, with no definition in the docs.
+7. **Relative time:** see the time rule above.
+
+If you rejected a close second reading, say so briefly in the rationale.
+
 ### Evidence each verdict needs (code checks this)
 
 - `ANSWERABLE`: links for every concept; all links valid; no `missing` links; no `alternatives`.
@@ -67,6 +83,7 @@ Link every concept: entities, measures, attributes, filter values, and the words
 | `shape` | `{"phrase": "never", "kind": "shape", "shape": "anti_join"}` |
 | `missing` | see above |
 
+For every column link, apply checklist item 1: another column that fits as well goes in `alternatives`.
 Columns are `table.column`. Values: exact stored text (add `"match": "contains"` for a word inside
 longer values); dates as `1997`, `1997-03`, `1997-03-15`, `1997-Q2` or `1993..1997`; numbers in stored
 units. Never link `multi_join` (code derives it). Don't link join keys the question doesn't mention.

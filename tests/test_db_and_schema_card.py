@@ -54,3 +54,24 @@ def test_notes_are_annotations_not_exclusions(card):
 def test_schema_card_markdown_warns_about_coded_columns_without_docs(card):
     assert "NO DOCS SUPPLIED" in render_schema_card_md(card, docs_supplied=False)
     assert "NO DOCS SUPPLIED" not in render_schema_card_md(card, docs_supplied=True)
+
+
+def test_data_fingerprint_ignores_row_order_and_file_bytes(tmp_path):
+    """Two files with the same rows inserted in different orders: different bytes, same data fingerprint."""
+    import duckdb
+
+    from t2s_eval.db import connect
+
+    rows = [(i, f"name{i}", i * 1.5) for i in range(200)]
+    for name, order in (("a", rows), ("b", list(reversed(rows)))):
+        con = duckdb.connect(str(tmp_path / f"{name}.duckdb"))
+        con.execute("CREATE TABLE t (id INTEGER, name VARCHAR, v DOUBLE)")
+        con.executemany("INSERT INTO t VALUES (?, ?, ?)", order)
+        con.close()
+    fa = connect(f"duckdb:///{tmp_path / 'a.duckdb'}", tmp_path).fingerprint()
+    fb = connect(f"duckdb:///{tmp_path / 'b.duckdb'}", tmp_path).fingerprint()
+    assert fa["data_sha256"] and fa["data_sha256"] == fb["data_sha256"]
+    con = duckdb.connect(str(tmp_path / "b.duckdb"))
+    con.execute("UPDATE t SET v = v + 1 WHERE id = 7")
+    con.close()
+    assert connect(f"duckdb:///{tmp_path / 'b.duckdb'}", tmp_path).fingerprint()["data_sha256"] != fa["data_sha256"]

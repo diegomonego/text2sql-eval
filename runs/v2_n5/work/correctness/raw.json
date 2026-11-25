@@ -1,0 +1,59 @@
+{"results": [
+  {"id": "q01", "verdict": "ANSWERABLE",
+   "rationale": "Supplier nation via supplier.s_nationkey -> nation.n_name; 'received late' is the glossary's late delivery (l_receiptdate > l_commitdate), counted per year of l_receiptdate for 1993-1997. Grouping by order or ship year was rejected because the question ties the year to 'received'.",
+   "links": [
+     {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "line items", "kind": "table", "table": "lineitem"},
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "UNITED KINGDOM", "kind": "column", "columns": ["nation.n_name"], "value": "UNITED KINGDOM"},
+     {"phrase": "received late", "kind": "column", "columns": ["lineitem.l_receiptdate", "lineitem.l_commitdate"], "source": "glossary: late delivery"},
+     {"phrase": "in each year", "kind": "shape", "shape": "time_trend"},
+     {"phrase": "from 1993 to 1997", "kind": "column", "columns": ["lineitem.l_receiptdate"], "value": "1993..1997"}
+   ],
+   "readings": []},
+  {"id": "q02", "verdict": "ANSWERABLE",
+   "rationale": "Customer region via customer.c_nationkey -> nation.n_regionkey -> region.r_name = 'MIDDLE EAST'; 'never placed an order' means no row in orders with o_custkey = c_custkey (spec clause 1.4 notes a third of customers have no orders).",
+   "links": [
+     {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "MIDDLE EAST region", "kind": "column", "columns": ["region.r_name"], "value": "MIDDLE EAST"},
+     {"phrase": "never", "kind": "shape", "shape": "anti_join"},
+     {"phrase": "placed an order", "kind": "table", "table": "orders"}
+   ],
+   "readings": []},
+  {"id": "q03", "verdict": "ANSWERABLE",
+   "rationale": "Revenue is the glossary's l_extendedprice * (1 - l_discount); population is lines of orders with o_orderdate in 1997 (last year, time anchor ON) from customers whose nation is INDONESIA, and the share is the part with l_shipmode = 'TRUCK'. o_totalprice was rejected since it includes tax and cannot be split by ship mode.",
+   "links": [
+     {"phrase": "What percentage", "kind": "shape", "shape": "ratio"},
+     {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+     {"phrase": "orders", "kind": "table", "table": "orders"},
+     {"phrase": "placed … last year", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1997"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "INDONESIA", "kind": "column", "columns": ["nation.n_name"], "value": "INDONESIA"},
+     {"phrase": "items", "kind": "table", "table": "lineitem"},
+     {"phrase": "shipped by TRUCK", "kind": "column", "columns": ["lineitem.l_shipmode"], "value": "TRUCK"}
+   ],
+   "readings": []},
+  {"id": "q04", "verdict": "ANSWERABLE",
+   "rationale": "Sum lineitem.l_quantity per part.p_container for lines with l_shipdate in 1998 (this year, time anchor ON) and return the top 3. Reading 'container type' as only the kind word (BOX, BAG...) was rejected: the glossary defines the container as the single p_container value.",
+   "links": [
+     {"phrase": "Which 3 … largest", "kind": "shape", "shape": "ranking"},
+     {"phrase": "container types", "kind": "column", "columns": ["part.p_container"]},
+     {"phrase": "accounted for", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "quantity of units", "kind": "column", "columns": ["lineitem.l_quantity"]},
+     {"phrase": "shipped this year", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1998"}
+   ],
+   "readings": []},
+  {"id": "q05", "verdict": "ANSWERABLE",
+   "rationale": "Suppliers whose nation is in region.r_name = 'ASIA' (supplier.s_nationkey -> nation -> region), returning s_name and s_phone where s_acctbal exceeds the average s_acctbal of all ASIA suppliers.",
+   "links": [
+     {"phrase": "List", "kind": "shape", "shape": "lookup"},
+     {"phrase": "names", "kind": "column", "columns": ["supplier.s_name"]},
+     {"phrase": "phone numbers", "kind": "column", "columns": ["supplier.s_phone"]},
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "ASIA region", "kind": "column", "columns": ["region.r_name"], "value": "ASIA"},
+     {"phrase": "account balance", "kind": "column", "columns": ["supplier.s_acctbal"]},
+     {"phrase": "above that region's supplier average", "kind": "shape", "shape": "vs_aggregate"}
+   ],
+   "readings": []}
+]}

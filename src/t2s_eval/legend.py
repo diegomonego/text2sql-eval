@@ -14,8 +14,8 @@ class Shape:
     description: str
     example: str
     triggers: tuple[str, ...]
-    F: int
-    I: int
+    F: float
+    I: float
     reason: str
     derived: bool
     weight: float
@@ -36,6 +36,12 @@ class Legend:
     def weights(self) -> dict[str, float]:
         return {s.id: s.weight for s in self.shapes}
 
+    def weights_for(self, alpha: float | None = None, beta: float | None = None) -> dict[str, float]:
+        """Weights with alpha/beta overridden (a preset's setting); the file's own values when None."""
+        if alpha is None:
+            return self.weights
+        return {s.id: (alpha * s.F + beta * s.I) / 3 for s in self.shapes}
+
     @property
     def sum_weights(self) -> float:
         return sum(s.weight for s in self.shapes)
@@ -53,7 +59,10 @@ def load_legend(path: Path) -> Legend:
     alpha, beta = float(data["alpha"]), float(data["beta"])
     shapes = []
     for s in data["shape"]:
-        F, I = int(s["F"]), int(s["I"])
+        F, I = float(s["F"]), float(s["I"])
+        for label, v in (("F", F), ("I", I)):
+            if not 1 <= v <= 3:
+                raise ValueError(f"shape {s['id']}: {label} must be between 1 and 3, got {v}")
         shapes.append(
             Shape(
                 id=s["id"],

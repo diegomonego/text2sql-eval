@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -65,10 +66,30 @@ class NotEnoughCandidates(Exception):
     pass
 
 
-def greedy_select(cands: list[Scored], n: int, g: GainSettings) -> tuple[list[Scored], list[dict[str, Any]]]:
-    """Pick exactly n candidates, one per round, by largest marginal gain (ties: earliest candidate)."""
+def greedy_select(
+    cands: list[Scored],
+    n: int,
+    g: GainSettings,
+    min_quota: int = 0,
+    in_quota: Callable[[Scored], bool] | None = None,
+) -> tuple[list[Scored], list[dict[str, Any]]]:
+    """Pick exactly n candidates, one per round, by largest marginal gain (ties: earliest candidate).
+
+    With min_quota > 0, at least that many picks must satisfy in_quota (the natural preset's free-form
+    share): once the slots left equal the unmet quota, only quota candidates may be picked. That is a
+    matroid constraint (at most n - min_quota other picks), under which greedy keeps a 1/2 guarantee
+    (Fisher, Nemhauser & Wolsey 1978, Mathematical Programming Studies 8:73-87, doi:10.1007/BFb0121195).
+    Without a quota the objective is monotone submodular and greedy is within 1 - 1/e of the best subset
+    (Nemhauser, Wolsey & Fisher 1978, Mathematical Programming 14:265-294, doi:10.1007/BF01588971).
+    """
     if len(cands) < n:
         raise NotEnoughCandidates(f"{len(cands)} valid unique candidates, {n} needed")
+    min_quota = min(min_quota, n)
+    if min_quota and in_quota is None:
+        raise ValueError("min_quota needs an in_quota predicate")
+    eligible = sum(1 for c in cands if in_quota(c)) if min_quota else 0
+    if eligible < min_quota:
+        raise NotEnoughCandidates(f"{eligible} valid unique free-form candidates, at least {min_quota} needed")
     picked: list[Scored] = []
     shape_counts: dict[str, int] = {}
     tables: set[str] = set()
@@ -76,7 +97,10 @@ def greedy_select(cands: list[Scored], n: int, g: GainSettings) -> tuple[list[Sc
     log = []
     remaining = list(cands)
     for rnd in range(1, n + 1):
-        scored = [(c, gain_parts(c, shape_counts, tables, columns, g)) for c in remaining]
+        unmet = max(0, min_quota - sum(1 for c in picked if in_quota(c))) if min_quota else 0
+        restricted = unmet > 0 and unmet >= n - len(picked)
+        pool = [c for c in remaining if in_quota(c)] if restricted else remaining
+        scored = [(c, gain_parts(c, shape_counts, tables, columns, g)) for c in pool]
         best_c, best_p = scored[0]
         for c, p in scored[1:]:
             if p["total"] > best_p["total"] + 1e-12:
@@ -85,6 +109,7 @@ def greedy_select(cands: list[Scored], n: int, g: GainSettings) -> tuple[list[Sc
             {
                 "round": rnd,
                 "picked": best_c.id,
+                **({"restricted_to_quota": True} if restricted else {}),
                 "gain": {k: round(v, 6) for k, v in best_p.items()},
                 "candidates": [
                     {"id": c.id, **{k: round(v, 6) for k, v in p.items()}}

@@ -1,0 +1,21 @@
+{
+  "n": 5,
+  "no_docs": true,
+  "anchor": {
+    "mode": "off",
+    "column": null,
+    "date": null,
+    "ranges": {},
+    "setting": "off"
+  },
+  "preset": {
+    "name": "coverage",
+    "style": "coverage",
+    "free_per_n": null,
+    "focus_tables": true,
+    "min_free_share": 0.0,
+    "max_shapes": null,
+    "alpha": null,
+    "beta": null
+  }
+}

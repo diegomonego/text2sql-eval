@@ -1,0 +1,24 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "text": "How many line items from suppliers in the UNITED KINGDOM were received late in each year from 1993 to 1997?"
+    },
+    {
+      "id": "q02",
+      "text": "How many customers in the MIDDLE EAST region have never placed an order?"
+    },
+    {
+      "id": "q03",
+      "text": "What percentage of revenue from orders placed by customers in INDONESIA last year came from items shipped by TRUCK?"
+    },
+    {
+      "id": "q04",
+      "text": "Which 3 container types accounted for the largest quantity of units shipped this year?"
+    },
+    {
+      "id": "q05",
+      "text": "List the names and phone numbers of suppliers in the ASIA region whose account balance is above that region's supplier average."
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "questions": [
+    {
+      "id": "l01",
+      "text": "What is the average price of a part?"
+    },
+    {
+      "id": "l02",
+      "text": "What is the average customer satisfaction rating per market segment?"
+    },
+    {
+      "id": "l03",
+      "text": "Which clerks exceeded their quarterly sales targets in 1996?"
+    },
+    {
+      "id": "l04",
+      "text": "What was the average number of orders per customer in 1995?"
+    },
+    {
+      "id": "l05",
+      "text": "Which 10 parts of size 50 have the lowest total available quantity across all suppliers?"
+    },
+    {
+      "id": "l06",
+      "text": "What is the population of GERMANY?"
+    },
+    {
+      "id": "l07",
+      "text": "In which countries is the average account balance of customers higher than the overall average for all customers?"
+    },
+    {
+      "id": "l08",
+      "text": "Which customers placed large orders in 1997?"
+    },
+    {
+      "id": "l09",
+      "text": "What is the average weight of parts shipped by TRUCK?"
+    },
+    {
+      "id": "l10",
+      "text": "For line items shipped between 1993 and 1997 to customers in ASIA, how did the average time from shipment to receipt change each year?"
+    },
+    {
+      "id": "l11",
+      "text": "How did the number of late deliveries from suppliers in INDIA change year by year for items received between 1993 and 1997?"
+    },
+    {
+      "id": "l12",
+      "text": "Who won the FIFA World Cup in 1998?"
+    },
+    {
+      "id": "l13",
+      "text": "How did the available quantity of Brand#23 parts change month by month during 1997?"
+    },
+    {
+      "id": "l14",
+      "text": "Which cities had the most late deliveries in 1996?"
+    },
+    {
+      "id": "l15",
+      "text": "How many line items did we have in March 1996?"
+    },
+    {
+      "id": "l16",
+      "text": "What was the total freight cost paid to carriers for AIR shipments in 1996?"
+    },
+    {
+      "id": "l17",
+      "text": "Which shipping mode should we recommend for fragile parts?"
+    },
+    {
+      "id": "l18",
+      "text": "In 1996, which five nations' customers paid the most in total once tax is included?"
+    },
+    {
+      "id": "l19",
+      "text": "Which nation generated the most revenue in 1996?"
+    },
+    {
+      "id": "l20",
+      "text": "What were the most common reasons customers gave for returning items in 1995?"
+    }
+  ]
+}

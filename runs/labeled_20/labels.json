@@ -1,0 +1,175 @@
+{
+  "labels": [
+    {
+      "id": "l01",
+      "text": "What is the average price of a part?",
+      "verdict": "AMBIGUOUS",
+      "reason": "The stored list price or the price parts actually sold for give different answers.",
+      "source": "bank #22",
+      "readings": [
+        "list price (part.p_retailprice)",
+        "realized price per unit (l_extendedprice / l_quantity, possibly after discount)"
+      ]
+    },
+    {
+      "id": "l02",
+      "text": "What is the average customer satisfaction rating per market segment?",
+      "verdict": "MISSING_DATA",
+      "reason": "Nothing in the database resembles a rating.",
+      "source": "bank #7",
+      "missing_concept": "customer satisfaction rating"
+    },
+    {
+      "id": "l03",
+      "text": "Which clerks exceeded their quarterly sales targets in 1996?",
+      "verdict": "MISSING_DATA",
+      "reason": "Clerks exist (o_clerk); sales targets don't.",
+      "source": "bank #5",
+      "missing_concept": "sales targets"
+    },
+    {
+      "id": "l04",
+      "text": "What was the average number of orders per customer in 1995?",
+      "verdict": "AMBIGUOUS",
+      "reason": "The denominator changes the answer: all customers, or only customers who ordered in 1995.",
+      "source": "bank #25",
+      "readings": [
+        "over all customers",
+        "over customers with at least one 1995 order"
+      ]
+    },
+    {
+      "id": "l05",
+      "text": "Which 10 parts of size 50 have the lowest total available quantity across all suppliers?",
+      "verdict": "ANSWERABLE",
+      "reason": "Sum of ps_availqty per part with p_size = 50, lowest 10.",
+      "source": "robust_tpch_sf001_n5 q03"
+    },
+    {
+      "id": "l06",
+      "text": "What is the population of GERMANY?",
+      "verdict": "OFF_TOPIC",
+      "reason": "Names a nation that is in the data, but a country's population isn't a question about this business.",
+      "source": "new",
+      "note": "borderline: a judge could call it MISSING_DATA"
+    },
+    {
+      "id": "l07",
+      "text": "In which countries is the average account balance of customers higher than the overall average for all customers?",
+      "verdict": "ANSWERABLE",
+      "reason": "Average c_acctbal per customer nation compared with the overall average.",
+      "source": "bank #12 (paraphrase of v2_n15 q06)"
+    },
+    {
+      "id": "l08",
+      "text": "Which customers placed large orders in 1997?",
+      "verdict": "AMBIGUOUS",
+      "reason": "'Large' is undefined: by value, by number of items or by quantity, and above what threshold.",
+      "source": "bank #24",
+      "readings": [
+        "by order value",
+        "by number of line items or total quantity"
+      ]
+    },
+    {
+      "id": "l09",
+      "text": "What is the average weight of parts shipped by TRUCK?",
+      "verdict": "MISSING_DATA",
+      "reason": "Parts have a size (p_size), not a weight.",
+      "source": "bank #6",
+      "missing_concept": "part weight"
+    },
+    {
+      "id": "l10",
+      "text": "For line items shipped between 1993 and 1997 to customers in ASIA, how did the average time from shipment to receipt change each year?",
+      "verdict": "ANSWERABLE",
+      "reason": "l_receiptdate minus l_shipdate, averaged per ship year, for customers in the ASIA region.",
+      "source": "bank #18 (paraphrase of v2_n15 q07)"
+    },
+    {
+      "id": "l11",
+      "text": "How did the number of late deliveries from suppliers in INDIA change year by year for items received between 1993 and 1997?",
+      "verdict": "ANSWERABLE",
+      "reason": "The glossary's late delivery (receipt after commit date), suppliers in INDIA, per receipt year.",
+      "source": "robust_tpch_sf001_n5 q01"
+    },
+    {
+      "id": "l12",
+      "text": "Who won the FIFA World Cup in 1998?",
+      "verdict": "OFF_TOPIC",
+      "reason": "Not about the wholesale business in the database.",
+      "source": "new"
+    },
+    {
+      "id": "l13",
+      "text": "How did the available quantity of Brand#23 parts change month by month during 1997?",
+      "verdict": "MISSING_DATA",
+      "reason": "ps_availqty is one current value per part and supplier, with no history or dates.",
+      "source": "bank #4",
+      "missing_concept": "history of available quantity"
+    },
+    {
+      "id": "l14",
+      "text": "Which cities had the most late deliveries in 1996?",
+      "verdict": "MISSING_DATA",
+      "reason": "Addresses are generated free text with no city field.",
+      "source": "bank #8",
+      "missing_concept": "city"
+    },
+    {
+      "id": "l15",
+      "text": "How many line items did we have in March 1996?",
+      "verdict": "AMBIGUOUS",
+      "reason": "Line items carry four dates; counting by order date and by ship date give different totals.",
+      "source": "bank #21",
+      "readings": [
+        "by order date (orders.o_orderdate)",
+        "by ship date (lineitem.l_shipdate), or commit/receipt date"
+      ]
+    },
+    {
+      "id": "l16",
+      "text": "What was the total freight cost paid to carriers for AIR shipments in 1996?",
+      "verdict": "MISSING_DATA",
+      "reason": "Ship mode and prices exist, but no shipping cost; the line's charge is what the customer pays, not freight.",
+      "source": "bank #3",
+      "missing_concept": "freight / shipping cost"
+    },
+    {
+      "id": "l17",
+      "text": "Which shipping mode should we recommend for fragile parts?",
+      "verdict": "MISSING_DATA",
+      "reason": "On topic (shipping), but nothing records fragility, and a recommendation isn't a computation over the data.",
+      "source": "new",
+      "missing_concept": "part fragility",
+      "note": "borderline: some would call a request for advice off-topic"
+    },
+    {
+      "id": "l18",
+      "text": "In 1996, which five nations' customers paid the most in total once tax is included?",
+      "verdict": "ANSWERABLE",
+      "reason": "The glossary's charge (or o_totalprice, which sums charges) per customer nation for 1996 orders; there is no payment date, so 1996 is the order date.",
+      "source": "bank #17 (paraphrase of v2_n15 q05)"
+    },
+    {
+      "id": "l19",
+      "text": "Which nation generated the most revenue in 1996?",
+      "verdict": "AMBIGUOUS",
+      "reason": "Revenue is defined, but whose nation is not: customers' or suppliers'.",
+      "source": "bank #23",
+      "readings": [
+        "the customers' nation",
+        "the suppliers' nation"
+      ]
+    },
+    {
+      "id": "l20",
+      "text": "What were the most common reasons customers gave for returning items in 1995?",
+      "verdict": "MISSING_DATA",
+      "reason": "l_returnflag records whether an item was returned (R), never why.",
+      "source": "bank #2",
+      "missing_concept": "reason for a return"
+    }
+  ],
+  "provenance": "Drafted by Claude (the same model family as the judges) from the approved question bank; rationales approved by the user on 2026-11-25. Not an independent human labeling."
+}

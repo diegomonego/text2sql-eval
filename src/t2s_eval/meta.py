@@ -20,11 +20,36 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
-def list_docs(cfg: Config, no_docs: bool) -> list[Path]:
-    """All Markdown/text documents under the docs directory, unless docs are switched off."""
-    if no_docs or not cfg.docs_dir.is_dir():
+def show_path(path: Path, root: Path) -> str:
+    """A path relative to the repo root when it is inside it, otherwise absolute."""
+    return str(path.relative_to(root)) if path.is_relative_to(root) else str(path)
+
+
+def resolve_inputs(cfg: Config, db_url: str | None, docs: str | None, no_docs: bool) -> tuple[str, Path]:
+    """The database connection and docs folder for a run: the --db / --docs arguments when given,
+    otherwise the config. Shared by the generator and both judges."""
+    if docs and no_docs:
+        raise ValueError("--docs and --no-docs can't be combined")
+    docs_dir = cfg.resolve(docs) if docs else cfg.docs_dir
+    if docs and not docs_dir.is_dir():
+        raise ValueError(f"--docs {docs}: not a directory")
+    return db_url or cfg.db_url, docs_dir
+
+
+def saved_inputs(cfg: Config, settings: dict) -> tuple[str, Path]:
+    """The inputs a prepare step recorded in settings.json (falls back to the config for older runs)."""
+    db_url = settings.get("db_url") or cfg.db_url
+    docs_dir = cfg.resolve(settings["docs_dir"]) if settings.get("docs_dir") else cfg.docs_dir
+    return db_url, docs_dir
+
+
+def list_docs(cfg: Config, no_docs: bool, docs_dir: Path | None = None) -> list[Path]:
+    """All Markdown/text documents under the docs directory (the config's, or `docs_dir` when given),
+    unless docs are switched off."""
+    folder = docs_dir or cfg.docs_dir
+    if no_docs or not folder.is_dir():
         return []
-    return sorted(p for p in cfg.docs_dir.rglob("*") if p.is_file() and p.suffix.lower() in {".md", ".txt"})
+    return sorted(p for p in folder.rglob("*") if p.is_file() and p.suffix.lower() in {".md", ".txt"})
 
 
 def _git(root: Path) -> dict[str, Any]:
@@ -73,10 +98,11 @@ def build_meta(
             "skill_sha256": _skill_sha(cfg.root, component),
         },
         "database": db_fingerprint,
-        "docs": [{"path": str(p.relative_to(cfg.root)), "sha256": sha256_file(p)} for p in docs] or "none",
+        "docs": [{"path": show_path(p, cfg.root), "sha256": sha256_file(p)} for p in docs] or "none",
         "config": {
             "shapes_toml_sha256": sha256_file(cfg.shapes_path) if cfg.shapes_path else None,
-            "eval_toml_sha256": sha256_file(cfg.root / "config" / "eval.toml"),
+            "eval_toml_sha256": sha256_file(cfg.config_path or cfg.root / "config" / "eval.toml"),
+            "eval_toml": str(cfg.config_path.relative_to(cfg.root)) if cfg.config_path and cfg.config_path.is_relative_to(cfg.root) else str(cfg.config_path),
             "time_anchor": {"setting": anchor.get("setting"), "mode": anchor["mode"], "date": anchor["date"]},
         },
         "input": inputs,

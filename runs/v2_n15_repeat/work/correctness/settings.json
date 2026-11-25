@@ -1,0 +1,49 @@
+{
+  "questions": "runs/v2_n15_repeat/questions.json",
+  "db_url": "duckdb:///data/tpch_sf01.duckdb",
+  "docs_dir": "semantic_docs/tpch",
+  "no_docs": false,
+  "anchor": {
+    "mode": "auto",
+    "column": "orders.o_orderdate",
+    "date": "1998-08-02",
+    "ranges": {
+      "this year": {
+        "from": "1998-01-01",
+        "to": "1998-08-02",
+        "value": "1998"
+      },
+      "last year": {
+        "from": "1997-01-01",
+        "to": "1997-12-31",
+        "value": "1997"
+      },
+      "this quarter": {
+        "from": "1998-07-01",
+        "to": "1998-08-02",
+        "value": "1998-Q3"
+      },
+      "last quarter": {
+        "from": "1998-04-01",
+        "to": "1998-06-30",
+        "value": "1998-Q2"
+      },
+      "this month": {
+        "from": "1998-08-01",
+        "to": "1998-08-02",
+        "value": "1998-08"
+      },
+      "last month": {
+        "from": "1998-07-01",
+        "to": "1998-07-31",
+        "value": "1998-07"
+      },
+      "last 12 months": {
+        "from": "1997-08-03",
+        "to": "1998-08-02",
+        "value": "1997-08-03..1998-08-02"
+      }
+    },
+    "setting": "auto"
+  }
+}

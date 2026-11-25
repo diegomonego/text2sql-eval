@@ -28,6 +28,25 @@ targeted_per_n = 2
 free_per_n = 1
 max_refill_rounds = 2
 
+[presets]
+# Named generator settings, chosen per run with `--preset <name>` (Makefile: PRESET=<name>).
+# Any key left out falls back to the settings above and to the shape legend.
+default = "coverage"
+
+[presets.coverage]
+# The v1 behaviour: spread questions across shapes, tables and columns.
+style = "coverage"
+
+[presets.natural]
+# More everyday questions, at little cost in coverage (measured on the v1 pools):
+style = "natural"
+free_per_n = 2          # twice as many free-form slots
+focus_tables = false    # targets name a shape only, so the LLM picks tables that make sense together
+min_free_share = 0.2    # at least ceil(0.2 * N) picks come from free-form slots
+max_shapes = 2          # drop candidates with more than 2 shapes (the derived multi_join counts)
+alpha = 0.6             # more weight on how often a shape is asked (F) than on how hard it is (I)
+beta = 0.4
+
 [profile]
 # Text and other columns with at most this many distinct values have their values listed in the schema card.
 max_listed_values = 25

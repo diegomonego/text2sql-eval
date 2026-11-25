@@ -83,20 +83,39 @@ def render_correctness_md(report: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def _uncovered_md(dimension: str, uncovered: dict[str, str]) -> str:
+    """Uncovered items, columns grouped by table. Reasons other than 'not asked' are shown."""
+    if not uncovered:
+        return "none"
+    def item(name: str, reason: str) -> str:
+        short = name.split(".", 1)[1] if dimension == "columns" and "." in name else name
+        note = reason[len("not asked (") : -1] if reason.startswith("not asked (") and reason.endswith(")") else reason
+        return f"`{short}`" + ("" if reason == "not asked" else f" ({note})")
+    if dimension != "columns":
+        return ", ".join(item(k, v) for k, v in uncovered.items())
+    by_table: dict[str, list[str]] = {}
+    for name, reason in uncovered.items():
+        by_table.setdefault(name.split(".", 1)[0], []).append(item(name, reason))
+    return "; ".join(f"**{t}**: {', '.join(items)}" for t, items in by_table.items())
+
+
 def render_coverage_md(report: dict[str, Any]) -> str:
     s = report["summary"]
+    dims = report["dimensions"]
     lines = ["# Coverage report", "", *_meta_lines(report["meta"]), ""]
-    lines += [
-        "## Score",
-        "",
-        f"**{s['score']:.2f}** = {s['formula']} = {s['calculation']}",
-        "",
-        "| dimension | covered | eligible | % |",
-        "|---|---|---|---|",
-    ]
-    for d, v in report["dimensions"].items():
+    lines += ["## Coverage by dimension", "", "| dimension | covered | eligible | % |", "|---|---|---|---|"]
+    for d, v in dims.items():
         lines.append(f"| {d} | {v['covered_count']} | {v['eligible']} | {v['pct']} |")
+    lines.append("")
+    for d, v in dims.items():
+        lines.append(f"- **Uncovered {d} ({len(v['uncovered'])}):** {_uncovered_md(d, v['uncovered'])}")
     lines += ["", "## Budget", "", report["budget_note"], ""]
+    lines += ["## Which questions cover each item", ""]
+    for d, v in dims.items():
+        lines += [f"### {d.capitalize()}", "", "| item | covered by |", "|---|---|"]
+        for item, ids in v["covered"].items():
+            lines.append(f"| `{item}` | {', '.join(ids)} |")
+        lines.append("")
     rep = report["repetition"]
     lines += [
         "## Repetition",
@@ -105,14 +124,14 @@ def render_coverage_md(report: dict[str, Any]) -> str:
         f"- Questions covering nothing unique: {', '.join(rep['nothing_unique']) or 'none'}",
         f"- Questions earning no credit: {', '.join(rep['no_credit']) or 'none'}",
         "",
+        "## Summary score",
+        "",
+        f"**{s['score']:.2f}** = {s['formula']} = {s['calculation']}",
+        "",
+        "The three dimensions above, weighted equally. Tables and shapes fill up within a few questions, so at small N "
+        "this number mostly tracks column coverage. Read the dimensions first.",
+        "",
     ]
-    for d, v in report["dimensions"].items():
-        lines += [f"## {d.capitalize()}", "", "| item | covered by |", "|---|---|"]
-        for item, ids in v["covered"].items():
-            lines.append(f"| `{item}` | {', '.join(ids)} |")
-        for item, reason in v["uncovered"].items():
-            lines.append(f"| `{item}` | — {reason} |")
-        lines.append("")
     lines += ["## Per question", "", "| id | question | credited | unique | not credited |", "|---|---|---|---|---|"]
     for pq in report["per_question"]:
         cred = "; ".join(f"{d}: {', '.join(v)}" for d, v in pq["credited"].items() if v) or "nothing"

@@ -1,0 +1,118 @@
+{"results": [
+  {"id": "q01", "links": [
+    {"phrase": "total profit", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "profit", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount", "partsupp.ps_supplycost", "lineitem.l_quantity"], "source": "glossary: profit"},
+    {"phrase": "items", "kind": "table", "table": "lineitem"},
+    {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+    {"phrase": "FRANCE", "kind": "column", "columns": ["nation.n_name"], "value": "FRANCE"},
+    {"phrase": "change year by year", "kind": "shape", "shape": "time_trend"},
+    {"phrase": "shipments between 1993 and 1997", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1993..1997"}
+  ]},
+  {"id": "q02", "links": [
+    {"phrase": "5 customers … largest", "kind": "shape", "shape": "ranking"},
+    {"phrase": "customers", "kind": "table", "table": "customer"},
+    {"phrase": "INDIA", "kind": "column", "columns": ["nation.n_name"], "value": "INDIA"},
+    {"phrase": "number of", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "1-URGENT orders", "kind": "column", "columns": ["orders.o_orderpriority"], "value": "1-URGENT"},
+    {"phrase": "placed … in 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1997"}
+  ]},
+  {"id": "q03", "links": [
+    {"phrase": "Brand#23", "kind": "column", "columns": ["part.p_brand"], "value": "Brand#23"},
+    {"phrase": "parts", "kind": "table", "table": "part"},
+    {"phrase": "have no supplier", "kind": "shape", "shape": "anti_join"},
+    {"phrase": "supplier", "kind": "table", "table": "supplier"},
+    {"phrase": "ASIA region", "kind": "column", "columns": ["region.r_name"], "value": "ASIA"}
+  ]},
+  {"id": "q04", "links": [
+    {"phrase": "nations", "kind": "table", "table": "nation"},
+    {"phrase": "total order value", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "order value", "kind": "column", "columns": ["orders.o_totalprice"], "source": "glossary: order value"},
+    {"phrase": "customers", "kind": "table", "table": "customer"},
+    {"phrase": "order value … in 1995", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1995"},
+    {"phrase": "above the average across all nations", "kind": "shape", "shape": "vs_aggregate"}
+  ]},
+  {"id": "q05", "links": [
+    {"phrase": "line items", "kind": "table", "table": "lineitem"},
+    {"phrase": "received in 1994", "kind": "column", "columns": ["lineitem.l_receiptdate"], "value": "1994"},
+    {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+    {"phrase": "AFRICA region", "kind": "column", "columns": ["region.r_name"], "value": "AFRICA"},
+    {"phrase": "what fraction", "kind": "shape", "shape": "ratio"},
+    {"phrase": "returned", "kind": "column", "columns": ["lineitem.l_returnflag"], "value": "R", "source": "glossary: l_returnflag R = returned"}
+  ]},
+  {"id": "q06", "links": [
+    {"phrase": "List", "kind": "shape", "shape": "lookup"},
+    {"phrase": "name", "kind": "column", "columns": ["part.p_name"]},
+    {"phrase": "brand", "kind": "column", "columns": ["part.p_brand"]},
+    {"phrase": "retail price", "kind": "column", "columns": ["part.p_retailprice"]},
+    {"phrase": "part", "kind": "table", "table": "part"},
+    {"phrase": "size 49", "kind": "column", "columns": ["part.p_size"], "value": "49"},
+    {"phrase": "LG DRUM container", "kind": "column", "columns": ["part.p_container"], "value": "LG DRUM"}
+  ]},
+  {"id": "q07", "links": [
+    {"phrase": "5 suppliers … largest", "kind": "shape", "shape": "ranking"},
+    {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+    {"phrase": "total available quantity", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "available quantity", "kind": "column", "columns": ["partsupp.ps_availqty"], "source": "glossary: available quantity"},
+    {"phrase": "STEEL parts", "kind": "column", "columns": ["part.p_type"], "value": "STEEL", "match": "contains", "source": "glossary: part type, last word is the material"}
+  ]},
+  {"id": "q08", "links": [
+    {"phrase": "number of", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "line items", "kind": "table", "table": "lineitem"},
+    {"phrase": "shipped by FOB", "kind": "column", "columns": ["lineitem.l_shipmode"], "value": "FOB"},
+    {"phrase": "customers", "kind": "table", "table": "customer"},
+    {"phrase": "MIDDLE EAST region", "kind": "column", "columns": ["region.r_name"], "value": "MIDDLE EAST"},
+    {"phrase": "change quarter by quarter", "kind": "shape", "shape": "time_trend"},
+    {"phrase": "shipped … in 1996", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1996"}
+  ]},
+  {"id": "q09", "links": [
+    {"phrase": "List", "kind": "shape", "shape": "lookup"},
+    {"phrase": "name", "kind": "column", "columns": ["customer.c_name"]},
+    {"phrase": "phone number", "kind": "column", "columns": ["customer.c_phone"]},
+    {"phrase": "customers", "kind": "table", "table": "customer"},
+    {"phrase": "AUTOMOBILE segment", "kind": "column", "columns": ["customer.c_mktsegment"], "value": "AUTOMOBILE"},
+    {"phrase": "CANADA", "kind": "column", "columns": ["nation.n_name"], "value": "CANADA"},
+    {"phrase": "negative account balance", "kind": "column", "columns": ["customer.c_acctbal"]}
+  ]},
+  {"id": "q10", "links": [
+    {"phrase": "What share", "kind": "shape", "shape": "ratio"},
+    {"phrase": "suppliers'", "kind": "table", "table": "supplier"},
+    {"phrase": "combined available quantity", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "available quantity", "kind": "column", "columns": ["partsupp.ps_availqty"], "source": "glossary: available quantity"},
+    {"phrase": "negative account balance", "kind": "column", "columns": ["supplier.s_acctbal"]}
+  ]},
+  {"id": "q11", "links": [
+    {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+    {"phrase": "PERU", "kind": "column", "columns": ["nation.n_name"], "value": "PERU"},
+    {"phrase": "had no line items", "kind": "shape", "shape": "anti_join"},
+    {"phrase": "line items", "kind": "table", "table": "lineitem"},
+    {"phrase": "shipping instruction COLLECT COD", "kind": "column", "columns": ["lineitem.l_shipinstruct"], "value": "COLLECT COD"},
+    {"phrase": "shipped last month", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1998-07"}
+  ]},
+  {"id": "q12", "links": [
+    {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "line items", "kind": "table", "table": "lineitem"},
+    {"phrase": "shipped in 1995", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1995"},
+    {"phrase": "gross value", "kind": "column", "columns": ["lineitem.l_extendedprice"], "source": "glossary: gross value of a line"},
+    {"phrase": "above that year's average", "kind": "shape", "shape": "vs_aggregate"}
+  ]},
+  {"id": "q13", "links": [
+    {"phrase": "What percentage", "kind": "shape", "shape": "ratio"},
+    {"phrase": "line items", "kind": "table", "table": "lineitem"},
+    {"phrase": "shipped by MAIL", "kind": "column", "columns": ["lineitem.l_shipmode"], "value": "MAIL"},
+    {"phrase": "shipped … in 1996", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1996"},
+    {"phrase": "delivered late", "kind": "column", "columns": ["lineitem.l_receiptdate", "lineitem.l_commitdate"], "source": "glossary: late delivery"}
+  ]},
+  {"id": "q14", "links": [
+    {"phrase": "10 clerks … highest", "kind": "shape", "shape": "ranking"},
+    {"phrase": "clerks", "kind": "column", "columns": ["orders.o_clerk"]},
+    {"phrase": "total order value", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "order value", "kind": "column", "columns": ["orders.o_totalprice"], "source": "glossary: order value"},
+    {"phrase": "order value in 1996", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1996"}
+  ]},
+  {"id": "q15", "links": [
+    {"phrase": "What is", "kind": "shape", "shape": "lookup"},
+    {"phrase": "phone number", "kind": "column", "columns": ["supplier.s_phone"]},
+    {"phrase": "account balance", "kind": "column", "columns": ["supplier.s_acctbal"]},
+    {"phrase": "Supplier#000000427", "kind": "column", "columns": ["supplier.s_name"], "value": "Supplier#000000427"}
+  ]}
+]}

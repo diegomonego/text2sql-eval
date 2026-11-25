@@ -1,0 +1,81 @@
+{"results": [
+  {"id": "q01", "links": [
+    {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+    {"phrase": "RUSSIA", "kind": "column", "columns": ["nation.n_name"], "value": "RUSSIA"},
+    {"phrase": "profit", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount", "partsupp.ps_supplycost", "lineitem.l_quantity"], "source": "glossary: profit"},
+    {"phrase": "shipped in 1996", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1996"},
+    {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "5 … highest", "kind": "shape", "shape": "ranking"}
+  ]},
+  {"id": "q02", "links": [
+    {"phrase": "customers", "kind": "table", "table": "customer"},
+    {"phrase": "MACHINERY", "kind": "column", "columns": ["customer.c_mktsegment"], "value": "MACHINERY"},
+    {"phrase": "ASIA region", "kind": "column", "columns": ["region.r_name"], "value": "ASIA"},
+    {"phrase": "order", "kind": "table", "table": "orders"},
+    {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "never placed an order", "kind": "shape", "shape": "anti_join"}
+  ]},
+  {"id": "q03", "links": [
+    {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+    {"phrase": "Manufacturer#4", "kind": "column", "columns": ["part.p_mfgr"], "value": "Manufacturer#4"},
+    {"phrase": "parts", "kind": "table", "table": "part"},
+    {"phrase": "shipped between 1993 and 1997", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1993..1997"},
+    {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "change year by year", "kind": "shape", "shape": "time_trend"}
+  ]},
+  {"id": "q04", "links": [
+    {"phrase": "line items", "kind": "table", "table": "lineitem"},
+    {"phrase": "received in 1995", "kind": "column", "columns": ["lineitem.l_receiptdate"], "value": "1995"},
+    {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+    {"phrase": "MIDDLE EAST region", "kind": "column", "columns": ["region.r_name"], "value": "MIDDLE EAST"},
+    {"phrase": "delivered late", "kind": "column", "columns": ["lineitem.l_receiptdate", "lineitem.l_commitdate"], "source": "glossary: late delivery"},
+    {"phrase": "proportion", "kind": "shape", "shape": "ratio"}
+  ]},
+  {"id": "q05", "links": [
+    {"phrase": "regions", "kind": "table", "table": "region"},
+    {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+    {"phrase": "customers'", "kind": "table", "table": "customer"},
+    {"phrase": "orders placed in 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1997"},
+    {"phrase": "generated more revenue", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "more … than the average region", "kind": "shape", "shape": "vs_aggregate"}
+  ]},
+  {"id": "q06", "links": [
+    {"phrase": "clerk", "kind": "column", "columns": ["orders.o_clerk"]},
+    {"phrase": "order value", "kind": "column", "columns": ["orders.o_totalprice"], "source": "glossary: order value"},
+    {"phrase": "status", "kind": "column", "columns": ["orders.o_orderstatus"]},
+    {"phrase": "5-LOW priority", "kind": "column", "columns": ["orders.o_orderpriority"], "value": "5-LOW"},
+    {"phrase": "placed on 1 July 1998", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1998-07-01"},
+    {"phrase": "List", "kind": "shape", "shape": "lookup"}
+  ]},
+  {"id": "q07", "links": [
+    {"phrase": "order value", "kind": "column", "columns": ["orders.o_totalprice"], "source": "glossary: order value"},
+    {"phrase": "customers", "kind": "table", "table": "customer"},
+    {"phrase": "BRAZIL", "kind": "column", "columns": ["nation.n_name"], "value": "BRAZIL"},
+    {"phrase": "in 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1997"},
+    {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "change quarter by quarter", "kind": "shape", "shape": "time_trend"}
+  ]},
+  {"id": "q08", "links": [
+    {"phrase": "line items", "kind": "table", "table": "lineitem"},
+    {"phrase": "customers", "kind": "table", "table": "customer"},
+    {"phrase": "KENYA", "kind": "column", "columns": ["nation.n_name"], "value": "KENYA"},
+    {"phrase": "ordered … during 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1997"},
+    {"phrase": "shipping instruction COLLECT COD", "kind": "column", "columns": ["lineitem.l_shipinstruct"], "value": "COLLECT COD"},
+    {"phrase": "percentage", "kind": "shape", "shape": "ratio"}
+  ]},
+  {"id": "q09", "links": [
+    {"phrase": "parts", "kind": "table", "table": "part"},
+    {"phrase": "LG CASE containers", "kind": "column", "columns": ["part.p_container"], "value": "LG CASE"},
+    {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+    {"phrase": "shipped in 1996", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1996"},
+    {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "5 … highest", "kind": "shape", "shape": "ranking"}
+  ]},
+  {"id": "q10", "links": [
+    {"phrase": "nations", "kind": "table", "table": "nation"},
+    {"phrase": "supplier account balance", "kind": "column", "columns": ["supplier.s_acctbal"]},
+    {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+    {"phrase": "mean", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "higher than the average across all suppliers", "kind": "shape", "shape": "vs_aggregate"}
+  ]}
+]}

@@ -1,0 +1,100 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "text": "What was the total revenue from customers in the EUROPE region last year?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "orders",
+          "region"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "orders.o_orderdate",
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join"
+        ]
+      }
+    },
+    {
+      "id": "q02",
+      "text": "What was the total profit on Manufacturer#2 parts shipped in 1996?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "part",
+          "partsupp"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "lineitem.l_quantity",
+          "lineitem.l_shipdate",
+          "part.p_mfgr",
+          "partsupp.ps_supplycost"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join"
+        ]
+      }
+    },
+    {
+      "id": "q03",
+      "text": "Which 5 suppliers in RUSSIA have the highest account balance?",
+      "labels": {
+        "tables": [
+          "nation",
+          "supplier"
+        ],
+        "columns": [
+          "nation.n_name",
+          "supplier.s_acctbal"
+        ],
+        "shapes": [
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q04",
+      "text": "How many deliveries arrived late each year from 1993 to 1997?",
+      "labels": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [
+          "lineitem.l_commitdate",
+          "lineitem.l_receiptdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "time_trend"
+        ]
+      }
+    },
+    {
+      "id": "q05",
+      "text": "What are the market segment and account balance of Customer#000001234?",
+      "labels": {
+        "tables": [
+          "customer"
+        ],
+        "columns": [
+          "customer.c_acctbal",
+          "customer.c_mktsegment",
+          "customer.c_name"
+        ],
+        "shapes": [
+          "lookup"
+        ]
+      }
+    }
+  ]
+}

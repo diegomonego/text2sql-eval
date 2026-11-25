@@ -1,0 +1,296 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "text": "How did the total profit on items supplied by suppliers in FRANCE change year by year for shipments between 1993 and 1997?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "nation",
+          "partsupp",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "lineitem.l_quantity",
+          "lineitem.l_shipdate",
+          "nation.n_name",
+          "partsupp.ps_supplycost"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ]
+      }
+    },
+    {
+      "id": "q02",
+      "text": "Which 5 customers in INDIA placed the largest number of 1-URGENT orders in 1997?",
+      "labels": {
+        "tables": [
+          "customer",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "nation.n_name",
+          "orders.o_orderdate",
+          "orders.o_orderpriority"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q03",
+      "text": "Which Brand#23 parts have no supplier located in the ASIA region?",
+      "labels": {
+        "tables": [
+          "part",
+          "region",
+          "supplier"
+        ],
+        "columns": [
+          "part.p_brand",
+          "region.r_name"
+        ],
+        "shapes": [
+          "anti_join",
+          "multi_join"
+        ]
+      }
+    },
+    {
+      "id": "q04",
+      "text": "Which nations had a total order value from their customers in 1995 above the average across all nations?",
+      "labels": {
+        "tables": [
+          "customer",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "orders.o_orderdate",
+          "orders.o_totalprice"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "vs_aggregate"
+        ]
+      }
+    },
+    {
+      "id": "q05",
+      "text": "Of the line items received in 1994 from suppliers in the AFRICA region, what fraction were returned?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "region",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_receiptdate",
+          "lineitem.l_returnflag",
+          "region.r_name"
+        ],
+        "shapes": [
+          "multi_join",
+          "ratio"
+        ]
+      }
+    },
+    {
+      "id": "q06",
+      "text": "List the name, brand and retail price of every part of size 49 packed in an LG DRUM container.",
+      "labels": {
+        "tables": [
+          "part"
+        ],
+        "columns": [
+          "part.p_brand",
+          "part.p_container",
+          "part.p_name",
+          "part.p_retailprice",
+          "part.p_size"
+        ],
+        "shapes": [
+          "lookup"
+        ]
+      }
+    },
+    {
+      "id": "q07",
+      "text": "Which 5 suppliers hold the largest total available quantity of STEEL parts?",
+      "labels": {
+        "tables": [
+          "part",
+          "partsupp",
+          "supplier"
+        ],
+        "columns": [
+          "part.p_type",
+          "partsupp.ps_availqty"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q08",
+      "text": "How did the number of line items shipped by FOB to customers in the MIDDLE EAST region change quarter by quarter in 1996?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "region"
+        ],
+        "columns": [
+          "lineitem.l_shipdate",
+          "lineitem.l_shipmode",
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ]
+      }
+    },
+    {
+      "id": "q09",
+      "text": "List the name and phone number of customers in the AUTOMOBILE segment in CANADA with a negative account balance.",
+      "labels": {
+        "tables": [
+          "customer",
+          "nation"
+        ],
+        "columns": [
+          "customer.c_acctbal",
+          "customer.c_mktsegment",
+          "customer.c_name",
+          "customer.c_phone",
+          "nation.n_name"
+        ],
+        "shapes": [
+          "lookup"
+        ]
+      }
+    },
+    {
+      "id": "q10",
+      "text": "What share of our suppliers' combined available quantity is held by suppliers with a negative account balance?",
+      "labels": {
+        "tables": [
+          "partsupp",
+          "supplier"
+        ],
+        "columns": [
+          "partsupp.ps_availqty",
+          "supplier.s_acctbal"
+        ],
+        "shapes": [
+          "ratio"
+        ]
+      }
+    },
+    {
+      "id": "q11",
+      "text": "Which suppliers in PERU had no line items with the shipping instruction COLLECT COD shipped last month?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "nation",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_shipdate",
+          "lineitem.l_shipinstruct",
+          "nation.n_name"
+        ],
+        "shapes": [
+          "anti_join",
+          "multi_join"
+        ]
+      }
+    },
+    {
+      "id": "q12",
+      "text": "How many line items shipped in 1995 had a gross value above that year's average?",
+      "labels": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [
+          "lineitem.l_extendedprice",
+          "lineitem.l_shipdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "vs_aggregate"
+        ]
+      }
+    },
+    {
+      "id": "q13",
+      "text": "What percentage of line items shipped by MAIL in 1996 were delivered late?",
+      "labels": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [
+          "lineitem.l_commitdate",
+          "lineitem.l_receiptdate",
+          "lineitem.l_shipdate",
+          "lineitem.l_shipmode"
+        ],
+        "shapes": [
+          "ratio"
+        ]
+      }
+    },
+    {
+      "id": "q14",
+      "text": "Which 10 clerks handled the highest total order value in 1996?",
+      "labels": {
+        "tables": [
+          "orders"
+        ],
+        "columns": [
+          "orders.o_clerk",
+          "orders.o_orderdate",
+          "orders.o_totalprice"
+        ],
+        "shapes": [
+          "aggregation",
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q15",
+      "text": "What is the phone number and account balance of Supplier#000000427?",
+      "labels": {
+        "tables": [
+          "supplier"
+        ],
+        "columns": [
+          "supplier.s_acctbal",
+          "supplier.s_name",
+          "supplier.s_phone"
+        ],
+        "shapes": [
+          "lookup"
+        ]
+      }
+    }
+  ]
+}

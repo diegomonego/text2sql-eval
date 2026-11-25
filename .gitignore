@@ -5,8 +5,10 @@ downloads/
 semantic_docs/tpch/spec/
 # Design notes and reference material: kept out of the repo for now
 docs/
-# Pipeline runs (rebuild with `make pipeline N=...`); the demo cases go in before submission
-runs/
+# Saved runs are committed. Runs made while reproducing (the Makefile's default runs/new_*, and
+# the runs/rejudge_* folders the README suggests) stay local.
+runs/new_*/
+runs/rejudge_*/
 # Python
 .venv/
 __pycache__/
@@ -16,3 +18,5 @@ __pycache__/
 .env
 # Local Claude Code settings
 .claude/settings.local.json
+# macOS
+.DS_Store

@@ -1,0 +1,186 @@
+{"candidates": [
+  {"target": "t01",
+   "question": "List the quantity, tax rate and shipping instruction of each line item shipped by TRUCK on 1997-03-15.",
+   "links": [
+     {"phrase": "List", "kind": "shape", "shape": "lookup"},
+     {"phrase": "quantity", "kind": "column", "columns": ["lineitem.l_quantity"]},
+     {"phrase": "tax rate", "kind": "column", "columns": ["lineitem.l_tax"]},
+     {"phrase": "shipping instruction", "kind": "column", "columns": ["lineitem.l_shipinstruct"]},
+     {"phrase": "line item", "kind": "table", "table": "lineitem"},
+     {"phrase": "shipped by TRUCK", "kind": "column", "columns": ["lineitem.l_shipmode"], "value": "TRUCK"},
+     {"phrase": "shipped … on 1997-03-15", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1997-03-15"}
+   ]},
+  {"target": "t02",
+   "question": "What is the average order value for each order priority among orders placed in 1996?",
+   "links": [
+     {"phrase": "average", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "order value", "kind": "column", "columns": ["orders.o_totalprice"]},
+     {"phrase": "for each order priority", "kind": "column", "columns": ["orders.o_orderpriority"]},
+     {"phrase": "orders placed in 1996", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1996"}
+   ]},
+  {"target": "t03",
+   "question": "What is the total available quantity of Brand#23 parts held by suppliers in GERMANY?",
+   "links": [
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "available quantity", "kind": "column", "columns": ["partsupp.ps_availqty"]},
+     {"phrase": "Brand#23 parts", "kind": "column", "columns": ["part.p_brand"], "value": "Brand#23"},
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "suppliers in GERMANY", "kind": "column", "columns": ["nation.n_name"], "value": "GERMANY"}
+   ]},
+  {"target": "t04",
+   "question": "What are the names of the 5 parts in LG CASE containers with the highest retail price?",
+   "links": [
+     {"phrase": "names … parts", "kind": "column", "columns": ["part.p_name"]},
+     {"phrase": "5 parts … highest", "kind": "shape", "shape": "ranking"},
+     {"phrase": "LG CASE containers", "kind": "column", "columns": ["part.p_container"], "value": "LG CASE"},
+     {"phrase": "retail price", "kind": "column", "columns": ["part.p_retailprice"]}
+   ]},
+  {"target": "t05",
+   "question": "How did revenue from AUTOMOBILE segment customers change quarter by quarter for orders placed in 1997?",
+   "links": [
+     {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+     {"phrase": "AUTOMOBILE segment customers", "kind": "column", "columns": ["customer.c_mktsegment"], "value": "AUTOMOBILE"},
+     {"phrase": "change quarter by quarter", "kind": "shape", "shape": "time_trend"},
+     {"phrase": "orders placed in 1997", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1997"}
+   ]},
+  {"target": "t06",
+   "question": "What percentage of suppliers in the AMERICA region have a negative account balance?",
+   "links": [
+     {"phrase": "percentage", "kind": "shape", "shape": "ratio"},
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "AMERICA region", "kind": "column", "columns": ["region.r_name"], "value": "AMERICA"},
+     {"phrase": "negative account balance", "kind": "column", "columns": ["supplier.s_acctbal"], "value": "-999.99..-0.01"}
+   ]},
+  {"target": "t07",
+   "question": "In which nations is the average customer account balance higher than the average across all customers?",
+   "links": [
+     {"phrase": "nations", "kind": "column", "columns": ["nation.n_name"]},
+     {"phrase": "average customer account balance", "kind": "column", "columns": ["customer.c_acctbal"]},
+     {"phrase": "average", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "higher than the average across all customers", "kind": "shape", "shape": "vs_aggregate"}
+   ]},
+  {"target": "t08",
+   "question": "List the names and addresses of customers in the EUROPE region who have never placed an order.",
+   "links": [
+     {"phrase": "names", "kind": "column", "columns": ["customer.c_name"]},
+     {"phrase": "addresses", "kind": "column", "columns": ["customer.c_address"]},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "EUROPE region", "kind": "column", "columns": ["region.r_name"], "value": "EUROPE"},
+     {"phrase": "never", "kind": "shape", "shape": "anti_join"},
+     {"phrase": "placed an order", "kind": "table", "table": "orders"}
+   ]},
+  {"target": "t09",
+   "question": "List the clerk and order value of every 1-URGENT order placed last month.",
+   "links": [
+     {"phrase": "List", "kind": "shape", "shape": "lookup"},
+     {"phrase": "clerk", "kind": "column", "columns": ["orders.o_clerk"]},
+     {"phrase": "order value", "kind": "column", "columns": ["orders.o_totalprice"]},
+     {"phrase": "1-URGENT", "kind": "column", "columns": ["orders.o_orderpriority"], "value": "1-URGENT"},
+     {"phrase": "placed last month", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1998-07"}
+   ]},
+  {"target": "t10",
+   "question": "What is the average supply cost of COPPER parts for each manufacturer?",
+   "links": [
+     {"phrase": "average", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "supply cost", "kind": "column", "columns": ["partsupp.ps_supplycost"]},
+     {"phrase": "COPPER parts", "kind": "column", "columns": ["part.p_type"], "value": "COPPER", "match": "contains"},
+     {"phrase": "for each manufacturer", "kind": "column", "columns": ["part.p_mfgr"]}
+   ]},
+  {"target": "t11",
+   "question": "What was the total profit on PROMO parts shipped in 1997?",
+   "links": [
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "profit", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount", "partsupp.ps_supplycost", "lineitem.l_quantity"], "source": "glossary: profit"},
+     {"phrase": "PROMO parts", "kind": "column", "columns": ["part.p_type"], "value": "PROMO", "match": "contains"},
+     {"phrase": "shipped in 1997", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1997"}
+   ]},
+  {"target": "t12",
+   "question": "Which 10 customers in the MACHINERY segment placed the most orders in 1996?",
+   "links": [
+     {"phrase": "10 customers … most", "kind": "shape", "shape": "ranking"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "MACHINERY segment", "kind": "column", "columns": ["customer.c_mktsegment"], "value": "MACHINERY"},
+     {"phrase": "most orders", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "orders", "kind": "table", "table": "orders"},
+     {"phrase": "orders in 1996", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1996"}
+   ]},
+  {"target": "t13",
+   "question": "How did the number of late deliveries from suppliers in INDIA change year by year for items received between 1993 and 1997?",
+   "links": [
+     {"phrase": "number of late deliveries", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "late deliveries", "kind": "column", "columns": ["lineitem.l_receiptdate", "lineitem.l_commitdate"], "source": "glossary: late delivery"},
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "suppliers in INDIA", "kind": "column", "columns": ["nation.n_name"], "value": "INDIA"},
+     {"phrase": "change year by year", "kind": "shape", "shape": "time_trend"},
+     {"phrase": "received between 1993 and 1997", "kind": "column", "columns": ["lineitem.l_receiptdate"], "value": "1993..1997"}
+   ]},
+  {"target": "t14",
+   "question": "What percentage of the line items ordered by customers in FRANCE in 1994 were returned?",
+   "links": [
+     {"phrase": "percentage", "kind": "shape", "shape": "ratio"},
+     {"phrase": "line items", "kind": "table", "table": "lineitem"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "customers in FRANCE", "kind": "column", "columns": ["nation.n_name"], "value": "FRANCE"},
+     {"phrase": "ordered … in 1994", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1994"},
+     {"phrase": "returned", "kind": "column", "columns": ["lineitem.l_returnflag"], "value": "R"}
+   ]},
+  {"target": "t15",
+   "question": "List the names and phone numbers of suppliers in the MIDDLE EAST region whose account balance is above the average for suppliers in that region.",
+   "links": [
+     {"phrase": "names", "kind": "column", "columns": ["supplier.s_name"]},
+     {"phrase": "phone numbers", "kind": "column", "columns": ["supplier.s_phone"]},
+     {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+     {"phrase": "MIDDLE EAST region", "kind": "column", "columns": ["region.r_name"], "value": "MIDDLE EAST"},
+     {"phrase": "account balance", "kind": "column", "columns": ["supplier.s_acctbal"]},
+     {"phrase": "above the average for suppliers in that region", "kind": "shape", "shape": "vs_aggregate"}
+   ]},
+  {"target": "t16",
+   "question": "List the names of parts that have never been sold at a 10% discount.",
+   "links": [
+     {"phrase": "names … parts", "kind": "column", "columns": ["part.p_name"]},
+     {"phrase": "never", "kind": "shape", "shape": "anti_join"},
+     {"phrase": "sold at a 10% discount", "kind": "column", "columns": ["lineitem.l_discount"], "value": "0.10"}
+   ]},
+  {"target": "f01",
+   "question": "What was the average shipping time in days for each ship mode for items shipped in 1997?",
+   "links": [
+     {"phrase": "average", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "shipping time", "kind": "column", "columns": ["lineitem.l_receiptdate", "lineitem.l_shipdate"], "source": "glossary: shipping time"},
+     {"phrase": "for each ship mode", "kind": "column", "columns": ["lineitem.l_shipmode"]},
+     {"phrase": "items shipped in 1997", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1997"}
+   ]},
+  {"target": "f02",
+   "question": "Which 5 clerks handled the most partially fulfilled orders?",
+   "links": [
+     {"phrase": "5 clerks … most", "kind": "shape", "shape": "ranking"},
+     {"phrase": "clerks", "kind": "column", "columns": ["orders.o_clerk"]},
+     {"phrase": "the most partially fulfilled orders", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "partially fulfilled orders", "kind": "column", "columns": ["orders.o_orderstatus"], "value": "P"}
+   ]},
+  {"target": "f03",
+   "question": "Which 10 parts of size 50 have the lowest total available quantity across all suppliers?",
+   "links": [
+     {"phrase": "10 parts … lowest", "kind": "shape", "shape": "ranking"},
+     {"phrase": "parts", "kind": "table", "table": "part"},
+     {"phrase": "size 50", "kind": "column", "columns": ["part.p_size"], "value": "50"},
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "available quantity", "kind": "column", "columns": ["partsupp.ps_availqty"]}
+   ]},
+  {"target": "f04",
+   "question": "What was the total charge for line items with the DELIVER IN PERSON instruction shipped last quarter?",
+   "links": [
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "charge", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount", "lineitem.l_tax"], "source": "glossary: charge"},
+     {"phrase": "line items", "kind": "table", "table": "lineitem"},
+     {"phrase": "DELIVER IN PERSON instruction", "kind": "column", "columns": ["lineitem.l_shipinstruct"], "value": "DELIVER IN PERSON"},
+     {"phrase": "shipped last quarter", "kind": "column", "columns": ["lineitem.l_shipdate"], "value": "1998-Q2"}
+   ]},
+  {"target": "f05",
+   "question": "How many customers have a negative account balance in each region?",
+   "links": [
+     {"phrase": "How many customers", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "negative account balance", "kind": "column", "columns": ["customer.c_acctbal"], "value": "-999.99..-0.01"},
+     {"phrase": "in each region", "kind": "column", "columns": ["region.r_name"]}
+   ]}
+]}

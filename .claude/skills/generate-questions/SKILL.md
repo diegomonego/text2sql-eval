@@ -1,7 +1,7 @@
 ---
 name: generate-questions
 description: Generate exactly N realistic natural-language questions for evaluating a Text-to-SQL system on the configured database, with checked links to the schema. Use only when explicitly asked to generate an evaluation question set.
-argument-hint: --n <N> --out <run-dir> [--no-docs] [--anchor auto|off|YYYY-MM-DD]
+argument-hint: --n <N> --out <run-dir> [--db <url>] [--docs <dir> | --no-docs] [--preset coverage|natural] [--anchor auto|off|YYYY-MM-DD]
 disable-model-invocation: true
 model: claude-opus-5-5
 allowed-tools: Read, Write, Bash(uv run t2s *)
@@ -24,7 +24,7 @@ Run `uv run t2s gen-prepare $ARGUMENTS`. It prints the run directory. If it fail
 
 ## Step 2: read
 
-Read in full: `<run-dir>/generation/brief.md` (time anchor, shape legend, targets), then
+Read in full: `<run-dir>/generation/brief.md` (preset, time anchor, shape legend, targets), then
 `<run-dir>/generation/schema_card.md` (tables, columns, value ranges, listed values, joins), then every
 docs file the brief lists (if it says no docs are supplied, rely on the schema card alone).
 
@@ -41,12 +41,12 @@ Write `<run-dir>/generation/candidates.json`:
 ### Question rules
 
 1. **Persona:** an analyst or manager at the business the docs describe (infer it from the schema if there are no docs), asking for something they need to know.
-2. **Targeted candidates** must exercise the target's shape and involve its focus table. **Free candidates** (`f…`): any question such a person would naturally ask.
+2. **Targeted candidates** must exercise the target's shape and, when the target names one, involve its focus table. **Free candidates** (`f…`): any question such a person would naturally ask.
 3. **One analytical goal per question**, with the metric and scope stated ("by total order value", "in 1996", "for the BUILDING segment"). No compound questions joined by "and also".
 4. **Business language only:** never table or column names (`l_shipmode`), never SQL words (join, group by, select, row, table, column).
 5. **Real values:** filter values must exist in the data. Use the exact listed values from the schema card, phrased naturally ("the BUILDING segment", "shipped by AIR"). Dates must fall inside the data's range.
 6. **Time:** use absolute periods ("in 1997", "between 1993 and 1996"). Only if the brief says the time anchor is ON may you use relative phrases ("last quarter"); then link them with the brief's resolved value.
-7. **Spread across the schema:** across all candidates, use as many different columns as possible. Prefer columns earlier candidates haven't used, including less obvious ones (containers, ship instructions, clerks, account balances, supply cost, available quantity, part sizes, tax). Don't build questions on columns noted "constant in this data". If no docs are supplied, never use columns noted as coded.
+7. **Follow the brief's preset section:** it says how far to spread across the schema and how simple to keep each question. Don't build questions on columns noted "constant in this data". If no docs are supplied, never use columns noted as coded.
 8. **Natural combinations only:** combine shapes (e.g. a ranking of totals per region) only where a real analyst would ask it that way.
 9. **Answerable:** never ask for data the database doesn't have. No trivia (one record's comment, internal IDs).
 10. Use the docs' definitions (e.g. revenue) and name the metric the way the docs do.

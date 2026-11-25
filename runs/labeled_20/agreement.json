@@ -1,0 +1,42 @@
+{
+  "n": 20,
+  "agreement": 19,
+  "agreement_rate": 0.95,
+  "cohen_kappa": 0.928,
+  "confusion_matrix_rows_label_cols_judge": {
+    "OFF_TOPIC": {
+      "OFF_TOPIC": 1,
+      "MISSING_DATA": 1,
+      "AMBIGUOUS": 0,
+      "ANSWERABLE": 0
+    },
+    "MISSING_DATA": {
+      "OFF_TOPIC": 0,
+      "MISSING_DATA": 8,
+      "AMBIGUOUS": 0,
+      "ANSWERABLE": 0
+    },
+    "AMBIGUOUS": {
+      "OFF_TOPIC": 0,
+      "MISSING_DATA": 0,
+      "AMBIGUOUS": 5,
+      "ANSWERABLE": 0
+    },
+    "ANSWERABLE": {
+      "OFF_TOPIC": 0,
+      "MISSING_DATA": 0,
+      "AMBIGUOUS": 0,
+      "ANSWERABLE": 5
+    }
+  },
+  "disagreements": [
+    {
+      "id": "l06",
+      "text": "What is the population of GERMANY?",
+      "label": "OFF_TOPIC",
+      "label_reason": "Names a nation that is in the data, but a country's population isn't a question about this business.",
+      "judge": "MISSING_DATA",
+      "judge_rationale": "GERMANY is a nation.n_name value, but the nation table holds only key, name, region and filler comment; no population or demographic data exists."
+    }
+  ]
+}

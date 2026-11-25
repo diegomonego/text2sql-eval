@@ -1,0 +1,917 @@
+{
+  "meta": {
+    "run": {
+      "timestamp_utc": "2026-11-25T00:53:42+00:00",
+      "component": "coverage_judge",
+      "git": {
+        "commit": "not a git repository",
+        "uncommitted_changes": null
+      },
+      "claude_code_version": "2.1.331 (Claude Code)",
+      "model": "claude-opus-5-5"
+    },
+    "database": {
+      "url": "duckdb:///data/tpch_sf01.duckdb",
+      "engine": "duckdb",
+      "engine_version": "2.0.1",
+      "file_sha256": "9a6859c7dad2fbf6fea4085b95ce1d453e29582b55d11bf2625ef5ce0ba734ee",
+      "tables": 8,
+      "columns": 61
+    },
+    "docs": [
+      {
+        "path": "semantic_docs/tpch/glossary.md",
+        "sha256": "09b524aabe1802cd6fec34505f2d8b8965293e34c6717080e3239fe3e1dd0b37"
+      },
+      {
+        "path": "semantic_docs/tpch/spec/clause1_database_design.md",
+        "sha256": "6fc1cb6613cb1f5c7bf76fa776ed37db47e270e2dfa0f104f0b4c3075e53e9df"
+      },
+      {
+        "path": "semantic_docs/tpch/spec/clause4_data_generation.md",
+        "sha256": "e781343888e0673ca99844444a36de3de5ecb8612b2e41935c3fb1203cffa115"
+      }
+    ],
+    "config": {
+      "shapes_toml_sha256": "e2539ca205ab3868170884e6226ac2acc06a326357ef6c504aa6bc8f1b7fbf89",
+      "eval_toml_sha256": "93dcef2ad43f97eb1e5f8da6868d2aecb6f96ce3db8d041f1840e8a8ba410b56",
+      "time_anchor": {
+        "setting": "auto",
+        "mode": "auto",
+        "date": "1998-08-02"
+      }
+    },
+    "input": {
+      "questions_file": "runs/n5/questions.json",
+      "questions_sha256": "0b0a76a088eda32a2edbd8965ae59b750a35092f9e1268632123993e8b407b61",
+      "n": 5,
+      "issues_accepted": 0
+    }
+  },
+  "per_question": [
+    {
+      "id": "q01",
+      "text": "What was the total profit on MEDIUM BRUSHED COPPER parts ordered by customers in JAPAN during 1995?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders",
+          "part",
+          "partsupp"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "lineitem.l_quantity",
+          "nation.n_name",
+          "orders.o_orderdate",
+          "part.p_type",
+          "partsupp.ps_supplycost"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "total",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "profit",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_extendedprice",
+            "lineitem.l_discount",
+            "partsupp.ps_supplycost",
+            "lineitem.l_quantity"
+          ],
+          "source": "glossary: profit",
+          "check": "pass"
+        },
+        {
+          "phrase": "MEDIUM BRUSHED COPPER parts",
+          "kind": "column",
+          "columns": [
+            "part.p_type"
+          ],
+          "value": "MEDIUM BRUSHED COPPER",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "JAPAN",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "value": "JAPAN",
+          "check": "pass"
+        },
+        {
+          "phrase": "ordered … during 1995",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1995",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders",
+        "part",
+        "partsupp"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "customer",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "nation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "orders",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "part",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "partsupp",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_discount",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_extendedprice",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_quantity",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "nation.n_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_orderdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "part.p_type",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "partsupp.ps_supplycost",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "tables:partsupp",
+        "columns:lineitem.l_quantity",
+        "columns:part.p_type",
+        "columns:partsupp.ps_supplycost"
+      ]
+    },
+    {
+      "id": "q02",
+      "text": "How many line items from suppliers in BRAZIL were delivered late in each year from 1993 to 1997?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "lineitem",
+          "nation",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_commitdate",
+          "lineitem.l_receiptdate",
+          "nation.n_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "How many",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "line items",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "suppliers",
+          "kind": "table",
+          "table": "supplier",
+          "check": "pass"
+        },
+        {
+          "phrase": "BRAZIL",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "value": "BRAZIL",
+          "check": "pass"
+        },
+        {
+          "phrase": "delivered late",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate",
+            "lineitem.l_commitdate"
+          ],
+          "source": "glossary: late delivery",
+          "check": "pass"
+        },
+        {
+          "phrase": "in each year",
+          "kind": "shape",
+          "shape": "time_trend",
+          "check": "pass"
+        },
+        {
+          "phrase": "delivered … in each year from 1993 to 1997",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate"
+          ],
+          "value": "1993..1997",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "lineitem",
+        "nation",
+        "supplier"
+      ],
+      "note": "The year is tied to delivery, so it is read as the receipt date.",
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "nation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "supplier",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_commitdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_receiptdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "nation.n_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "time_trend",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:lineitem.l_commitdate",
+        "columns:lineitem.l_receiptdate",
+        "shapes:time_trend"
+      ]
+    },
+    {
+      "id": "q03",
+      "text": "What percentage of line items from suppliers in the AMERICA region were returned?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "lineitem",
+          "region",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_returnflag",
+          "region.r_name"
+        ],
+        "shapes": [
+          "multi_join",
+          "ratio"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "What percentage",
+          "kind": "shape",
+          "shape": "ratio",
+          "check": "pass"
+        },
+        {
+          "phrase": "line items",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "suppliers",
+          "kind": "table",
+          "table": "supplier",
+          "check": "pass"
+        },
+        {
+          "phrase": "AMERICA region",
+          "kind": "column",
+          "columns": [
+            "region.r_name"
+          ],
+          "value": "AMERICA",
+          "check": "pass"
+        },
+        {
+          "phrase": "returned",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_returnflag"
+          ],
+          "value": "R",
+          "source": "glossary: l_returnflag",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "lineitem",
+        "nation",
+        "region",
+        "supplier"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "region",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "supplier",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_returnflag",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "region.r_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "ratio",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "tables:region",
+        "columns:lineitem.l_returnflag",
+        "columns:region.r_name",
+        "shapes:ratio"
+      ]
+    },
+    {
+      "id": "q04",
+      "text": "Which 3 brands have the highest average retail price among parts of size 50?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "part"
+        ],
+        "columns": [
+          "part.p_brand",
+          "part.p_retailprice",
+          "part.p_size"
+        ],
+        "shapes": [
+          "aggregation",
+          "ranking"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "3 brands have the highest",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "brands",
+          "kind": "column",
+          "columns": [
+            "part.p_brand"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "retail price",
+          "kind": "column",
+          "columns": [
+            "part.p_retailprice"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "parts",
+          "kind": "table",
+          "table": "part",
+          "check": "pass"
+        },
+        {
+          "phrase": "size 50",
+          "kind": "column",
+          "columns": [
+            "part.p_size"
+          ],
+          "value": 50,
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "part"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "part",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "part.p_brand",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "part.p_retailprice",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "part.p_size",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "ranking",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "columns:part.p_brand",
+        "columns:part.p_retailprice",
+        "columns:part.p_size",
+        "shapes:ranking"
+      ]
+    },
+    {
+      "id": "q05",
+      "text": "Which nations had total revenue from their customers' orders in 1996 above the average across all nations?",
+      "supported": true,
+      "credited": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "nation.n_name",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "vs_aggregate"
+        ]
+      },
+      "not_credited": [],
+      "links": [
+        {
+          "phrase": "nations",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "total",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "revenue",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_extendedprice",
+            "lineitem.l_discount"
+          ],
+          "source": "glossary: revenue",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers'",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "orders in 1996",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1996",
+          "check": "pass"
+        },
+        {
+          "phrase": "above the average across all nations",
+          "kind": "shape",
+          "shape": "vs_aggregate",
+          "check": "pass"
+        }
+      ],
+      "join_path": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders"
+      ],
+      "note": null,
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "customer",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "nation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "orders",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_discount",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_extendedprice",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_orderdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "nation.n_name",
+          "status": "not labeled"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "vs_aggregate",
+          "status": "confirmed"
+        }
+      ],
+      "unique": [
+        "shapes:vs_aggregate"
+      ]
+    }
+  ],
+  "dimensions": {
+    "tables": {
+      "eligible": 8,
+      "covered_count": 8,
+      "pct": 100.0,
+      "covered": {
+        "customer": [
+          "q01",
+          "q05"
+        ],
+        "lineitem": [
+          "q01",
+          "q02",
+          "q03",
+          "q05"
+        ],
+        "nation": [
+          "q01",
+          "q02",
+          "q05"
+        ],
+        "orders": [
+          "q01",
+          "q05"
+        ],
+        "part": [
+          "q01",
+          "q04"
+        ],
+        "partsupp": [
+          "q01"
+        ],
+        "region": [
+          "q03"
+        ],
+        "supplier": [
+          "q02",
+          "q03"
+        ]
+      },
+      "uncovered": {}
+    },
+    "columns": {
+      "eligible": 61,
+      "covered_count": 14,
+      "pct": 22.95,
+      "covered": {
+        "lineitem.l_quantity": [
+          "q01"
+        ],
+        "lineitem.l_extendedprice": [
+          "q01",
+          "q05"
+        ],
+        "lineitem.l_discount": [
+          "q01",
+          "q05"
+        ],
+        "lineitem.l_returnflag": [
+          "q03"
+        ],
+        "lineitem.l_commitdate": [
+          "q02"
+        ],
+        "lineitem.l_receiptdate": [
+          "q02"
+        ],
+        "nation.n_name": [
+          "q01",
+          "q02",
+          "q05"
+        ],
+        "orders.o_orderdate": [
+          "q01",
+          "q05"
+        ],
+        "part.p_brand": [
+          "q04"
+        ],
+        "part.p_type": [
+          "q01"
+        ],
+        "part.p_size": [
+          "q04"
+        ],
+        "part.p_retailprice": [
+          "q04"
+        ],
+        "partsupp.ps_supplycost": [
+          "q01"
+        ],
+        "region.r_name": [
+          "q03"
+        ]
+      },
+      "uncovered": {
+        "customer.c_custkey": "not asked",
+        "customer.c_name": "not asked",
+        "customer.c_address": "not asked",
+        "customer.c_nationkey": "not asked",
+        "customer.c_phone": "not asked",
+        "customer.c_acctbal": "not asked",
+        "customer.c_mktsegment": "not asked",
+        "customer.c_comment": "not asked",
+        "lineitem.l_orderkey": "not asked",
+        "lineitem.l_partkey": "not asked",
+        "lineitem.l_suppkey": "not asked",
+        "lineitem.l_linenumber": "not asked",
+        "lineitem.l_tax": "not asked",
+        "lineitem.l_linestatus": "not asked",
+        "lineitem.l_shipdate": "not asked",
+        "lineitem.l_shipinstruct": "not asked",
+        "lineitem.l_shipmode": "not asked",
+        "lineitem.l_comment": "not asked",
+        "nation.n_nationkey": "not asked",
+        "nation.n_regionkey": "not asked",
+        "nation.n_comment": "not asked",
+        "orders.o_orderkey": "not asked",
+        "orders.o_custkey": "not asked",
+        "orders.o_orderstatus": "not asked",
+        "orders.o_totalprice": "not asked",
+        "orders.o_orderpriority": "not asked",
+        "orders.o_clerk": "not asked",
+        "orders.o_shippriority": "not asked (constant in this data)",
+        "orders.o_comment": "not asked",
+        "part.p_partkey": "not asked",
+        "part.p_name": "not asked",
+        "part.p_mfgr": "not asked",
+        "part.p_container": "not asked",
+        "part.p_comment": "not asked",
+        "partsupp.ps_partkey": "not asked",
+        "partsupp.ps_suppkey": "not asked",
+        "partsupp.ps_availqty": "not asked",
+        "partsupp.ps_comment": "not asked",
+        "region.r_regionkey": "not asked",
+        "region.r_comment": "not asked",
+        "supplier.s_suppkey": "not asked",
+        "supplier.s_name": "not asked",
+        "supplier.s_address": "not asked",
+        "supplier.s_nationkey": "not asked",
+        "supplier.s_phone": "not asked",
+        "supplier.s_acctbal": "not asked",
+        "supplier.s_comment": "not asked"
+      }
+    },
+    "shapes": {
+      "eligible": 8,
+      "covered_count": 6,
+      "pct": 75.0,
+      "covered": {
+        "aggregation": [
+          "q01",
+          "q02",
+          "q04",
+          "q05"
+        ],
+        "multi_join": [
+          "q01",
+          "q02",
+          "q03",
+          "q05"
+        ],
+        "ranking": [
+          "q04"
+        ],
+        "time_trend": [
+          "q02"
+        ],
+        "ratio": [
+          "q03"
+        ],
+        "vs_aggregate": [
+          "q05"
+        ]
+      },
+      "uncovered": {
+        "lookup": "not asked",
+        "anti_join": "not asked"
+      }
+    }
+  },
+  "repetition": {
+    "duplicate_pairs": [],
+    "nothing_unique": [],
+    "no_credit": []
+  },
+  "summary": {
+    "n": 5,
+    "tables_pct": 100.0,
+    "columns_pct": 22.95,
+    "shapes_pct": 75.0,
+    "score": 65.98,
+    "formula": "(table % + column % + shape %) / 3",
+    "calculation": "(100.0 + 22.95 + 75.0) / 3 = 65.98",
+    "duplicate_pairs": 0,
+    "questions_covering_nothing_unique": 0,
+    "questions_without_credit": 0
+  },
+  "budget_note": "N = 5. There are 8 tables, 61 columns and 8 shapes. A few questions that each combine several tables and shapes can cover all tables and shapes; columns can't be covered that way. Credited questions here link 3.8 columns on average, so even with no repetition at most about 19 of 61 columns (31%) could be covered at this N; 14 were. Read column coverage relative to N. 0 question(s) earned no credit (a concept not in the database, or tables that don't connect) and 0 ambiguous phrase(s) earned nothing."
+}

@@ -1,0 +1,696 @@
+{
+  "meta": {
+    "run": {
+      "timestamp_utc": "2026-11-25T15:05:31+00:00",
+      "component": "correctness_judge",
+      "git": {
+        "commit": "7cd82794b736dc1a0b94a142382d6c4310cd0cbb",
+        "uncommitted_changes": true
+      },
+      "claude_code_version": "2.1.331 (Claude Code)",
+      "model": "claude-opus-5-5",
+      "skill_sha256": "6c3d583f2e6f3ae76e35e015cf4272e115a3382b3941677eeed39993c2330a6e"
+    },
+    "database": {
+      "url": "duckdb:///data/tpch_sf01.duckdb",
+      "engine": "duckdb",
+      "engine_version": "2.0.1",
+      "file_sha256": "9a6859c7dad2fbf6fea4085b95ce1d453e29582b55d11bf2625ef5ce0ba734ee",
+      "tables": 8,
+      "columns": 61
+    },
+    "docs": [
+      {
+        "path": "semantic_docs/tpch/glossary.md",
+        "sha256": "09b524aabe1802cd6fec34505f2d8b8965293e34c6717080e3239fe3e1dd0b37"
+      },
+      {
+        "path": "semantic_docs/tpch/spec/clause1_database_design.md",
+        "sha256": "6fc1cb6613cb1f5c7bf76fa776ed37db47e270e2dfa0f104f0b4c3075e53e9df"
+      },
+      {
+        "path": "semantic_docs/tpch/spec/clause4_data_generation.md",
+        "sha256": "e781343888e0673ca99844444a36de3de5ecb8612b2e41935c3fb1203cffa115"
+      }
+    ],
+    "config": {
+      "shapes_toml_sha256": "b292990befb8d8a3611e95253c2a16e9232ef84feb35a7b12825c4a929e97629",
+      "eval_toml_sha256": "949fff8732841bcc406bd78cfd2edf2acc52e2697937c30bef995fa02b24f7cf",
+      "eval_toml": "config/eval.toml",
+      "time_anchor": {
+        "setting": "auto",
+        "mode": "auto",
+        "date": "1998-08-02"
+      }
+    },
+    "input": {
+      "questions_file": "runs/v2_n5/questions.json",
+      "questions_sha256": "f59d3d75ef786c7cb1ff69bf624637f25f15cc7efb3fd2fd2dc32dff75d56aef",
+      "n": 5,
+      "issues_accepted": 0
+    }
+  },
+  "results": [
+    {
+      "id": "q01",
+      "text": "How many line items from suppliers in the UNITED KINGDOM were received late in each year from 1993 to 1997?",
+      "verdict": "ANSWERABLE",
+      "rationale": "Supplier nation via supplier.s_nationkey -> nation.n_name; 'received late' is the glossary's late delivery (l_receiptdate > l_commitdate), counted per year of l_receiptdate for 1993-1997. Grouping by order or ship year was rejected because the question ties the year to 'received'.",
+      "links": [
+        {
+          "phrase": "How many",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "line items",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "suppliers",
+          "kind": "table",
+          "table": "supplier",
+          "check": "pass"
+        },
+        {
+          "phrase": "UNITED KINGDOM",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "value": "UNITED KINGDOM",
+          "check": "pass"
+        },
+        {
+          "phrase": "received late",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate",
+            "lineitem.l_commitdate"
+          ],
+          "source": "glossary: late delivery",
+          "check": "pass"
+        },
+        {
+          "phrase": "in each year",
+          "kind": "shape",
+          "shape": "time_trend",
+          "check": "pass"
+        },
+        {
+          "phrase": "from 1993 to 1997",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate"
+          ],
+          "value": "1993..1997",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "lineitem",
+          "nation",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_commitdate",
+          "lineitem.l_receiptdate",
+          "nation.n_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ],
+        "join_path": [
+          "lineitem",
+          "nation",
+          "supplier"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "nation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "supplier",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_commitdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_receiptdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "nation.n_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "time_trend",
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "q02",
+      "text": "How many customers in the MIDDLE EAST region have never placed an order?",
+      "verdict": "ANSWERABLE",
+      "rationale": "Customer region via customer.c_nationkey -> nation.n_regionkey -> region.r_name = 'MIDDLE EAST'; 'never placed an order' means no row in orders with o_custkey = c_custkey (spec clause 1.4 notes a third of customers have no orders).",
+      "links": [
+        {
+          "phrase": "How many",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "MIDDLE EAST region",
+          "kind": "column",
+          "columns": [
+            "region.r_name"
+          ],
+          "value": "MIDDLE EAST",
+          "check": "pass"
+        },
+        {
+          "phrase": "never",
+          "kind": "shape",
+          "shape": "anti_join",
+          "check": "pass"
+        },
+        {
+          "phrase": "placed an order",
+          "kind": "table",
+          "table": "orders",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "customer",
+          "orders",
+          "region"
+        ],
+        "columns": [
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "anti_join",
+          "multi_join"
+        ],
+        "join_path": [
+          "customer",
+          "nation",
+          "orders",
+          "region"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "customer",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "orders",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "region",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "region.r_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "anti_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "q03",
+      "text": "What percentage of revenue from orders placed by customers in INDONESIA last year came from items shipped by TRUCK?",
+      "verdict": "ANSWERABLE",
+      "rationale": "Revenue is the glossary's l_extendedprice * (1 - l_discount); population is lines of orders with o_orderdate in 1997 (last year, time anchor ON) from customers whose nation is INDONESIA, and the share is the part with l_shipmode = 'TRUCK'. o_totalprice was rejected since it includes tax and cannot be split by ship mode.",
+      "links": [
+        {
+          "phrase": "What percentage",
+          "kind": "shape",
+          "shape": "ratio",
+          "check": "pass"
+        },
+        {
+          "phrase": "revenue",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_extendedprice",
+            "lineitem.l_discount"
+          ],
+          "source": "glossary: revenue",
+          "check": "pass"
+        },
+        {
+          "phrase": "orders",
+          "kind": "table",
+          "table": "orders",
+          "check": "pass"
+        },
+        {
+          "phrase": "placed … last year",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1997",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "INDONESIA",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "value": "INDONESIA",
+          "check": "pass"
+        },
+        {
+          "phrase": "items",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "shipped by TRUCK",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipmode"
+          ],
+          "value": "TRUCK",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "lineitem.l_shipmode",
+          "nation.n_name",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "multi_join",
+          "ratio"
+        ],
+        "join_path": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "customer",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "nation",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "orders",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_discount",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_extendedprice",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_shipmode",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "nation.n_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "orders.o_orderdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "ratio",
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "q04",
+      "text": "Which 3 container types accounted for the largest quantity of units shipped this year?",
+      "verdict": "ANSWERABLE",
+      "rationale": "Sum lineitem.l_quantity per part.p_container for lines with l_shipdate in 1998 (this year, time anchor ON) and return the top 3. Reading 'container type' as only the kind word (BOX, BAG...) was rejected: the glossary defines the container as the single p_container value.",
+      "links": [
+        {
+          "phrase": "Which 3 … largest",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "container types",
+          "kind": "column",
+          "columns": [
+            "part.p_container"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "accounted for",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "quantity of units",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_quantity"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "shipped this year",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipdate"
+          ],
+          "value": "1998",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "lineitem",
+          "part"
+        ],
+        "columns": [
+          "lineitem.l_quantity",
+          "lineitem.l_shipdate",
+          "part.p_container"
+        ],
+        "shapes": [
+          "aggregation",
+          "ranking"
+        ],
+        "join_path": [
+          "lineitem",
+          "part"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "lineitem",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "part",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_quantity",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "lineitem.l_shipdate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "part.p_container",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "ranking",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "aggregation",
+          "status": "not labeled"
+        }
+      ]
+    },
+    {
+      "id": "q05",
+      "text": "List the names and phone numbers of suppliers in the ASIA region whose account balance is above that region's supplier average.",
+      "verdict": "ANSWERABLE",
+      "rationale": "Suppliers whose nation is in region.r_name = 'ASIA' (supplier.s_nationkey -> nation -> region), returning s_name and s_phone where s_acctbal exceeds the average s_acctbal of all ASIA suppliers.",
+      "links": [
+        {
+          "phrase": "List",
+          "kind": "shape",
+          "shape": "lookup",
+          "check": "pass"
+        },
+        {
+          "phrase": "names",
+          "kind": "column",
+          "columns": [
+            "supplier.s_name"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "phone numbers",
+          "kind": "column",
+          "columns": [
+            "supplier.s_phone"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "suppliers",
+          "kind": "table",
+          "table": "supplier",
+          "check": "pass"
+        },
+        {
+          "phrase": "ASIA region",
+          "kind": "column",
+          "columns": [
+            "region.r_name"
+          ],
+          "value": "ASIA",
+          "check": "pass"
+        },
+        {
+          "phrase": "account balance",
+          "kind": "column",
+          "columns": [
+            "supplier.s_acctbal"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "above that region's supplier average",
+          "kind": "shape",
+          "shape": "vs_aggregate",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "region",
+          "supplier"
+        ],
+        "columns": [
+          "region.r_name",
+          "supplier.s_acctbal",
+          "supplier.s_name",
+          "supplier.s_phone"
+        ],
+        "shapes": [
+          "lookup",
+          "multi_join",
+          "vs_aggregate"
+        ],
+        "join_path": [
+          "nation",
+          "region",
+          "supplier"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": [
+        {
+          "dimension": "tables",
+          "item": "region",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "tables",
+          "item": "supplier",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "region.r_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "supplier.s_acctbal",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "supplier.s_name",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "columns",
+          "item": "supplier.s_phone",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "multi_join",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "vs_aggregate",
+          "status": "confirmed"
+        },
+        {
+          "dimension": "shapes",
+          "item": "lookup",
+          "status": "not labeled"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "n": 5,
+    "counts": {
+      "OFF_TOPIC": 0,
+      "MISSING_DATA": 0,
+      "AMBIGUOUS": 0,
+      "ANSWERABLE": 5
+    },
+    "score": 1.0,
+    "formula": "(ANSWERABLE + 0.5 x AMBIGUOUS) / N",
+    "calculation": "(5 + 0.5 x 0) / 5 = 1.0000",
+    "verdicts_with_evidence_issues": 0
+  }
+}

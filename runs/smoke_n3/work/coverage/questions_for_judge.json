@@ -1,0 +1,16 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "text": "Which 5 suppliers earned the highest total profit on items shipped in 1997?"
+    },
+    {
+      "id": "q02",
+      "text": "How many customers in the MIDDLE EAST region have never placed an order?"
+    },
+    {
+      "id": "q03",
+      "text": "What share of revenue on orders placed in 1997 came from customers in the UNITED STATES?"
+    }
+  ]
+}

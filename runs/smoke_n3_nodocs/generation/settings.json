@@ -1,0 +1,11 @@
+{
+  "n": 3,
+  "no_docs": true,
+  "anchor": {
+    "mode": "off",
+    "column": "orders.o_orderdate",
+    "date": null,
+    "ranges": {},
+    "setting": "off"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "run": {
+    "timestamp_utc": "2026-11-25T00:48:30+00:00",
+    "component": "generator",
+    "git": {
+      "commit": "not a git repository",
+      "uncommitted_changes": null
+    },
+    "claude_code_version": "2.1.331 (Claude Code)",
+    "model": "claude-opus-5-5"
+  },
+  "database": {
+    "url": "duckdb:///data/tpch_sf01.duckdb",
+    "engine": "duckdb",
+    "engine_version": "2.0.1",
+    "file_sha256": "9a6859c7dad2fbf6fea4085b95ce1d453e29582b55d11bf2625ef5ce0ba734ee",
+    "tables": 8,
+    "columns": 61
+  },
+  "docs": "none",
+  "config": {
+    "shapes_toml_sha256": "e2539ca205ab3868170884e6226ac2acc06a326357ef6c504aa6bc8f1b7fbf89",
+    "eval_toml_sha256": "93dcef2ad43f97eb1e5f8da6868d2aecb6f96ce3db8d041f1840e8a8ba410b56",
+    "time_anchor": {
+      "setting": "off",
+      "mode": "off",
+      "date": null
+    }
+  },
+  "input": {
+    "n": 3,
+    "pool_size": 19,
+    "candidate_files": [
+      "candidates.json"
+    ],
+    "candidates_selected": 3,
+    "candidates_not_selected": 16,
+    "candidates_duplicate": 0,
+    "candidates_dropped": 0
+  }
+}

@@ -1,0 +1,1049 @@
+{
+  "database": {
+    "url": "duckdb:///data/tpch_sf01.duckdb",
+    "engine": "duckdb",
+    "engine_version": "2.0.1"
+  },
+  "tables": [
+    {
+      "name": "customer",
+      "rows": 15000,
+      "columns": [
+        {
+          "name": "c_custkey",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 15000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 15000,
+          "notes": []
+        },
+        {
+          "name": "c_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 15000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 18,
+          "max_length": 18,
+          "samples": [
+            "Customer#000000001",
+            "Customer#000000002",
+            "Customer#000000003"
+          ],
+          "notes": []
+        },
+        {
+          "name": "c_address",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 15000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 10,
+          "max_length": 40,
+          "samples": [
+            "   5L06W67,Mw8G",
+            "  fb1LA6BKjWwc,DQMqKnUTlx88ugWRvAny8xcTv",
+            "  udI60hnJb0IMvB67xQFfkgamLpP2Bwynf5P"
+          ],
+          "notes": []
+        },
+        {
+          "name": "c_nationkey",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 25,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 24,
+          "notes": []
+        },
+        {
+          "name": "c_phone",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 15000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 15,
+          "max_length": 15,
+          "samples": [
+            "10-103-318-6809",
+            "10-109-430-5638",
+            "10-109-684-5601"
+          ],
+          "notes": []
+        },
+        {
+          "name": "c_acctbal",
+          "type": "DECIMAL(15,2)",
+          "category": "number",
+          "distinct": 14887,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": -999.95,
+          "max": 9999.72,
+          "notes": []
+        },
+        {
+          "name": "c_mktsegment",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 5,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 8,
+          "max_length": 10,
+          "values": [
+            "AUTOMOBILE",
+            "BUILDING",
+            "FURNITURE",
+            "HOUSEHOLD",
+            "MACHINERY"
+          ],
+          "notes": []
+        },
+        {
+          "name": "c_comment",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 15000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 29,
+          "max_length": 116,
+          "samples": [
+            " Tiresias among the boldly regular pinto beans wake pending",
+            " Tiresias poach after the quickly special foxes. c",
+            " about the carefully ironic pinto beans. accoun"
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "lineitem",
+      "rows": 600572,
+      "columns": [
+        {
+          "name": "l_orderkey",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 150000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 600000,
+          "notes": []
+        },
+        {
+          "name": "l_partkey",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 20000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 20000,
+          "notes": []
+        },
+        {
+          "name": "l_suppkey",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1000,
+          "notes": []
+        },
+        {
+          "name": "l_linenumber",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 7,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 7,
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "notes": []
+        },
+        {
+          "name": "l_quantity",
+          "type": "DECIMAL(15,2)",
+          "category": "number",
+          "distinct": 50,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1.0,
+          "max": 50.0,
+          "notes": []
+        },
+        {
+          "name": "l_extendedprice",
+          "type": "DECIMAL(15,2)",
+          "category": "number",
+          "distinct": 130792,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 901.0,
+          "max": 95949.5,
+          "notes": []
+        },
+        {
+          "name": "l_discount",
+          "type": "DECIMAL(15,2)",
+          "category": "number",
+          "distinct": 11,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0.0,
+          "max": 0.1,
+          "notes": []
+        },
+        {
+          "name": "l_tax",
+          "type": "DECIMAL(15,2)",
+          "category": "number",
+          "distinct": 9,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0.0,
+          "max": 0.08,
+          "values": [
+            0.0,
+            0.01,
+            0.02,
+            0.03,
+            0.04,
+            0.05,
+            0.06,
+            0.07,
+            0.08
+          ],
+          "notes": []
+        },
+        {
+          "name": "l_returnflag",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "A",
+            "N",
+            "R"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "l_linestatus",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 2,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "F",
+            "O"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "l_shipdate",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 2525,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": "1992-01-03",
+          "max": "1998-12-01",
+          "notes": []
+        },
+        {
+          "name": "l_commitdate",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 2466,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": "1992-01-31",
+          "max": "1998-10-31",
+          "notes": []
+        },
+        {
+          "name": "l_receiptdate",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 2547,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": "1992-01-04",
+          "max": "1998-12-27",
+          "notes": []
+        },
+        {
+          "name": "l_shipinstruct",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 4,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 4,
+          "max_length": 17,
+          "values": [
+            "COLLECT COD",
+            "DELIVER IN PERSON",
+            "NONE",
+            "TAKE BACK RETURN"
+          ],
+          "notes": []
+        },
+        {
+          "name": "l_shipmode",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 7,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 3,
+          "max_length": 7,
+          "values": [
+            "AIR",
+            "FOB",
+            "MAIL",
+            "RAIL",
+            "REG AIR",
+            "SHIP",
+            "TRUCK"
+          ],
+          "notes": []
+        },
+        {
+          "name": "l_comment",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 538684,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 10,
+          "max_length": 43,
+          "samples": [
+            " Tiresias ",
+            " Tiresias above the stealthily p",
+            " Tiresias across the bold re"
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "nation",
+      "rows": 25,
+      "columns": [
+        {
+          "name": "n_nationkey",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 25,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 24,
+          "notes": []
+        },
+        {
+          "name": "n_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 25,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 4,
+          "max_length": 14,
+          "values": [
+            "ALGERIA",
+            "ARGENTINA",
+            "BRAZIL",
+            "CANADA",
+            "CHINA",
+            "EGYPT",
+            "ETHIOPIA",
+            "FRANCE",
+            "GERMANY",
+            "INDIA",
+            "INDONESIA",
+            "IRAN",
+            "IRAQ",
+            "JAPAN",
+            "JORDAN",
+            "KENYA",
+            "MOROCCO",
+            "MOZAMBIQUE",
+            "PERU",
+            "ROMANIA",
+            "RUSSIA",
+            "SAUDI ARABIA",
+            "UNITED KINGDOM",
+            "UNITED STATES",
+            "VIETNAM"
+          ],
+          "notes": []
+        },
+        {
+          "name": "n_regionkey",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 5,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 4,
+          "values": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "notes": []
+        },
+        {
+          "name": "n_comment",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 25,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 31,
+          "max_length": 114,
+          "values": [
+            " haggle. carefully final deposits detect slyly agai",
+            " pending excuses haggle furiously deposits. pending, express pinto beans wake fluffily past t",
+            " requests against the platelets use never according to the quickly regular pint",
+            " slyly express asymptotes. regular deposits haggle slyly. carefully ironic hockey players sleep blithely. carefull",
+            "al foxes promise slyly according to the regular accounts. bold requests alon",
+            "c dependencies. furiously express notornis sleep slyly regular accounts. ideas sleep. depos",
+            "eans boost carefully special requests. accounts are. carefull",
+            "eas hang ironic, silent packages. slyly regular packages are furiously over the tithes. fluffily bold",
+            "efully alongside of the slyly final dependencies. ",
+            "hely enticingly express accounts. even, final ",
+            "ic deposits are blithely about the carefully regular pa",
+            "l platelets. regular accounts x-ray: unusual, regular acco",
+            "nic deposits boost atop the quickly final requests? quickly regula",
+            "ously. final, express gifts cajole a",
+            "platelets. blithely pending dependencies use fluffily across the even pinto beans. carefully silent accoun",
+            "refully final requests. regular, ironi",
+            "rns. blithely bold courts among the closely regular packages use furiously bold platelets?",
+            "s. ironic, unusual asymptotes wake blithely r",
+            "ss excuses cajole slyly across the packages. deposits print aroun",
+            "ts. silent requests haggle. closely express packages sleep across the blithely",
+            "ular asymptotes are about the furious multipliers. express dependencies nag above the ironically ironic account",
+            "ven packages wake quickly. regu",
+            "y above the carefully unusual theodolites. final dugouts are quickly across the furiously regular d",
+            "y alongside of the pending deposits. carefully special packages are about the ironic forges. slyly special ",
+            "y final packages. slow foxes cajole quickly. quickly silent platelets breach ironic accounts. unusual pinto be"
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "orders",
+      "rows": 150000,
+      "columns": [
+        {
+          "name": "o_orderkey",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 150000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 600000,
+          "notes": []
+        },
+        {
+          "name": "o_custkey",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 10000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 14999,
+          "notes": []
+        },
+        {
+          "name": "o_orderstatus",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 3,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 1,
+          "max_length": 1,
+          "values": [
+            "F",
+            "O",
+            "P"
+          ],
+          "notes": [
+            "coded: meaning needs docs"
+          ]
+        },
+        {
+          "name": "o_totalprice",
+          "type": "DECIMAL(15,2)",
+          "category": "number",
+          "distinct": 149565,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 833.4,
+          "max": 479129.21,
+          "notes": []
+        },
+        {
+          "name": "o_orderdate",
+          "type": "DATE",
+          "category": "date",
+          "distinct": 2406,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": "1992-01-01",
+          "max": "1998-08-02",
+          "notes": []
+        },
+        {
+          "name": "o_orderpriority",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 5,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 15,
+          "values": [
+            "1-URGENT",
+            "2-HIGH",
+            "3-MEDIUM",
+            "4-NOT SPECIFIED",
+            "5-LOW"
+          ],
+          "notes": []
+        },
+        {
+          "name": "o_clerk",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 15,
+          "max_length": 15,
+          "samples": [
+            "Clerk#000000001",
+            "Clerk#000000002",
+            "Clerk#000000003"
+          ],
+          "notes": []
+        },
+        {
+          "name": "o_shippriority",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 1,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 0,
+          "values": [
+            0
+          ],
+          "notes": [
+            "constant in this data"
+          ]
+        },
+        {
+          "name": "o_comment",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 149770,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 19,
+          "max_length": 78,
+          "samples": [
+            " Tiresias about the blithely ironic a",
+            " Tiresias above the carefully ironic packages nag about the pend",
+            " Tiresias use deposits. carefully express deposits integrat"
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "part",
+      "rows": 20000,
+      "columns": [
+        {
+          "name": "p_partkey",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 20000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 20000,
+          "notes": []
+        },
+        {
+          "name": "p_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 20000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 21,
+          "max_length": 47,
+          "samples": [
+            "almond antique metallic honeydew green",
+            "almond antique orange white violet",
+            "almond aquamarine frosted tomato green"
+          ],
+          "notes": []
+        },
+        {
+          "name": "p_mfgr",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 5,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 14,
+          "max_length": 14,
+          "values": [
+            "Manufacturer#1",
+            "Manufacturer#2",
+            "Manufacturer#3",
+            "Manufacturer#4",
+            "Manufacturer#5"
+          ],
+          "notes": []
+        },
+        {
+          "name": "p_brand",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 25,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 8,
+          "max_length": 8,
+          "values": [
+            "Brand#11",
+            "Brand#12",
+            "Brand#13",
+            "Brand#14",
+            "Brand#15",
+            "Brand#21",
+            "Brand#22",
+            "Brand#23",
+            "Brand#24",
+            "Brand#25",
+            "Brand#31",
+            "Brand#32",
+            "Brand#33",
+            "Brand#34",
+            "Brand#35",
+            "Brand#41",
+            "Brand#42",
+            "Brand#43",
+            "Brand#44",
+            "Brand#45",
+            "Brand#51",
+            "Brand#52",
+            "Brand#53",
+            "Brand#54",
+            "Brand#55"
+          ],
+          "notes": []
+        },
+        {
+          "name": "p_type",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 150,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 16,
+          "max_length": 25,
+          "samples": [
+            "ECONOMY ANODIZED BRASS",
+            "ECONOMY ANODIZED COPPER",
+            "ECONOMY ANODIZED NICKEL"
+          ],
+          "notes": []
+        },
+        {
+          "name": "p_size",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 50,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 50,
+          "notes": []
+        },
+        {
+          "name": "p_container",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 40,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 6,
+          "max_length": 10,
+          "samples": [
+            "JUMBO BAG",
+            "JUMBO BOX",
+            "JUMBO CAN"
+          ],
+          "notes": []
+        },
+        {
+          "name": "p_retailprice",
+          "type": "DECIMAL(15,2)",
+          "category": "number",
+          "distinct": 2899,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 901.0,
+          "max": 1918.99,
+          "notes": []
+        },
+        {
+          "name": "p_comment",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 17482,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 5,
+          "max_length": 22,
+          "samples": [
+            " Tiresias boost a",
+            " Tiresias. furiou",
+            " Tiresias. quickly bus"
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "partsupp",
+      "rows": 80000,
+      "columns": [
+        {
+          "name": "ps_partkey",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 20000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 20000,
+          "notes": []
+        },
+        {
+          "name": "ps_suppkey",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1000,
+          "notes": []
+        },
+        {
+          "name": "ps_availqty",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 9996,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 9999,
+          "notes": []
+        },
+        {
+          "name": "ps_supplycost",
+          "type": "DECIMAL(15,2)",
+          "category": "number",
+          "distinct": 54983,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1.01,
+          "max": 999.99,
+          "notes": []
+        },
+        {
+          "name": "ps_comment",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 79991,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 49,
+          "max_length": 198,
+          "samples": [
+            " Tiresias haggle quickly upon the special instructions. blithely pending platelets across the bold",
+            " Tiresias print carefully regular requests. ironic accounts use quickly along the furiously even pearls. packages sleep furiously unusual asymptotes. furiously unusual hockey playe",
+            " Tiresias. carefully final instructions along the blithely re"
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "region",
+      "rows": 5,
+      "columns": [
+        {
+          "name": "r_regionkey",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 5,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 4,
+          "values": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "notes": []
+        },
+        {
+          "name": "r_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 5,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 4,
+          "max_length": 11,
+          "values": [
+            "AFRICA",
+            "AMERICA",
+            "ASIA",
+            "EUROPE",
+            "MIDDLE EAST"
+          ],
+          "notes": []
+        },
+        {
+          "name": "r_comment",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 5,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 31,
+          "max_length": 115,
+          "values": [
+            "ges. thinly even pinto beans ca",
+            "hs use ironic, even requests. s",
+            "lar deposits. blithely final packages cajole. regular waters are final requests. regular accounts are according to ",
+            "ly final courts cajole furiously final excuse",
+            "uickly special accounts cajole carefully blithely close requests. carefully final asymptotes haggle furiousl"
+          ],
+          "notes": []
+        }
+      ]
+    },
+    {
+      "name": "supplier",
+      "rows": 1000,
+      "columns": [
+        {
+          "name": "s_suppkey",
+          "type": "BIGINT",
+          "category": "number",
+          "distinct": 1000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 1,
+          "max": 1000,
+          "notes": []
+        },
+        {
+          "name": "s_name",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 18,
+          "max_length": 18,
+          "samples": [
+            "Supplier#000000001",
+            "Supplier#000000002",
+            "Supplier#000000003"
+          ],
+          "notes": []
+        },
+        {
+          "name": "s_address",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 10,
+          "max_length": 40,
+          "samples": [
+            " 0L8yoIwSCP4EJyESI 6bVH9k",
+            " 2mQLQsVJ8WLBSnl0R bXrcyTgqXKrplgxb",
+            " 3kCm2eN3Jra2UzvWWBm,P04b"
+          ],
+          "notes": []
+        },
+        {
+          "name": "s_nationkey",
+          "type": "INTEGER",
+          "category": "number",
+          "distinct": 25,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": 0,
+          "max": 24,
+          "notes": []
+        },
+        {
+          "name": "s_phone",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 15,
+          "max_length": 15,
+          "samples": [
+            "10-108-564-6160",
+            "10-119-372-1062",
+            "10-178-678-7353"
+          ],
+          "notes": []
+        },
+        {
+          "name": "s_acctbal",
+          "type": "DECIMAL(15,2)",
+          "category": "number",
+          "distinct": 999,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min": -966.2,
+          "max": 9993.46,
+          "notes": []
+        },
+        {
+          "name": "s_comment",
+          "type": "VARCHAR",
+          "category": "text",
+          "distinct": 1000,
+          "distinct_is_approximate": false,
+          "nulls": 0,
+          "min_length": 25,
+          "max_length": 100,
+          "samples": [
+            " according to the bravely quick dolphins. deposit",
+            " according to the ironic packages.",
+            " accounts detect slyly bo"
+          ],
+          "notes": []
+        }
+      ]
+    }
+  ],
+  "joins": [
+    {
+      "from": "customer.c_nationkey",
+      "to": "nation.n_nationkey",
+      "source": "inferred"
+    },
+    {
+      "from": "lineitem.l_orderkey",
+      "to": "orders.o_orderkey",
+      "source": "inferred"
+    },
+    {
+      "from": "lineitem.l_partkey",
+      "to": "part.p_partkey",
+      "source": "inferred"
+    },
+    {
+      "from": "lineitem.l_suppkey",
+      "to": "supplier.s_suppkey",
+      "source": "inferred"
+    },
+    {
+      "from": "nation.n_regionkey",
+      "to": "region.r_regionkey",
+      "source": "inferred"
+    },
+    {
+      "from": "orders.o_custkey",
+      "to": "customer.c_custkey",
+      "source": "inferred"
+    },
+    {
+      "from": "partsupp.ps_partkey",
+      "to": "part.p_partkey",
+      "source": "inferred"
+    },
+    {
+      "from": "partsupp.ps_suppkey",
+      "to": "supplier.s_suppkey",
+      "source": "inferred"
+    },
+    {
+      "from": "supplier.s_nationkey",
+      "to": "nation.n_nationkey",
+      "source": "inferred"
+    }
+  ],
+  "eligible": {
+    "tables": 8,
+    "columns": 61
+  }
+}

@@ -21,6 +21,7 @@ def _get(d: dict[str, Any], path: str) -> Any:
 # separately against each run's log.
 FIELDS = {
     "database file": "database.file_sha256",
+    "database data": "database.data_sha256",
     "docs": "docs",
     "time anchor date": "config.time_anchor.date",
     "shape legend": "config.shapes_toml_sha256",
@@ -34,6 +35,25 @@ def _model_from_log(log: Path) -> str | None:
     if not usage:
         return None
     return max(usage, key=lambda k: usage[k].get("costUSD", 0))
+
+
+def _claimed_vs_verified(qfile: Path, coverage_file: Path) -> list[str]:
+    """Coverage the generator claims (its labels) against coverage the judge verified from its own links.
+    Informational: a gap means the two readings of the questions differ, not that a file is inconsistent."""
+    questions = json.loads(qfile.read_text()).get("questions", [])
+    if not all("labels" in q for q in questions):
+        return ["note: questions.json has no generator labels (edited or hand-written), so claimed coverage isn't known"]
+    dims = json.loads(coverage_file.read_text())["dimensions"]
+    out = []
+    for d in ("tables", "columns", "shapes"):
+        claimed = set().union(*[set(q["labels"].get(d, [])) for q in questions]) if questions else set()
+        verified = set(dims[d]["covered"])
+        extra = sorted(claimed - verified)
+        out.append(
+            f"claimed vs verified {d}: generator {len(claimed)}, coverage judge {len(verified)}"
+            + (f"; claimed but not verified: {', '.join(extra)}" if extra else "")
+        )
+    return out
 
 
 def check_run(folder: Path) -> tuple[int, str]:
@@ -65,6 +85,8 @@ def check_run(folder: Path) -> tuple[int, str]:
         else:
             lines.append(f"{name}: ran on {actual}")
     qfile = folder / "questions.json"
+    if qfile.exists() and "coverage" in metas:
+        lines += _claimed_vs_verified(qfile, folder / "coverage.json")
     if qfile.exists():
         current = sha256_file(qfile)
         for name in ("correctness", "coverage"):

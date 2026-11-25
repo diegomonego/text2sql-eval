@@ -20,7 +20,7 @@ from .db import connect
 from .generator import _anchor, _docs_md, _write_json
 from .legend import load_legend, render_legend_md
 from .links import Analysis, Link, LinkChecker, label_check, link_record
-from .meta import build_meta, list_docs, sha256_file
+from .meta import build_meta, list_docs, resolve_inputs, saved_inputs, sha256_file, show_path
 from .questions import judge_view, load_questions
 from .render import render_correctness_md, render_coverage_md
 from .schema_card import NOTE_CODED, NOTE_CONSTANT, build_schema_card, render_schema_card_md
@@ -56,19 +56,33 @@ def _work(out: Path, judge: str) -> Path:
     return out / "work" / judge
 
 
-def prepare(cfg: Config, judge: str, questions_path: Path, out: Path, no_docs: bool, anchor_setting: str | None) -> str:
+def prepare(
+    cfg: Config,
+    judge: str,
+    questions_path: Path,
+    out: Path,
+    no_docs: bool,
+    anchor_setting: str | None,
+    db_url: str | None = None,
+    docs: str | None = None,
+) -> str:
+    db_url, docs_dir = resolve_inputs(cfg, db_url, docs, no_docs)
     questions, warnings = load_questions(questions_path)
     work = _work(out, judge)
     work.mkdir(parents=True, exist_ok=True)
     raw_path = work / "raw.json"
     if raw_path.exists():
         raw_path.unlink()
-    db = connect(cfg.db_url, cfg.root)
+    db = connect(db_url, cfg.root)
     legend = load_legend(cfg.shapes_path)
     card = build_schema_card(db, cfg.max_listed_values)
     anchor = _anchor(cfg, anchor_setting, db)
-    docs = list_docs(cfg, no_docs)
-    _write_json(work / "settings.json", {"questions": str(questions_path), "no_docs": no_docs, "anchor": anchor})
+    docs = list_docs(cfg, no_docs, docs_dir)
+    _write_json(
+        work / "settings.json",
+        {"questions": show_path(questions_path.resolve(), cfg.root), "db_url": db_url,
+         "docs_dir": show_path(docs_dir, cfg.root), "no_docs": no_docs, "anchor": anchor},
+    )
     _write_json(work / "schema_card.json", card)
     (work / "schema_card.md").write_text(render_schema_card_md(card, docs_supplied=bool(docs)))
     _write_json(work / "questions_for_judge.json", {"questions": judge_view(questions)})
@@ -354,10 +368,11 @@ def finalize(cfg: Config, judge: str, questions_path: Path, out: Path, accept_is
     fmt += _id_issues(questions, [it.id for it in items])
     if fmt:
         return 2, "FORMAT PROBLEMS in raw.json (fix and run again):\n" + "\n".join(f"- {x}" for x in fmt)
-    db = connect(cfg.db_url, cfg.root)
+    db_url, docs_dir = saved_inputs(cfg, settings)  # the same inputs judge-prepare used
+    db = connect(db_url, cfg.root)
     legend = load_legend(cfg.shapes_path)
     checker = LinkChecker(card, db, legend)
-    docs = list_docs(cfg, settings["no_docs"])
+    docs = list_docs(cfg, settings["no_docs"], docs_dir)
     if judge == "correctness":
         results, summary, issues = evaluate_correctness(questions, items, checker)
         body: dict[str, Any] = {"results": results, "summary": summary}
@@ -384,6 +399,6 @@ def finalize(cfg: Config, judge: str, questions_path: Path, out: Path, accept_is
     md = render_correctness_md(report) if judge == "correctness" else render_coverage_md(report)
     (out / f"{judge}.md").write_text(md)
     db.close()
-    return 0, f"Wrote {out / (judge + '.json')} and {judge}.md. Score: {summary['score']} ({summary['calculation']})." + (
+    return 0, f"Wrote {show_path(out / (judge + '.json'), cfg.root)} and {judge}.md. Score: {summary['score']} ({summary['calculation']})." + (
         f" {len(issues)} evidence issue(s) flagged." if issues else ""
     )

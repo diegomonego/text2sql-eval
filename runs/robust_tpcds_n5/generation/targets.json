@@ -1,0 +1,118 @@
+[
+  {
+    "id": "t01",
+    "kind": "targeted",
+    "shape": "lookup",
+    "focus_table": "time_dim"
+  },
+  {
+    "id": "t02",
+    "kind": "targeted",
+    "shape": "aggregation",
+    "focus_table": "date_dim"
+  },
+  {
+    "id": "t03",
+    "kind": "targeted",
+    "shape": "multi_join",
+    "focus_table": "store_sales"
+  },
+  {
+    "id": "t04",
+    "kind": "targeted",
+    "shape": "ranking",
+    "focus_table": "inventory"
+  },
+  {
+    "id": "t05",
+    "kind": "targeted",
+    "shape": "time_trend",
+    "focus_table": "customer_demographics"
+  },
+  {
+    "id": "t06",
+    "kind": "targeted",
+    "shape": "ratio",
+    "focus_table": "catalog_sales"
+  },
+  {
+    "id": "t07",
+    "kind": "targeted",
+    "shape": "vs_aggregate",
+    "focus_table": "catalog_page"
+  },
+  {
+    "id": "t08",
+    "kind": "targeted",
+    "shape": "anti_join",
+    "focus_table": "web_sales"
+  },
+  {
+    "id": "t09",
+    "kind": "targeted",
+    "shape": "lookup",
+    "focus_table": "store_returns"
+  },
+  {
+    "id": "t10",
+    "kind": "targeted",
+    "shape": "aggregation",
+    "focus_table": "catalog_returns"
+  },
+  {
+    "id": "t11",
+    "kind": "targeted",
+    "shape": "multi_join",
+    "focus_table": "customer"
+  },
+  {
+    "id": "t12",
+    "kind": "targeted",
+    "shape": "ranking",
+    "focus_table": "web_returns"
+  },
+  {
+    "id": "t13",
+    "kind": "targeted",
+    "shape": "time_trend",
+    "focus_table": "customer_address"
+  },
+  {
+    "id": "t14",
+    "kind": "targeted",
+    "shape": "ratio",
+    "focus_table": "item"
+  },
+  {
+    "id": "t15",
+    "kind": "targeted",
+    "shape": "vs_aggregate",
+    "focus_table": "income_band"
+  },
+  {
+    "id": "t16",
+    "kind": "targeted",
+    "shape": "anti_join",
+    "focus_table": "ship_mode"
+  },
+  {
+    "id": "f01",
+    "kind": "free"
+  },
+  {
+    "id": "f02",
+    "kind": "free"
+  },
+  {
+    "id": "f03",
+    "kind": "free"
+  },
+  {
+    "id": "f04",
+    "kind": "free"
+  },
+  {
+    "id": "f05",
+    "kind": "free"
+  }
+]

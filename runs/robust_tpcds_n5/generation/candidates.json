@@ -1,0 +1,182 @@
+{"candidates": [
+  {"target": "t01",
+   "question": "Which hours of the day fall within the lunch meal period?",
+   "links": [
+     {"phrase": "Which", "kind": "shape", "shape": "lookup"},
+     {"phrase": "hours of the day", "kind": "column", "columns": ["time_dim.t_hour"]},
+     {"phrase": "lunch meal period", "kind": "column", "columns": ["time_dim.t_meal_time"], "value": "lunch"}
+   ]},
+  {"target": "t02",
+   "question": "What was the total net profit from store sales for each day of the week in 2001?",
+   "links": [
+     {"phrase": "total … for each", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "net profit from store sales", "kind": "column", "columns": ["store_sales.ss_net_profit"]},
+     {"phrase": "day of the week", "kind": "column", "columns": ["date_dim.d_day_name"]},
+     {"phrase": "in 2001", "kind": "column", "columns": ["date_dim.d_year"], "value": "2001"}
+   ]},
+  {"target": "t03",
+   "question": "What was the total coupon amount used in store purchases per item category by households in the >10000 buying potential band?",
+   "links": [
+     {"phrase": "total … per", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "coupon amount used in store purchases", "kind": "column", "columns": ["store_sales.ss_coupon_amt"]},
+     {"phrase": "item category", "kind": "column", "columns": ["item.i_category"]},
+     {"phrase": "households in the >10000 buying potential band", "kind": "column", "columns": ["household_demographics.hd_buy_potential"], "value": ">10000"}
+   ]},
+  {"target": "t04",
+   "question": "Which 10 products had the highest average quantity on hand in inventory during 2001?",
+   "links": [
+     {"phrase": "10 … highest", "kind": "shape", "shape": "ranking"},
+     {"phrase": "average", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "products", "kind": "column", "columns": ["item.i_product_name"]},
+     {"phrase": "quantity on hand in inventory", "kind": "column", "columns": ["inventory.inv_quantity_on_hand"]},
+     {"phrase": "during 2001", "kind": "column", "columns": ["date_dim.d_year"], "value": "2001"}
+   ]},
+  {"target": "t05",
+   "question": "How did the total quantity bought in stores by customers with an Advanced Degree change year by year from 1998 to 2002?",
+   "links": [
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "year by year", "kind": "shape", "shape": "time_trend"},
+     {"phrase": "year by year", "kind": "column", "columns": ["date_dim.d_year"]},
+     {"phrase": "quantity bought in stores", "kind": "column", "columns": ["store_sales.ss_quantity"]},
+     {"phrase": "customers with an Advanced Degree", "kind": "column", "columns": ["customer_demographics.cd_education_status"], "value": "Advanced Degree"},
+     {"phrase": "from 1998 to 2002", "kind": "column", "columns": ["date_dim.d_year"], "value": "1998..2002"}
+   ]},
+  {"target": "t06",
+   "question": "What share of the total catalog shipping cost in 2000 was spent on orders shipped OVERNIGHT?",
+   "links": [
+     {"phrase": "share", "kind": "shape", "shape": "ratio"},
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "catalog shipping cost", "kind": "column", "columns": ["catalog_sales.cs_ext_ship_cost"]},
+     {"phrase": "in 2000", "kind": "column", "columns": ["date_dim.d_year"], "value": "2000"},
+     {"phrase": "shipped OVERNIGHT", "kind": "column", "columns": ["ship_mode.sm_type"], "value": "OVERNIGHT"}
+   ]},
+  {"target": "t07",
+   "question": "Which catalog pages, identified by catalog number and page number, had total catalog sales in 2000 above the average for pages of the same catalog type?",
+   "links": [
+     {"phrase": "above the average", "kind": "shape", "shape": "vs_aggregate"},
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "catalog pages", "kind": "table", "table": "catalog_page"},
+     {"phrase": "catalog number", "kind": "column", "columns": ["catalog_page.cp_catalog_number"]},
+     {"phrase": "page number", "kind": "column", "columns": ["catalog_page.cp_catalog_page_number"]},
+     {"phrase": "catalog sales", "kind": "column", "columns": ["catalog_sales.cs_ext_sales_price"]},
+     {"phrase": "in 2000", "kind": "column", "columns": ["date_dim.d_year"], "value": "2000"},
+     {"phrase": "same catalog type", "kind": "column", "columns": ["catalog_page.cp_type"]}
+   ]},
+  {"target": "t08",
+   "question": "List the names of customers born in 1980 or later who have never bought anything through the website.",
+   "links": [
+     {"phrase": "never", "kind": "shape", "shape": "anti_join"},
+     {"phrase": "names", "kind": "column", "columns": ["customer.c_first_name", "customer.c_last_name"]},
+     {"phrase": "customers", "kind": "table", "table": "customer"},
+     {"phrase": "born in 1980 or later", "kind": "column", "columns": ["customer.c_birth_year"], "value": "1980..1992"},
+     {"phrase": "bought anything through the website", "kind": "table", "table": "web_sales"}
+   ]},
+  {"target": "t09",
+   "question": "List the return quantity, refunded cash and store credit for every store return with a net loss above 6,000.",
+   "links": [
+     {"phrase": "List", "kind": "shape", "shape": "lookup"},
+     {"phrase": "return quantity", "kind": "column", "columns": ["store_returns.sr_return_quantity"]},
+     {"phrase": "refunded cash", "kind": "column", "columns": ["store_returns.sr_refunded_cash"]},
+     {"phrase": "store credit", "kind": "column", "columns": ["store_returns.sr_store_credit"]},
+     {"phrase": "store return", "kind": "table", "table": "store_returns"},
+     {"phrase": "net loss above 6,000", "kind": "column", "columns": ["store_returns.sr_net_loss"], "value": "6000"}
+   ]},
+  {"target": "t10",
+   "question": "What was the average return shipping cost of catalog returns per shipping carrier in 2001?",
+   "links": [
+     {"phrase": "average … per", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "return shipping cost of catalog returns", "kind": "column", "columns": ["catalog_returns.cr_return_ship_cost"]},
+     {"phrase": "shipping carrier", "kind": "column", "columns": ["ship_mode.sm_carrier"]},
+     {"phrase": "in 2001", "kind": "column", "columns": ["date_dim.d_year"], "value": "2001"}
+   ]},
+  {"target": "t11",
+   "question": "What was the total discount amount given on web sales in 2002 to customers born before 1950, by item category?",
+   "links": [
+     {"phrase": "total … by", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "discount amount given on web sales", "kind": "column", "columns": ["web_sales.ws_ext_discount_amt"]},
+     {"phrase": "in 2002", "kind": "column", "columns": ["date_dim.d_year"], "value": "2002"},
+     {"phrase": "customers born before 1950", "kind": "column", "columns": ["customer.c_birth_year"], "value": "1924..1949"},
+     {"phrase": "item category", "kind": "column", "columns": ["item.i_category"]}
+   ]},
+  {"target": "t12",
+   "question": "Which 5 brands received the most account credit on web returns in 2002?",
+   "links": [
+     {"phrase": "5 … most", "kind": "shape", "shape": "ranking"},
+     {"phrase": "brands", "kind": "column", "columns": ["item.i_brand"]},
+     {"phrase": "account credit on web returns", "kind": "column", "columns": ["web_returns.wr_account_credit"]},
+     {"phrase": "in 2002", "kind": "column", "columns": ["date_dim.d_year"], "value": "2002"}
+   ]},
+  {"target": "t13",
+   "question": "How many customer addresses are there for each location type within each time zone offset?",
+   "links": [
+     {"phrase": "How many … for each", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "customer addresses", "kind": "table", "table": "customer_address"},
+     {"phrase": "location type", "kind": "column", "columns": ["customer_address.ca_location_type"]},
+     {"phrase": "time zone offset", "kind": "column", "columns": ["customer_address.ca_gmt_offset"]}
+   ]},
+  {"target": "t14",
+   "question": "What percentage of items in the Women category come in petite size?",
+   "links": [
+     {"phrase": "percentage", "kind": "shape", "shape": "ratio"},
+     {"phrase": "items", "kind": "table", "table": "item"},
+     {"phrase": "Women category", "kind": "column", "columns": ["item.i_category"], "value": "Women"},
+     {"phrase": "petite size", "kind": "column", "columns": ["item.i_size"], "value": "petite"}
+   ]},
+  {"target": "t15",
+   "question": "Which income bands, shown by lower and upper bound, have more customers than the average across all income bands?",
+   "links": [
+     {"phrase": "more customers than the average", "kind": "shape", "shape": "vs_aggregate"},
+     {"phrase": "income bands", "kind": "table", "table": "income_band"},
+     {"phrase": "lower and upper bound", "kind": "column", "columns": ["income_band.ib_lower_bound", "income_band.ib_upper_bound"]},
+     {"phrase": "customers", "kind": "table", "table": "customer"}
+   ]},
+  {"target": "t16",
+   "question": "Which shipping carriers were not used for any catalog returns in the first quarter of 2001?",
+   "links": [
+     {"phrase": "not used for any", "kind": "shape", "shape": "anti_join"},
+     {"phrase": "shipping carriers", "kind": "column", "columns": ["ship_mode.sm_carrier"]},
+     {"phrase": "catalog returns", "kind": "table", "table": "catalog_returns"},
+     {"phrase": "first quarter of 2001", "kind": "column", "columns": ["date_dim.d_date"], "value": "2001-Q1"}
+   ]},
+  {"target": "f01",
+   "question": "What is the average markup of current price over wholesale cost for items in each category?",
+   "links": [
+     {"phrase": "average … each", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "markup of current price over wholesale cost", "kind": "column", "columns": ["item.i_current_price", "item.i_wholesale_cost"]},
+     {"phrase": "items", "kind": "table", "table": "item"},
+     {"phrase": "category", "kind": "column", "columns": ["item.i_category"]}
+   ]},
+  {"target": "f02",
+   "question": "What was the total sales tax collected on catalog sales per promotion name in 2000?",
+   "links": [
+     {"phrase": "total … per", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "sales tax collected on catalog sales", "kind": "column", "columns": ["catalog_sales.cs_ext_tax"]},
+     {"phrase": "promotion name", "kind": "column", "columns": ["promotion.p_promo_name"]},
+     {"phrase": "in 2000", "kind": "column", "columns": ["date_dim.d_year"], "value": "2000"}
+   ]},
+  {"target": "f03",
+   "question": "How did monthly net profit from web sales evolve over 2001?",
+   "links": [
+     {"phrase": "monthly", "kind": "shape", "shape": "time_trend"},
+     {"phrase": "monthly", "kind": "column", "columns": ["date_dim.d_moy"]},
+     {"phrase": "net profit from web sales", "kind": "column", "columns": ["web_sales.ws_net_profit"]},
+     {"phrase": "over 2001", "kind": "column", "columns": ["date_dim.d_year"], "value": "2001"}
+   ]},
+  {"target": "f04",
+   "question": "How many store returns were made in each sub-shift of the day in 2000?",
+   "links": [
+     {"phrase": "How many … each", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "store returns", "kind": "table", "table": "store_returns"},
+     {"phrase": "sub-shift of the day", "kind": "column", "columns": ["time_dim.t_sub_shift"]},
+     {"phrase": "in 2000", "kind": "column", "columns": ["date_dim.d_year"], "value": "2000"}
+   ]},
+  {"target": "f05",
+   "question": "What proportion of total web sales net paid in 2001 came from buyers with a High Risk credit rating?",
+   "links": [
+     {"phrase": "proportion", "kind": "shape", "shape": "ratio"},
+     {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+     {"phrase": "web sales net paid", "kind": "column", "columns": ["web_sales.ws_net_paid"]},
+     {"phrase": "in 2001", "kind": "column", "columns": ["date_dim.d_year"], "value": "2001"},
+     {"phrase": "buyers with a High Risk credit rating", "kind": "column", "columns": ["customer_demographics.cd_credit_rating"], "value": "High Risk"}
+   ]}
+]}

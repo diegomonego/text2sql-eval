@@ -13,6 +13,10 @@ dependencies = [
 t2s = "t2s_eval.cli:main"
 
 [dependency-groups]
+calibration = [
+    "numpy>=2.5.5",
+    "sqlglot>=30.35.0",
+]
 dev = ["pytest>=8"]
 
 [build-system]

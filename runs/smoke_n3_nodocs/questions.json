@@ -1,0 +1,65 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "text": "Which 10 customers received the largest total discount amount, measured as extended price times discount rate, on orders placed in 1997?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q02",
+      "text": "Which 5 suppliers hold the largest total available quantity of parts of size 50?",
+      "labels": {
+        "tables": [
+          "part",
+          "partsupp",
+          "supplier"
+        ],
+        "columns": [
+          "part.p_size",
+          "partsupp.ps_availqty"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q03",
+      "text": "Which nations in the AMERICA region have an average customer account balance above the average for the region as a whole?",
+      "labels": {
+        "tables": [
+          "customer",
+          "nation",
+          "region"
+        ],
+        "columns": [
+          "customer.c_acctbal",
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "vs_aggregate"
+        ]
+      }
+    }
+  ]
+}

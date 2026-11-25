@@ -37,6 +37,9 @@ def main(argv: list[str] | None = None) -> None:
     g.add_argument("--out", required=True)
     g.add_argument("--no-docs", action="store_true")
     g.add_argument("--anchor", default=None, help="auto | off | YYYY-MM-DD (default: config)")
+    g.add_argument("--preset", default=None, help="generator preset from config/eval.toml [presets] (default: its `default`)")
+    g.add_argument("--db", default=None, help="database connection URL, e.g. duckdb:///data/tpch_sf01.duckdb (default: config)")
+    g.add_argument("--docs", default=None, help="folder of .md/.txt semantic docs (default: config); --no-docs runs without")
 
     s = sub.add_parser("gen-select", help="generator step 2: check, dedupe and select exactly N")
     s.add_argument("--out", required=True)
@@ -47,6 +50,8 @@ def main(argv: list[str] | None = None) -> None:
     jp.add_argument("--out", required=True)
     jp.add_argument("--no-docs", action="store_true")
     jp.add_argument("--anchor", default=None)
+    jp.add_argument("--db", default=None, help="database connection URL (default: config)")
+    jp.add_argument("--docs", default=None, help="folder of .md/.txt semantic docs (default: config)")
 
     jf = sub.add_parser("judge-finalize", help="judge step 2: check links, compute scores, write reports")
     jf.add_argument("--judge", choices=["correctness", "coverage"], required=True)
@@ -93,7 +98,7 @@ def main(argv: list[str] | None = None) -> None:
     elif args.cmd == "gen-prepare":
         from .generator import prepare
 
-        msg = prepare(cfg, args.n, cfg.resolve(args.out), args.no_docs, args.anchor)
+        msg = prepare(cfg, args.n, cfg.resolve(args.out), args.no_docs, args.anchor, args.preset, args.db, args.docs)
     elif args.cmd == "gen-select":
         from .generator import select
 
@@ -101,7 +106,7 @@ def main(argv: list[str] | None = None) -> None:
     elif args.cmd == "judge-prepare":
         from .judges import prepare as jprepare
 
-        msg = jprepare(cfg, args.judge, cfg.resolve(args.questions), cfg.resolve(args.out), args.no_docs, args.anchor)
+        msg = jprepare(cfg, args.judge, cfg.resolve(args.questions), cfg.resolve(args.out), args.no_docs, args.anchor, args.db, args.docs)
     elif args.cmd == "judge-finalize":
         from .judges import finalize
 

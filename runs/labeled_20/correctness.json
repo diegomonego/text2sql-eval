@@ -1,0 +1,1706 @@
+{
+  "meta": {
+    "run": {
+      "timestamp_utc": "2026-11-25T15:23:29+00:00",
+      "component": "correctness_judge",
+      "git": {
+        "commit": "7cd82794b736dc1a0b94a142382d6c4310cd0cbb",
+        "uncommitted_changes": true
+      },
+      "claude_code_version": "2.1.331 (Claude Code)",
+      "model": "claude-opus-5-5",
+      "skill_sha256": "6c3d583f2e6f3ae76e35e015cf4272e115a3382b3941677eeed39993c2330a6e"
+    },
+    "database": {
+      "url": "duckdb:///data/tpch_sf01.duckdb",
+      "engine": "duckdb",
+      "engine_version": "2.0.1",
+      "file_sha256": "9a6859c7dad2fbf6fea4085b95ce1d453e29582b55d11bf2625ef5ce0ba734ee",
+      "data_sha256": "2df9fef25352f1a5be0f2cb6428ed5b0ed5026fff544044cc338b9752fd77127",
+      "tables": 8,
+      "columns": 61
+    },
+    "docs": [
+      {
+        "path": "semantic_docs/tpch/glossary.md",
+        "sha256": "09b524aabe1802cd6fec34505f2d8b8965293e34c6717080e3239fe3e1dd0b37"
+      },
+      {
+        "path": "semantic_docs/tpch/spec/clause1_database_design.md",
+        "sha256": "6fc1cb6613cb1f5c7bf76fa776ed37db47e270e2dfa0f104f0b4c3075e53e9df"
+      },
+      {
+        "path": "semantic_docs/tpch/spec/clause4_data_generation.md",
+        "sha256": "e781343888e0673ca99844444a36de3de5ecb8612b2e41935c3fb1203cffa115"
+      }
+    ],
+    "config": {
+      "shapes_toml_sha256": "b292990befb8d8a3611e95253c2a16e9232ef84feb35a7b12825c4a929e97629",
+      "eval_toml_sha256": "949fff8732841bcc406bd78cfd2edf2acc52e2697937c30bef995fa02b24f7cf",
+      "eval_toml": "config/eval.toml",
+      "time_anchor": {
+        "setting": "auto",
+        "mode": "auto",
+        "date": "1998-08-02"
+      }
+    },
+    "input": {
+      "questions_file": "runs/labeled_20/questions.json",
+      "questions_sha256": "816641734de0640ee7ea5860edf9ca8feded6c33b8995bb0e609fc949949f5eb",
+      "n": 20,
+      "issues_accepted": 0
+    }
+  },
+  "results": [
+    {
+      "id": "l01",
+      "text": "What is the average price of a part?",
+      "verdict": "AMBIGUOUS",
+      "rationale": "\"Price of a part\" fits the list price part.p_retailprice, the supply cost partsupp.ps_supplycost (what the wholesaler pays per unit), and the realized per-unit selling price from lineitem (extended price after discount over quantity). The docs don't say which one 'price' means, and the averages differ a lot (about 1,400 vs about 500).",
+      "links": [
+        {
+          "phrase": "average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "part",
+          "kind": "table",
+          "table": "part",
+          "check": "pass"
+        },
+        {
+          "phrase": "price",
+          "kind": "column",
+          "columns": [
+            "part.p_retailprice"
+          ],
+          "alternatives": [
+            [
+              "partsupp.ps_supplycost"
+            ],
+            [
+              "lineitem.l_extendedprice",
+              "lineitem.l_discount",
+              "lineitem.l_quantity"
+            ]
+          ],
+          "check": "pass"
+        }
+      ],
+      "readings": [
+        {
+          "description": "price = the part's list price, averaged over all parts (AVG p_retailprice)",
+          "links": [
+            {
+              "phrase": "average",
+              "kind": "shape",
+              "shape": "aggregation",
+              "check": "pass"
+            },
+            {
+              "phrase": "price of a part",
+              "kind": "column",
+              "columns": [
+                "part.p_retailprice"
+              ],
+              "check": "pass"
+            }
+          ]
+        },
+        {
+          "description": "price = the supply cost suppliers charge per unit (AVG ps_supplycost)",
+          "links": [
+            {
+              "phrase": "average",
+              "kind": "shape",
+              "shape": "aggregation",
+              "check": "pass"
+            },
+            {
+              "phrase": "price of a part",
+              "kind": "column",
+              "columns": [
+                "partsupp.ps_supplycost"
+              ],
+              "check": "pass"
+            }
+          ]
+        },
+        {
+          "description": "price = realized unit selling price on line items, l_extendedprice*(1-l_discount)/l_quantity",
+          "links": [
+            {
+              "phrase": "average",
+              "kind": "shape",
+              "shape": "aggregation",
+              "check": "pass"
+            },
+            {
+              "phrase": "price of a part",
+              "kind": "column",
+              "columns": [
+                "lineitem.l_extendedprice",
+                "lineitem.l_discount",
+                "lineitem.l_quantity"
+              ],
+              "check": "pass"
+            }
+          ]
+        }
+      ],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "part"
+        ],
+        "columns": [],
+        "shapes": [
+          "aggregation"
+        ],
+        "join_path": [
+          "part"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l02",
+      "text": "What is the average customer satisfaction rating per market segment?",
+      "verdict": "MISSING_DATA",
+      "rationale": "Market segment is customer.c_mktsegment, but no table stores satisfaction ratings or feedback, and none can be derived (comments are generated filler text, per the glossary's 'Free text').",
+      "links": [
+        {
+          "phrase": "average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "customer satisfaction rating",
+          "kind": "missing",
+          "concept": "customer satisfaction rating",
+          "closest": [
+            "customer.c_comment",
+            "lineitem.l_returnflag"
+          ],
+          "why_not": "no rating, survey or feedback column exists; comments are random generated text",
+          "check": "pass"
+        },
+        {
+          "phrase": "per market segment",
+          "kind": "column",
+          "columns": [
+            "customer.c_mktsegment"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "per",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [
+        {
+          "phrase": "customer satisfaction rating",
+          "concept": "customer satisfaction rating",
+          "closest": [
+            "customer.c_comment",
+            "lineitem.l_returnflag"
+          ],
+          "why_not": "no rating, survey or feedback column exists; comments are random generated text"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "customer"
+        ],
+        "columns": [
+          "customer.c_mktsegment"
+        ],
+        "shapes": [
+          "aggregation"
+        ],
+        "join_path": [
+          "customer"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l03",
+      "text": "Which clerks exceeded their quarterly sales targets in 1996?",
+      "verdict": "MISSING_DATA",
+      "rationale": "Clerks are orders.o_clerk and 1996 sales can be computed, but the schema has no sales targets or quotas for clerks, so 'exceeded their targets' can't be evaluated.",
+      "links": [
+        {
+          "phrase": "clerks",
+          "kind": "column",
+          "columns": [
+            "orders.o_clerk"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "quarterly sales targets",
+          "kind": "missing",
+          "concept": "per-clerk quarterly sales target",
+          "closest": [
+            "orders.o_clerk",
+            "orders.o_totalprice"
+          ],
+          "why_not": "no target or quota data exists for clerks; only the actual orders they handled",
+          "check": "pass"
+        },
+        {
+          "phrase": "in 1996",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1996",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [
+        {
+          "phrase": "quarterly sales targets",
+          "concept": "per-clerk quarterly sales target",
+          "closest": [
+            "orders.o_clerk",
+            "orders.o_totalprice"
+          ],
+          "why_not": "no target or quota data exists for clerks; only the actual orders they handled"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "orders"
+        ],
+        "columns": [
+          "orders.o_clerk",
+          "orders.o_orderdate"
+        ],
+        "shapes": [],
+        "join_path": [
+          "orders"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l04",
+      "text": "What was the average number of orders per customer in 1995?",
+      "verdict": "AMBIGUOUS",
+      "rationale": "Orders in 1995 are counted on orders.o_orderdate, but the denominator 'per customer' could be only the customers who ordered in 1995 or all 15,000 customers in customer (a third of them never order, per the spec). The two averages differ materially.",
+      "links": [
+        {
+          "phrase": "average number of",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "orders",
+          "kind": "table",
+          "table": "orders",
+          "check": "pass"
+        },
+        {
+          "phrase": "per customer",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "in 1995",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1995",
+          "check": "pass"
+        }
+      ],
+      "readings": [
+        {
+          "description": "average over customers who placed at least one order in 1995 (orders only, no join)",
+          "links": [
+            {
+              "phrase": "average number of",
+              "kind": "shape",
+              "shape": "aggregation",
+              "check": "pass"
+            },
+            {
+              "phrase": "orders",
+              "kind": "table",
+              "table": "orders",
+              "check": "pass"
+            },
+            {
+              "phrase": "per customer",
+              "kind": "column",
+              "columns": [
+                "orders.o_custkey"
+              ],
+              "check": "pass"
+            },
+            {
+              "phrase": "in 1995",
+              "kind": "column",
+              "columns": [
+                "orders.o_orderdate"
+              ],
+              "value": "1995",
+              "check": "pass"
+            }
+          ]
+        },
+        {
+          "description": "average over all customers in the customer table, counting zero for those with no 1995 orders",
+          "links": [
+            {
+              "phrase": "average number of",
+              "kind": "shape",
+              "shape": "aggregation",
+              "check": "pass"
+            },
+            {
+              "phrase": "orders",
+              "kind": "table",
+              "table": "orders",
+              "check": "pass"
+            },
+            {
+              "phrase": "per customer",
+              "kind": "table",
+              "table": "customer",
+              "check": "pass"
+            },
+            {
+              "phrase": "in 1995",
+              "kind": "column",
+              "columns": [
+                "orders.o_orderdate"
+              ],
+              "value": "1995",
+              "check": "pass"
+            }
+          ]
+        }
+      ],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "customer",
+          "orders"
+        ],
+        "columns": [
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "aggregation"
+        ],
+        "join_path": [
+          "customer",
+          "orders"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l05",
+      "text": "Which 10 parts of size 50 have the lowest total available quantity across all suppliers?",
+      "verdict": "ANSWERABLE",
+      "rationale": "Filter part.p_size = 50, sum partsupp.ps_availqty over each part's supplier rows, and return the 10 smallest totals. 'Available quantity' is ps_availqty per the glossary (Parts).",
+      "links": [
+        {
+          "phrase": "10",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "lowest",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "parts",
+          "kind": "table",
+          "table": "part",
+          "check": "pass"
+        },
+        {
+          "phrase": "size 50",
+          "kind": "column",
+          "columns": [
+            "part.p_size"
+          ],
+          "value": 50,
+          "check": "pass"
+        },
+        {
+          "phrase": "total",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "available quantity",
+          "kind": "column",
+          "columns": [
+            "partsupp.ps_availqty"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "across all suppliers",
+          "kind": "table",
+          "table": "partsupp",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "part",
+          "partsupp"
+        ],
+        "columns": [
+          "part.p_size",
+          "partsupp.ps_availqty"
+        ],
+        "shapes": [
+          "aggregation",
+          "ranking"
+        ],
+        "join_path": [
+          "part",
+          "partsupp"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l06",
+      "text": "What is the population of GERMANY?",
+      "verdict": "MISSING_DATA",
+      "rationale": "GERMANY is a nation.n_name value, but the nation table holds only key, name, region and filler comment; no population or demographic data exists.",
+      "links": [
+        {
+          "phrase": "population",
+          "kind": "missing",
+          "concept": "country population",
+          "closest": [
+            "nation.n_name",
+            "nation.n_comment"
+          ],
+          "why_not": "the nation table has no population or demographic attribute",
+          "check": "pass"
+        },
+        {
+          "phrase": "GERMANY",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "value": "GERMANY",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [
+        {
+          "phrase": "population",
+          "concept": "country population",
+          "closest": [
+            "nation.n_name",
+            "nation.n_comment"
+          ],
+          "why_not": "the nation table has no population or demographic attribute"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "nation"
+        ],
+        "columns": [
+          "nation.n_name"
+        ],
+        "shapes": [],
+        "join_path": [
+          "nation"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l07",
+      "text": "In which countries is the average account balance of customers higher than the overall average for all customers?",
+      "verdict": "ANSWERABLE",
+      "rationale": "Average customer.c_acctbal per customer nation (nation.n_name via c_nationkey), keeping nations whose average is above AVG(c_acctbal) over all customers. Only customers are involved, so 'countries' can only be the customers' nation.",
+      "links": [
+        {
+          "phrase": "countries",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "average account balance",
+          "kind": "column",
+          "columns": [
+            "customer.c_acctbal"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "higher than the overall average",
+          "kind": "shape",
+          "shape": "vs_aggregate",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "customer",
+          "nation"
+        ],
+        "columns": [
+          "customer.c_acctbal",
+          "nation.n_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "vs_aggregate"
+        ],
+        "join_path": [
+          "customer",
+          "nation"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l08",
+      "text": "Which customers placed large orders in 1997?",
+      "verdict": "AMBIGUOUS",
+      "rationale": "The docs don't define 'large'. It could mean high order value (orders.o_totalprice) or high quantity (lineitem.l_quantity), and any threshold is arbitrary, so different readings return different customers.",
+      "links": [
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "large orders",
+          "kind": "column",
+          "columns": [
+            "orders.o_totalprice"
+          ],
+          "alternatives": [
+            [
+              "lineitem.l_quantity"
+            ]
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "in 1997",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1997",
+          "check": "pass"
+        }
+      ],
+      "readings": [
+        {
+          "description": "large = orders with a high total value (o_totalprice above some threshold)",
+          "links": [
+            {
+              "phrase": "customers",
+              "kind": "table",
+              "table": "customer",
+              "check": "pass"
+            },
+            {
+              "phrase": "large orders",
+              "kind": "column",
+              "columns": [
+                "orders.o_totalprice"
+              ],
+              "check": "pass"
+            },
+            {
+              "phrase": "in 1997",
+              "kind": "column",
+              "columns": [
+                "orders.o_orderdate"
+              ],
+              "value": "1997",
+              "check": "pass"
+            }
+          ]
+        },
+        {
+          "description": "large = orders with a high total quantity (sum of l_quantity above some threshold)",
+          "links": [
+            {
+              "phrase": "customers",
+              "kind": "table",
+              "table": "customer",
+              "check": "pass"
+            },
+            {
+              "phrase": "large orders",
+              "kind": "column",
+              "columns": [
+                "lineitem.l_quantity"
+              ],
+              "check": "pass"
+            },
+            {
+              "phrase": "in 1997",
+              "kind": "column",
+              "columns": [
+                "orders.o_orderdate"
+              ],
+              "value": "1997",
+              "check": "pass"
+            }
+          ]
+        }
+      ],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "customer",
+          "orders"
+        ],
+        "columns": [
+          "orders.o_orderdate"
+        ],
+        "shapes": [],
+        "join_path": [
+          "customer",
+          "orders"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l09",
+      "text": "What is the average weight of parts shipped by TRUCK?",
+      "verdict": "MISSING_DATA",
+      "rationale": "Shipped by TRUCK is lineitem.l_shipmode = 'TRUCK', but parts have no weight attribute. p_size is a size code, not a weight.",
+      "links": [
+        {
+          "phrase": "average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "weight",
+          "kind": "missing",
+          "concept": "part weight",
+          "closest": [
+            "part.p_size",
+            "part.p_container",
+            "lineitem.l_quantity"
+          ],
+          "why_not": "no weight column exists; p_size is an integer size 1-50, not a weight",
+          "check": "pass"
+        },
+        {
+          "phrase": "parts",
+          "kind": "table",
+          "table": "part",
+          "check": "pass"
+        },
+        {
+          "phrase": "shipped by TRUCK",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipmode"
+          ],
+          "value": "TRUCK",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [
+        {
+          "phrase": "weight",
+          "concept": "part weight",
+          "closest": [
+            "part.p_size",
+            "part.p_container",
+            "lineitem.l_quantity"
+          ],
+          "why_not": "no weight column exists; p_size is an integer size 1-50, not a weight"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "lineitem",
+          "part"
+        ],
+        "columns": [
+          "lineitem.l_shipmode"
+        ],
+        "shapes": [
+          "aggregation"
+        ],
+        "join_path": [
+          "lineitem",
+          "part"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l10",
+      "text": "For line items shipped between 1993 and 1997 to customers in ASIA, how did the average time from shipment to receipt change each year?",
+      "verdict": "ANSWERABLE",
+      "rationale": "Shipping time is l_receiptdate - l_shipdate (glossary: Shipping time). Filter l_shipdate in 1993-1997 and customers whose nation is in region ASIA (orders -> customer -> nation -> region), then average per ship year. Grouping by ship year follows from the ship-date filter; I rejected order year as a weaker reading.",
+      "links": [
+        {
+          "phrase": "line items",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "shipped between 1993 and 1997",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipdate"
+          ],
+          "value": "1993..1997",
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "ASIA",
+          "kind": "column",
+          "columns": [
+            "region.r_name"
+          ],
+          "value": "ASIA",
+          "check": "pass"
+        },
+        {
+          "phrase": "average",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "time from shipment to receipt",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate",
+            "lineitem.l_shipdate"
+          ],
+          "source": "glossary: shipping time",
+          "check": "pass"
+        },
+        {
+          "phrase": "change each year",
+          "kind": "shape",
+          "shape": "time_trend",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "region"
+        ],
+        "columns": [
+          "lineitem.l_receiptdate",
+          "lineitem.l_shipdate",
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ],
+        "join_path": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders",
+          "region"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l11",
+      "text": "How did the number of late deliveries from suppliers in INDIA change year by year for items received between 1993 and 1997?",
+      "verdict": "ANSWERABLE",
+      "rationale": "Late delivery is l_receiptdate > l_commitdate (glossary: Late delivery). Restrict to suppliers whose nation.n_name = 'INDIA' and l_receiptdate in 1993-1997, then count per receipt year.",
+      "links": [
+        {
+          "phrase": "number of",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "late deliveries",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate",
+            "lineitem.l_commitdate"
+          ],
+          "source": "glossary: late delivery",
+          "check": "pass"
+        },
+        {
+          "phrase": "suppliers",
+          "kind": "table",
+          "table": "supplier",
+          "check": "pass"
+        },
+        {
+          "phrase": "INDIA",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "value": "INDIA",
+          "check": "pass"
+        },
+        {
+          "phrase": "change year by year",
+          "kind": "shape",
+          "shape": "time_trend",
+          "check": "pass"
+        },
+        {
+          "phrase": "items",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "received between 1993 and 1997",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate"
+          ],
+          "value": "1993..1997",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "lineitem",
+          "nation",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_commitdate",
+          "lineitem.l_receiptdate",
+          "nation.n_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ],
+        "join_path": [
+          "lineitem",
+          "nation",
+          "supplier"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l12",
+      "text": "Who won the FIFA World Cup in 1998?",
+      "verdict": "OFF_TOPIC",
+      "rationale": "Football results have nothing to do with the wholesale parts business the database describes.",
+      "links": [],
+      "readings": [],
+      "missing": [],
+      "derived": {
+        "tables": [],
+        "columns": [],
+        "shapes": [],
+        "join_path": []
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l13",
+      "text": "How did the available quantity of Brand#23 parts change month by month during 1997?",
+      "verdict": "MISSING_DATA",
+      "rationale": "Brand#23 is part.p_brand, but partsupp.ps_availqty is one undated value per part and supplier. No inventory history exists, so there is no month-by-month change to report.",
+      "links": [
+        {
+          "phrase": "available quantity … change month by month",
+          "kind": "missing",
+          "concept": "dated history of available quantity",
+          "closest": [
+            "partsupp.ps_availqty"
+          ],
+          "why_not": "ps_availqty is a single undated snapshot per part and supplier; no inventory history or dates exist",
+          "check": "pass"
+        },
+        {
+          "phrase": "Brand#23",
+          "kind": "column",
+          "columns": [
+            "part.p_brand"
+          ],
+          "value": "Brand#23",
+          "check": "pass"
+        },
+        {
+          "phrase": "parts",
+          "kind": "table",
+          "table": "part",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [
+        {
+          "phrase": "available quantity … change month by month",
+          "concept": "dated history of available quantity",
+          "closest": [
+            "partsupp.ps_availqty"
+          ],
+          "why_not": "ps_availqty is a single undated snapshot per part and supplier; no inventory history or dates exist"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "part"
+        ],
+        "columns": [
+          "part.p_brand"
+        ],
+        "shapes": [],
+        "join_path": [
+          "part"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l14",
+      "text": "Which cities had the most late deliveries in 1996?",
+      "verdict": "MISSING_DATA",
+      "rationale": "Late deliveries can be computed (glossary: l_receiptdate > l_commitdate), but no city is stored. c_address and s_address are random strings (spec 4.2.3), and the finest geography is nation.",
+      "links": [
+        {
+          "phrase": "cities",
+          "kind": "missing",
+          "concept": "city",
+          "closest": [
+            "customer.c_address",
+            "supplier.s_address",
+            "nation.n_name"
+          ],
+          "why_not": "addresses are random v-strings with no city component; geography stops at nation",
+          "check": "pass"
+        },
+        {
+          "phrase": "the most",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "late deliveries",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate",
+            "lineitem.l_commitdate"
+          ],
+          "source": "glossary: late delivery",
+          "check": "pass"
+        },
+        {
+          "phrase": "in 1996",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate"
+          ],
+          "value": "1996",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [
+        {
+          "phrase": "cities",
+          "concept": "city",
+          "closest": [
+            "customer.c_address",
+            "supplier.s_address",
+            "nation.n_name"
+          ],
+          "why_not": "addresses are random v-strings with no city component; geography stops at nation"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [
+          "lineitem.l_commitdate",
+          "lineitem.l_receiptdate"
+        ],
+        "shapes": [
+          "ranking"
+        ],
+        "join_path": [
+          "lineitem"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l15",
+      "text": "How many line items did we have in March 1996?",
+      "verdict": "AMBIGUOUS",
+      "rationale": "Line items have no single date: 'in March 1996' could filter on the order date (orders.o_orderdate), the ship date (l_shipdate) or the receipt date (l_receiptdate), which give different counts. The docs don't pick one.",
+      "links": [
+        {
+          "phrase": "How many",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "line items",
+          "kind": "table",
+          "table": "lineitem",
+          "check": "pass"
+        },
+        {
+          "phrase": "March 1996",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipdate"
+          ],
+          "value": "1996-03",
+          "alternatives": [
+            [
+              "orders.o_orderdate"
+            ],
+            [
+              "lineitem.l_receiptdate"
+            ]
+          ],
+          "check": "pass"
+        }
+      ],
+      "readings": [
+        {
+          "description": "line items whose order was placed in March 1996 (o_orderdate)",
+          "links": [
+            {
+              "phrase": "How many",
+              "kind": "shape",
+              "shape": "aggregation",
+              "check": "pass"
+            },
+            {
+              "phrase": "line items",
+              "kind": "table",
+              "table": "lineitem",
+              "check": "pass"
+            },
+            {
+              "phrase": "March 1996",
+              "kind": "column",
+              "columns": [
+                "orders.o_orderdate"
+              ],
+              "value": "1996-03",
+              "check": "pass"
+            }
+          ]
+        },
+        {
+          "description": "line items shipped in March 1996 (l_shipdate)",
+          "links": [
+            {
+              "phrase": "How many",
+              "kind": "shape",
+              "shape": "aggregation",
+              "check": "pass"
+            },
+            {
+              "phrase": "line items",
+              "kind": "table",
+              "table": "lineitem",
+              "check": "pass"
+            },
+            {
+              "phrase": "March 1996",
+              "kind": "column",
+              "columns": [
+                "lineitem.l_shipdate"
+              ],
+              "value": "1996-03",
+              "check": "pass"
+            }
+          ]
+        },
+        {
+          "description": "line items received in March 1996 (l_receiptdate)",
+          "links": [
+            {
+              "phrase": "How many",
+              "kind": "shape",
+              "shape": "aggregation",
+              "check": "pass"
+            },
+            {
+              "phrase": "line items",
+              "kind": "table",
+              "table": "lineitem",
+              "check": "pass"
+            },
+            {
+              "phrase": "March 1996",
+              "kind": "column",
+              "columns": [
+                "lineitem.l_receiptdate"
+              ],
+              "value": "1996-03",
+              "check": "pass"
+            }
+          ]
+        }
+      ],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [],
+        "shapes": [
+          "aggregation"
+        ],
+        "join_path": [
+          "lineitem"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l16",
+      "text": "What was the total freight cost paid to carriers for AIR shipments in 1996?",
+      "verdict": "MISSING_DATA",
+      "rationale": "AIR shipments are lineitem.l_shipmode = 'AIR', but no freight or carrier cost is recorded. l_extendedprice is the goods' value, not shipping cost.",
+      "links": [
+        {
+          "phrase": "total",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        },
+        {
+          "phrase": "freight cost paid to carriers",
+          "kind": "missing",
+          "concept": "freight / carrier shipping cost",
+          "closest": [
+            "lineitem.l_shipmode",
+            "lineitem.l_extendedprice"
+          ],
+          "why_not": "no shipping cost or carrier data exists; l_extendedprice is the value of the goods",
+          "check": "pass"
+        },
+        {
+          "phrase": "AIR shipments",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipmode"
+          ],
+          "value": "AIR",
+          "check": "pass"
+        },
+        {
+          "phrase": "in 1996",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipdate"
+          ],
+          "value": "1996",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [
+        {
+          "phrase": "freight cost paid to carriers",
+          "concept": "freight / carrier shipping cost",
+          "closest": [
+            "lineitem.l_shipmode",
+            "lineitem.l_extendedprice"
+          ],
+          "why_not": "no shipping cost or carrier data exists; l_extendedprice is the value of the goods"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [
+          "lineitem.l_shipdate",
+          "lineitem.l_shipmode"
+        ],
+        "shapes": [
+          "aggregation"
+        ],
+        "join_path": [
+          "lineitem"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l17",
+      "text": "Which shipping mode should we recommend for fragile parts?",
+      "verdict": "MISSING_DATA",
+      "rationale": "Shipping mode is lineitem.l_shipmode, but nothing marks parts as fragile (p_type and p_container describe finish, material and packaging), and no damage or breakage outcomes exist to base a recommendation on.",
+      "links": [
+        {
+          "phrase": "shipping mode",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_shipmode"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "fragile parts",
+          "kind": "missing",
+          "concept": "part fragility",
+          "closest": [
+            "part.p_type",
+            "part.p_container"
+          ],
+          "why_not": "no fragility attribute and no damage or breakage data exists",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [
+        {
+          "phrase": "fragile parts",
+          "concept": "part fragility",
+          "closest": [
+            "part.p_type",
+            "part.p_container"
+          ],
+          "why_not": "no fragility attribute and no damage or breakage data exists"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [
+          "lineitem.l_shipmode"
+        ],
+        "shapes": [],
+        "join_path": [
+          "lineitem"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l18",
+      "text": "In 1996, which five nations' customers paid the most in total once tax is included?",
+      "verdict": "ANSWERABLE",
+      "rationale": "Amount paid with tax is the order total orders.o_totalprice, which the glossary (Order value; Charge) and spec 4.2.3 define as the sum of line charges including tax. Sum it per customer nation for orders with o_orderdate in 1996 and take the top 5. Stored and computed totals agree by definition. I rejected filtering by ship date, since payment attaches to the order.",
+      "links": [
+        {
+          "phrase": "In 1996",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1996",
+          "check": "pass"
+        },
+        {
+          "phrase": "five … the most",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "nations'",
+          "kind": "column",
+          "columns": [
+            "nation.n_name"
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "customers",
+          "kind": "table",
+          "table": "customer",
+          "check": "pass"
+        },
+        {
+          "phrase": "paid … once tax is included",
+          "kind": "column",
+          "columns": [
+            "orders.o_totalprice"
+          ],
+          "source": "glossary: order value",
+          "check": "pass"
+        },
+        {
+          "phrase": "in total",
+          "kind": "shape",
+          "shape": "aggregation",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "customer",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "nation.n_name",
+          "orders.o_orderdate",
+          "orders.o_totalprice"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ranking"
+        ],
+        "join_path": [
+          "customer",
+          "nation",
+          "orders"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l19",
+      "text": "Which nation generated the most revenue in 1996?",
+      "verdict": "AMBIGUOUS",
+      "rationale": "Revenue is l_extendedprice*(1-l_discount) (glossary: Revenue), but 'nation' could be the customer's nation (customer.c_nationkey) or the supplier's nation (supplier.s_nationkey). Each line item has both, and they rank nations differently.",
+      "links": [
+        {
+          "phrase": "nation",
+          "kind": "column",
+          "columns": [
+            "nation.n_name",
+            "customer.c_nationkey"
+          ],
+          "alternatives": [
+            [
+              "nation.n_name",
+              "supplier.s_nationkey"
+            ]
+          ],
+          "check": "pass"
+        },
+        {
+          "phrase": "the most",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "revenue",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_extendedprice",
+            "lineitem.l_discount"
+          ],
+          "source": "glossary: revenue",
+          "check": "pass"
+        },
+        {
+          "phrase": "in 1996",
+          "kind": "column",
+          "columns": [
+            "orders.o_orderdate"
+          ],
+          "value": "1996",
+          "check": "pass"
+        }
+      ],
+      "readings": [
+        {
+          "description": "nation = the customer's nation (where revenue is earned from)",
+          "links": [
+            {
+              "phrase": "nation",
+              "kind": "column",
+              "columns": [
+                "nation.n_name",
+                "customer.c_nationkey"
+              ],
+              "check": "pass"
+            },
+            {
+              "phrase": "the most",
+              "kind": "shape",
+              "shape": "ranking",
+              "check": "pass"
+            },
+            {
+              "phrase": "revenue",
+              "kind": "column",
+              "columns": [
+                "lineitem.l_extendedprice",
+                "lineitem.l_discount"
+              ],
+              "source": "glossary: revenue",
+              "check": "pass"
+            },
+            {
+              "phrase": "in 1996",
+              "kind": "column",
+              "columns": [
+                "orders.o_orderdate"
+              ],
+              "value": "1996",
+              "check": "pass"
+            }
+          ]
+        },
+        {
+          "description": "nation = the supplier's nation (which suppliers' sales generated the revenue)",
+          "links": [
+            {
+              "phrase": "nation",
+              "kind": "column",
+              "columns": [
+                "nation.n_name",
+                "supplier.s_nationkey"
+              ],
+              "check": "pass"
+            },
+            {
+              "phrase": "the most",
+              "kind": "shape",
+              "shape": "ranking",
+              "check": "pass"
+            },
+            {
+              "phrase": "revenue",
+              "kind": "column",
+              "columns": [
+                "lineitem.l_extendedprice",
+                "lineitem.l_discount"
+              ],
+              "source": "glossary: revenue",
+              "check": "pass"
+            },
+            {
+              "phrase": "in 1996",
+              "kind": "column",
+              "columns": [
+                "orders.o_orderdate"
+              ],
+              "value": "1996",
+              "check": "pass"
+            }
+          ]
+        }
+      ],
+      "missing": [],
+      "derived": {
+        "tables": [
+          "lineitem",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "multi_join",
+          "ranking"
+        ],
+        "join_path": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    },
+    {
+      "id": "l20",
+      "text": "What were the most common reasons customers gave for returning items in 1995?",
+      "verdict": "MISSING_DATA",
+      "rationale": "lineitem.l_returnflag = 'R' marks returned items, but no return reason is stored. l_comment is generated filler text (glossary: Free text).",
+      "links": [
+        {
+          "phrase": "most common",
+          "kind": "shape",
+          "shape": "ranking",
+          "check": "pass"
+        },
+        {
+          "phrase": "reasons customers gave for returning items",
+          "kind": "missing",
+          "concept": "return reason",
+          "closest": [
+            "lineitem.l_returnflag",
+            "lineitem.l_comment"
+          ],
+          "why_not": "only a returned/accepted flag exists; no reason codes or feedback are recorded",
+          "check": "pass"
+        },
+        {
+          "phrase": "in 1995",
+          "kind": "column",
+          "columns": [
+            "lineitem.l_receiptdate"
+          ],
+          "value": "1995",
+          "check": "pass"
+        }
+      ],
+      "readings": [],
+      "missing": [
+        {
+          "phrase": "reasons customers gave for returning items",
+          "concept": "return reason",
+          "closest": [
+            "lineitem.l_returnflag",
+            "lineitem.l_comment"
+          ],
+          "why_not": "only a returned/accepted flag exists; no reason codes or feedback are recorded"
+        }
+      ],
+      "derived": {
+        "tables": [
+          "lineitem"
+        ],
+        "columns": [
+          "lineitem.l_receiptdate"
+        ],
+        "shapes": [
+          "ranking"
+        ],
+        "join_path": [
+          "lineitem"
+        ]
+      },
+      "evidence_ok": true,
+      "evidence_issues": [],
+      "label_check": []
+    }
+  ],
+  "summary": {
+    "n": 20,
+    "counts": {
+      "OFF_TOPIC": 1,
+      "MISSING_DATA": 9,
+      "AMBIGUOUS": 5,
+      "ANSWERABLE": 5
+    },
+    "score": 0.375,
+    "formula": "(ANSWERABLE + 0.5 x AMBIGUOUS) / N",
+    "calculation": "(5 + 0.5 x 5) / 20 = 0.3750",
+    "verdicts_with_evidence_issues": 0
+  }
+}

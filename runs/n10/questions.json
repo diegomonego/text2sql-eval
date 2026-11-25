@@ -1,0 +1,208 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "text": "Which 5 suppliers in RUSSIA earned the highest total profit on items shipped in 1996?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "nation",
+          "partsupp",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "lineitem.l_quantity",
+          "lineitem.l_shipdate",
+          "nation.n_name",
+          "partsupp.ps_supplycost"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q02",
+      "text": "How many MACHINERY customers in the ASIA region have never placed an order?",
+      "labels": {
+        "tables": [
+          "customer",
+          "orders",
+          "region"
+        ],
+        "columns": [
+          "customer.c_mktsegment",
+          "region.r_name"
+        ],
+        "shapes": [
+          "aggregation",
+          "anti_join",
+          "multi_join"
+        ]
+      }
+    },
+    {
+      "id": "q03",
+      "text": "How did total revenue from Manufacturer#4 parts change year by year for items shipped between 1993 and 1997?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "part"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "lineitem.l_shipdate",
+          "part.p_mfgr"
+        ],
+        "shapes": [
+          "aggregation",
+          "time_trend"
+        ]
+      }
+    },
+    {
+      "id": "q04",
+      "text": "What proportion of line items received in 1995 from suppliers in the MIDDLE EAST region were delivered late?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "region",
+          "supplier"
+        ],
+        "columns": [
+          "lineitem.l_commitdate",
+          "lineitem.l_receiptdate",
+          "region.r_name"
+        ],
+        "shapes": [
+          "multi_join",
+          "ratio"
+        ]
+      }
+    },
+    {
+      "id": "q05",
+      "text": "Which regions generated more revenue from their customers' orders placed in 1997 than the average region?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "orders",
+          "region"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "multi_join",
+          "vs_aggregate"
+        ]
+      }
+    },
+    {
+      "id": "q06",
+      "text": "List the clerk, order value and status of each 5-LOW priority order placed on 1 July 1998.",
+      "labels": {
+        "tables": [
+          "orders"
+        ],
+        "columns": [
+          "orders.o_clerk",
+          "orders.o_orderdate",
+          "orders.o_orderpriority",
+          "orders.o_orderstatus",
+          "orders.o_totalprice"
+        ],
+        "shapes": [
+          "lookup"
+        ]
+      }
+    },
+    {
+      "id": "q07",
+      "text": "How did the total order value from customers in BRAZIL change quarter by quarter in 1997?",
+      "labels": {
+        "tables": [
+          "customer",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "nation.n_name",
+          "orders.o_orderdate",
+          "orders.o_totalprice"
+        ],
+        "shapes": [
+          "aggregation",
+          "multi_join",
+          "time_trend"
+        ]
+      }
+    },
+    {
+      "id": "q08",
+      "text": "What percentage of the line items ordered by customers in KENYA during 1997 carried the shipping instruction COLLECT COD?",
+      "labels": {
+        "tables": [
+          "customer",
+          "lineitem",
+          "nation",
+          "orders"
+        ],
+        "columns": [
+          "lineitem.l_shipinstruct",
+          "nation.n_name",
+          "orders.o_orderdate"
+        ],
+        "shapes": [
+          "multi_join",
+          "ratio"
+        ]
+      }
+    },
+    {
+      "id": "q09",
+      "text": "Which 5 parts packed in LG CASE containers brought in the highest total revenue from items shipped in 1996?",
+      "labels": {
+        "tables": [
+          "lineitem",
+          "part"
+        ],
+        "columns": [
+          "lineitem.l_discount",
+          "lineitem.l_extendedprice",
+          "lineitem.l_shipdate",
+          "part.p_container"
+        ],
+        "shapes": [
+          "aggregation",
+          "ranking"
+        ]
+      }
+    },
+    {
+      "id": "q10",
+      "text": "Which nations have a mean supplier account balance higher than the average across all suppliers?",
+      "labels": {
+        "tables": [
+          "nation",
+          "supplier"
+        ],
+        "columns": [
+          "supplier.s_acctbal"
+        ],
+        "shapes": [
+          "aggregation",
+          "vs_aggregate"
+        ]
+      }
+    }
+  ]
+}

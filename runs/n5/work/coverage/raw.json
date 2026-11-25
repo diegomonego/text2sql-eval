@@ -1,0 +1,42 @@
+{"results": [
+  {"id": "q01", "links": [
+    {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "profit", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount", "partsupp.ps_supplycost", "lineitem.l_quantity"], "source": "glossary: profit"},
+    {"phrase": "MEDIUM BRUSHED COPPER parts", "kind": "column", "columns": ["part.p_type"], "value": "MEDIUM BRUSHED COPPER"},
+    {"phrase": "customers", "kind": "table", "table": "customer"},
+    {"phrase": "JAPAN", "kind": "column", "columns": ["nation.n_name"], "value": "JAPAN"},
+    {"phrase": "ordered … during 1995", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1995"}
+  ]},
+  {"id": "q02", "links": [
+    {"phrase": "How many", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "line items", "kind": "table", "table": "lineitem"},
+    {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+    {"phrase": "BRAZIL", "kind": "column", "columns": ["nation.n_name"], "value": "BRAZIL"},
+    {"phrase": "delivered late", "kind": "column", "columns": ["lineitem.l_receiptdate", "lineitem.l_commitdate"], "source": "glossary: late delivery"},
+    {"phrase": "in each year", "kind": "shape", "shape": "time_trend"},
+    {"phrase": "delivered … in each year from 1993 to 1997", "kind": "column", "columns": ["lineitem.l_receiptdate"], "value": "1993..1997"}
+  ], "note": "The year is tied to delivery, so it is read as the receipt date."},
+  {"id": "q03", "links": [
+    {"phrase": "What percentage", "kind": "shape", "shape": "ratio"},
+    {"phrase": "line items", "kind": "table", "table": "lineitem"},
+    {"phrase": "suppliers", "kind": "table", "table": "supplier"},
+    {"phrase": "AMERICA region", "kind": "column", "columns": ["region.r_name"], "value": "AMERICA"},
+    {"phrase": "returned", "kind": "column", "columns": ["lineitem.l_returnflag"], "value": "R", "source": "glossary: l_returnflag"}
+  ]},
+  {"id": "q04", "links": [
+    {"phrase": "3 brands have the highest", "kind": "shape", "shape": "ranking"},
+    {"phrase": "brands", "kind": "column", "columns": ["part.p_brand"]},
+    {"phrase": "average", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "retail price", "kind": "column", "columns": ["part.p_retailprice"]},
+    {"phrase": "parts", "kind": "table", "table": "part"},
+    {"phrase": "size 50", "kind": "column", "columns": ["part.p_size"], "value": 50}
+  ]},
+  {"id": "q05", "links": [
+    {"phrase": "nations", "kind": "column", "columns": ["nation.n_name"]},
+    {"phrase": "total", "kind": "shape", "shape": "aggregation"},
+    {"phrase": "revenue", "kind": "column", "columns": ["lineitem.l_extendedprice", "lineitem.l_discount"], "source": "glossary: revenue"},
+    {"phrase": "customers'", "kind": "table", "table": "customer"},
+    {"phrase": "orders in 1996", "kind": "column", "columns": ["orders.o_orderdate"], "value": "1996"},
+    {"phrase": "above the average across all nations", "kind": "shape", "shape": "vs_aggregate"}
+  ]}
+]}

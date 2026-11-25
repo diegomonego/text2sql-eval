@@ -1,0 +1,24 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "text": "What was the total profit on MEDIUM BRUSHED COPPER parts ordered by customers in JAPAN during 1995?"
+    },
+    {
+      "id": "q02",
+      "text": "How many line items from suppliers in BRAZIL were delivered late in each year from 1993 to 1997?"
+    },
+    {
+      "id": "q03",
+      "text": "What percentage of line items from suppliers in the AMERICA region were returned?"
+    },
+    {
+      "id": "q04",
+      "text": "Which 3 brands have the highest average retail price among parts of size 50?"
+    },
+    {
+      "id": "q05",
+      "text": "Which nations had total revenue from their customers' orders in 1996 above the average across all nations?"
+    }
+  ]
+}

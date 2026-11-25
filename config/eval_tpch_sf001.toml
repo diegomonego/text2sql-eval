@@ -1,0 +1,69 @@
+# Alternative config for a robustness smoke test. Select it with T2S_CONFIG=config/eval_tpch_sf001.toml (Makefile: CONFIG=config/eval_tpch_sf001.toml).
+# Same as config/eval.toml except as noted.
+
+# Configuration for question generation and judging.
+# Everything dataset-specific lives here or is discovered from the database at run time.
+
+[database]
+# duckdb:///relative/path is relative to the repo root; duckdb:////absolute/path is absolute.
+url = "duckdb:///data/tpch_sf001.duckdb"   # changed: TPC-H at scale factor 0.01 (same schema, different data)
+
+[docs]
+# Every .md/.txt file under this folder is given to the generator and both judges.
+dir = "semantic_docs/tpch"
+
+[time_anchor]
+# "auto" = latest value of `column`; "off" = no reference date; or a fixed date "YYYY-MM-DD".
+# Override per run with --anchor.
+mode = "auto"
+column = "orders.o_orderdate"
+
+[selection]
+# gain = lambda_shape * shape gain / sum(W) + lambda_table * new tables / #tables + lambda_column * new columns / #columns
+lambda_shape = 0.5
+lambda_table = 0.25
+lambda_column = 0.25
+
+[pool]
+# targeted candidates = max(targeted_per_n * N, min_targeted); free candidates = free_per_n * N
+min_targeted = 16
+targeted_per_n = 2
+free_per_n = 1
+max_refill_rounds = 2
+
+[presets]
+# Named generator settings, chosen per run with `--preset <name>` (Makefile: PRESET=<name>).
+# Any key left out falls back to the settings above and to the shape legend.
+default = "coverage"
+
+[presets.coverage]
+# The v1 behaviour: spread questions across shapes, tables and columns.
+style = "coverage"
+
+[presets.natural]
+# More everyday questions, at little cost in coverage (measured on the v1 pools):
+style = "natural"
+free_per_n = 2          # twice as many free-form slots
+focus_tables = false    # targets name a shape only, so the LLM picks tables that make sense together
+min_free_share = 0.2    # at least ceil(0.2 * N) picks come from free-form slots
+max_shapes = 2          # drop candidates with more than 2 shapes (the derived multi_join counts)
+alpha = 0.6             # more weight on how often a shape is asked (F) than on how hard it is (I)
+beta = 0.4
+
+[profile]
+# Text and other columns with at most this many distinct values have their values listed in the schema card.
+max_listed_values = 25
+
+[model]
+# The model each component runs on. This file is the source of truth: `make skills`
+# (`uv run t2s sync-skills`) copies these values into the `model:` line of each skill in
+# .claude/skills, because a skill's own model line decides which model runs, even over
+# `claude --model`. Every make target that runs a skill syncs first; the tests fail if a
+# skill drifts, and `check-run` compares each run's metadata with the model its log shows.
+generator = "claude-opus-5-5"
+correctness_judge = "claude-opus-5-5"
+coverage_judge = "claude-opus-5-5"
+
+[spec]
+url = "https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf"
+sha256 = "9274d6ee5cbb2071bbb8a2cf71716e212db01c237e3d6fd2b2e9e9014a1fa3b3"

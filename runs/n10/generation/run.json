@@ -1,0 +1,54 @@
+{
+  "run": {
+    "timestamp_utc": "2026-11-25T00:51:12+00:00",
+    "component": "generator",
+    "git": {
+      "commit": "not a git repository",
+      "uncommitted_changes": null
+    },
+    "claude_code_version": "2.1.331 (Claude Code)",
+    "model": "claude-opus-5-5"
+  },
+  "database": {
+    "url": "duckdb:///data/tpch_sf01.duckdb",
+    "engine": "duckdb",
+    "engine_version": "2.0.1",
+    "file_sha256": "9a6859c7dad2fbf6fea4085b95ce1d453e29582b55d11bf2625ef5ce0ba734ee",
+    "tables": 8,
+    "columns": 61
+  },
+  "docs": [
+    {
+      "path": "semantic_docs/tpch/glossary.md",
+      "sha256": "09b524aabe1802cd6fec34505f2d8b8965293e34c6717080e3239fe3e1dd0b37"
+    },
+    {
+      "path": "semantic_docs/tpch/spec/clause1_database_design.md",
+      "sha256": "6fc1cb6613cb1f5c7bf76fa776ed37db47e270e2dfa0f104f0b4c3075e53e9df"
+    },
+    {
+      "path": "semantic_docs/tpch/spec/clause4_data_generation.md",
+      "sha256": "e781343888e0673ca99844444a36de3de5ecb8612b2e41935c3fb1203cffa115"
+    }
+  ],
+  "config": {
+    "shapes_toml_sha256": "e2539ca205ab3868170884e6226ac2acc06a326357ef6c504aa6bc8f1b7fbf89",
+    "eval_toml_sha256": "93dcef2ad43f97eb1e5f8da6868d2aecb6f96ce3db8d041f1840e8a8ba410b56",
+    "time_anchor": {
+      "setting": "auto",
+      "mode": "auto",
+      "date": "1998-08-02"
+    }
+  },
+  "input": {
+    "n": 10,
+    "pool_size": 30,
+    "candidate_files": [
+      "candidates.json"
+    ],
+    "candidates_selected": 10,
+    "candidates_not_selected": 20,
+    "candidates_duplicate": 0,
+    "candidates_dropped": 0
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "preset": "natural",
+  "n": 5,
+  "pool_ceiling": {
+    "pool": {
+      "tables": 8,
+      "columns": 22,
+      "shapes": 8
+    },
+    "selected": {
+      "tables": 8,
+      "columns": 15,
+      "shapes": 5
+    },
+    "valid_unique_candidates": 24
+  },
+  "greedy_vs_best": {
+    "greedy_value": 0.7274,
+    "best_value": 0.7274,
+    "greedy_over_best": 1.0,
+    "method": "exact, over all 42,504 subsets",
+    "picks_that_differ": []
+  },
+  "sensitivity_picks_changed": {
+    "lambdas in equal thirds": 0,
+    "lambda_column = 0.5": 0,
+    "repeat factor 0.3": 0,
+    "repeat factor 0.7": 1,
+    "W = F x I / 9 (multiplied, not added)": 1,
+    "no F (alpha = 0)": 2,
+    "each F or I nudged by 1": {
+      "variants": 19,
+      "max_changed": 3,
+      "mean_changed": 0.58,
+      "unchanged": 12
+    }
+  },
+  "free_form": {
+    "picks": 1,
+    "of": 5,
+    "in_pool": 8,
+    "pool": 24,
+    "required": 1
+  }
+}
