@@ -1,0 +1,18 @@
+# Generated database files (rebuild with `make db`)
+data/
+# Downloaded TPC-H specification and text extracted from it (check the TPC license before committing)
+downloads/
+semantic_docs/tpch/spec/
+# Design notes and reference material: kept out of the repo for now
+docs/
+# Pipeline runs (rebuild with `make pipeline N=...`); the demo cases go in before submission
+runs/
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# Secrets
+.env
+# Local Claude Code settings
+.claude/settings.local.json

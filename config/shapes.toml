@@ -1,0 +1,90 @@
+# Shape legend: the single source of truth for query shapes.
+# Selection weight per shape: W = (alpha * F + beta * I) / 3, computed when the file is loaded.
+#   F = how often analysts ask for this shape (an estimate: there are no query logs), 1-3
+#   I = how much it tests a Text-to-SQL system, 1-3
+# The coverage judge uses the definitions only and counts every shape equally.
+
+alpha = 0.4
+beta = 0.6
+repeat_penalty = 0.5   # each repeat of a shape is worth this fraction of the previous one
+
+[[shape]]
+id = "lookup"
+name = "Simple lookup"
+description = "Retrieves facts about specific records from one table, with no aggregate."
+triggers = ["what is", "which", "list", "show"]
+example = "What is the account balance and phone number of Supplier#000000042?"
+F = 3
+I = 1
+reason = "Asked daily, but nearly every system handles it, so it shows little."
+
+[[shape]]
+id = "aggregation"
+name = "Aggregation"
+description = "Computes a total, count, average, minimum or maximum, overall or per group."
+triggers = ["total", "how many", "average", "number of", "per", "by"]
+example = "What is the total order value per market segment?"
+F = 3
+I = 2
+reason = "Core reporting ask. Errors come from the grouping level and how measures are defined."
+
+[[shape]]
+id = "multi_join"
+name = "Join (3+ tables)"
+description = "Needs data from three or more tables. Derived by code from the tables the question links and the join path between them."
+triggers = []
+example = "What is the total revenue per region?"
+F = 2
+I = 3
+reason = "Choosing the join path is a top failure point, worse when no keys are declared."
+derived = true
+
+[[shape]]
+id = "ranking"
+name = "Ranking / top-K"
+description = "Asks for the highest or lowest N items, overall or within each group."
+triggers = ["top", "highest", "lowest", "most", "least", "best", "largest"]
+example = "Who are the 10 customers with the highest total order value?"
+F = 3
+I = 2
+reason = "Very common ask. Top-K within each group and ties are the hard parts."
+
+[[shape]]
+id = "time_trend"
+name = "Time trend / period comparison"
+description = "Groups by time periods (month, quarter, year) or compares periods. A date used only as a filter does not count."
+triggers = ["per month", "each quarter", "by year", "over time", "trend", "year over year", "compared with"]
+example = "How did total order value change month by month in 1997?"
+F = 2
+I = 3
+reason = "Date bucketing, period-over-period and relative dates are frequent errors."
+
+[[shape]]
+id = "ratio"
+name = "Ratio / share of total"
+description = "Computes a share, percentage, proportion or rate (part divided by a whole)."
+triggers = ["share", "percentage", "proportion", "fraction", "rate", "ratio"]
+example = "What share of total order value comes from the BUILDING segment?"
+F = 2
+I = 3
+reason = "Needs two levels of aggregation. The denominator is often wrong."
+
+[[shape]]
+id = "vs_aggregate"
+name = "Comparison against an aggregate"
+description = "Compares records with an aggregate of a group (above or below average, more than the median)."
+triggers = ["above average", "below average", "more than the average", "higher than typical"]
+example = "Which suppliers have an account balance above the average for their nation?"
+F = 1
+I = 3
+reason = "Less common phrasing, and it needs a nested computation."
+
+[[shape]]
+id = "anti_join"
+name = "Anti-join"
+description = "Asks for records that have no matching record elsewhere."
+triggers = ["never", "without", "no orders", "not ... any", "none"]
+example = "Which customers have never placed an order?"
+F = 1
+I = 3
+reason = "Rare phrasing, and a classic trap for systems (NOT IN with NULLs)."

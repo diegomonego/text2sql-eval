@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v1 results: Text-to-SQL question generation and judging</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10); --chip: #f0efec;
+  --n5: #86b6ef; --n10: #2a78d6; --n15: #104281;
+  --h1: #cde2fb; --h2: #9ec5f4; --h3: #5598e7; --h4: #2a78d6; --h5: #184f95;
+  --h1-ink: #0b0b0b; --h2-ink: #0b0b0b; --h3-ink: #ffffff; --h4-ink: #ffffff; --h5-ink: #ffffff;
+  --good: #0ca30c; --good-text: #006300; --serious: #ec835a; --critical: #d03b3b; --warning: #fab219;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10); --chip: #2c2c2a;
+    --n5: #184f95; --n10: #3987e5; --n15: #9ec5f4;
+    --h1: #104281; --h2: #184f95; --h3: #256abf; --h4: #3987e5; --h5: #86b6ef;
+    --h1-ink: #ffffff; --h2-ink: #ffffff; --h3-ink: #ffffff; --h4-ink: #0b0b0b; --h5-ink: #0b0b0b;
+    --good-text: #0ca30c;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
+h1 { font-size: 28px; line-height: 1.25; margin: 0 0 6px; letter-spacing: -0.01em; }
+h2 { font-size: 20px; margin: 48px 0 8px; }
+h3 { font-size: 16px; margin: 24px 0 8px; }
+p, li { color: var(--ink); max-width: 76ch; }
+.sub { color: var(--ink2); margin: 0 0 4px; }
+.meta { color: var(--muted); font-size: 13px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin: 14px 0; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 22px 0 6px; }
+.kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.kpi .label { color: var(--ink2); font-size: 13px; }
+.kpi .value { font-size: 22px; font-weight: 650; font-variant-numeric: tabular-nums; line-height: 1.3; margin-top: 4px; white-space: nowrap; }
+.kpi .note { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { color: var(--ink2); font-weight: 600; font-size: 13px; }
+td.num, th.num { text-align: right; }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; color: var(--ink2); font-size: 13px; margin: 4px 0 8px; }
+.legend span::before { content: ""; display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--sw); }
+svg { display: block; width: 100%; height: auto; overflow: visible; }
+svg text { fill: var(--ink2); font: 12px system-ui, -apple-system, "Segoe UI", sans-serif; }
+svg .axis-label { fill: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip { background: var(--chip); color: var(--ink2); border-radius: 999px; padding: 1px 8px; font-size: 12px; white-space: nowrap; }
+.badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--dot); }
+.heat td.cell { text-align: center; width: 72px; font-weight: 600; border-left: 2px solid var(--surface); }
+.heat td.cell.zero { color: var(--muted); font-weight: 400; }
+.heat tr.group td { color: var(--ink2); font-weight: 600; padding-top: 14px; border-bottom: 1px solid var(--axis); }
+.heat td.item { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; }
+.c1 { background: var(--h1); color: var(--h1-ink); } .c2 { background: var(--h2); color: var(--h2-ink); }
+.c3 { background: var(--h3); color: var(--h3-ink); } .c4 { background: var(--h4); color: var(--h4-ink); }
+.c5 { background: var(--h5); color: var(--h5-ink); }
+details { margin: 10px 0; }
+summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
+.callout { border-left: 3px solid var(--axis); padding: 4px 0 4px 14px; color: var(--ink2); margin: 12px 0; max-width: 80ch; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em; }
+#tip { position: fixed; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12); border-radius: 8px; padding: 7px 10px; font-size: 13px; max-width: 320px; display: none; z-index: 10; }
+.scroll { overflow-x: auto; }
+</style>
+</head>
+<body>
+<main>
+  <h1>v1 results: generating and judging questions for a Text-to-SQL evaluation</h1>
+  <p class="sub">Three budgets (N = 5, 10, 15) on TPC-H, each generated once and judged by both independent judges.</p>
+  <p class="meta" id="meta"></p>
+
+  <div class="kpis" id="kpis"></div>
+
+  <h2>What the runs show</h2>
+  <div class="card">
+    <ol>
+      <li><strong>Coverage rises with the budget, with diminishing returns.</strong> The coverage score goes from 65.98 (N=5) to 77.05 (N=10) to 83.06 (N=15). Every run covers all 8 tables. Shapes reach 8 of 8 from N=10. Columns are the slow dimension: 14, 19 and 30 of 61.</li>
+      <li><strong>The N=5 trade-off is visible.</strong> With five slots, selection favoured dense questions: four of the five need three or more tables, and the first one touches six. It dropped the two lowest-weight shapes, <em>simple lookup</em> (W 0.60) and <em>anti-join</em> (W 0.73), to cover a ratio, a ranking, a time trend and an above-average comparison instead.</li>
+      <li><strong>Extra slots buy less and less.</strong> The generator's gain at the moment of picking falls from about 0.35 for each run's first pick to 0.02 for the 15th. The coverage judge, working independently, agrees: 0 questions at N=5, 2 at N=10 and 5 at N=15 add nothing unique. There are no duplicate pairs.</li>
+      <li><strong>Every generator label was confirmed by both judges.</strong> All 243 labels (tables, columns and shapes) were confirmed by each judge's own links, and none was contradicted. The judges found 5 extra items the generator hadn't labeled.</li>
+      <li><strong>Correctness is 1.00 at every budget, and that is expected rather than reassuring.</strong> The generator drops any candidate whose links fail the code checks, so the questions that reach the judges are answerable by construction. These runs show that the correctness judge agrees with the generator. They don't yet show that it catches bad questions; that is what the controlled check (planned next) tests.</li>
+    </ol>
+  </div>
+
+  <h2>Coverage by dimension</h2>
+  <p>Share of each dimension covered by the questions the coverage judge credited. All 61 columns count, including comment and constant columns.</p>
+  <div class="card">
+    <div class="legend" id="legend-bars"></div>
+    <div id="bars"></div>
+  </div>
+  <div class="card scroll"><table id="cov-table"></table></div>
+
+  <h2>Gain per pick</h2>
+  <p>The generator's marginal gain for each question at the moment it was picked: shapes weighted by importance, plus new tables and columns. Each pick's value falls as coverage fills up.</p>
+  <div class="card">
+    <div class="legend" id="legend-lines"></div>
+    <div id="lines"></div>
+  </div>
+
+  <h2>What each budget covers</h2>
+  <p>Number of credited questions per item. A dash means not covered; hover for the reason and, for covered items, the question IDs.</p>
+  <div class="card scroll"><table class="heat" id="heat-main"></table></div>
+  <details class="card">
+    <summary>All 61 columns</summary>
+    <div class="scroll"><table class="heat" id="heat-cols"></table></div>
+  </details>
+
+  <h2>Repetition</h2>
+  <div class="card scroll"><table id="rep-table"></table></div>
+
+  <h2>Budget notes from the coverage judge</h2>
+  <div class="card" id="budget-notes"></div>
+
+  <h2>Questions</h2>
+  <div id="questions"></div>
+
+  <h2>Generation pool, cost and runtime</h2>
+  <p>Each run generated a fresh pool (targeted = max(2N, 16), plus N free slots). Code checked every candidate, removed duplicates and selected exactly N. Costs and durations come from each <code>claude -p</code> run's own log.</p>
+  <div class="card scroll"><table id="cost-table"></table></div>
+
+  <h2>Smoke runs</h2>
+  <p>N = 3 runs used to test the skills end to end, including a generator run with no docs and the time anchor off. The no-docs run used no coded columns and no relative dates, and it spelled metrics out instead of relying on glossary terms.</p>
+  <div class="card scroll"><table id="smoke-table"></table></div>
+
+  <h2>Caveats</h2>
+  <div class="card">
+    <ul>
+      <li><strong>One run per budget.</strong> LLM output varies between runs, so these numbers describe these specific question sets, not the generator's average behaviour.</li>
+      <li><strong>Same model everywhere.</strong> The generator and both judges use <span id="model"></span>, so they can share blind spots. Full label agreement is partly a consequence of that.</li>
+      <li><strong>The generator optimizes a measure close to the coverage judge's.</strong> High coverage is partly expected by construction. The coverage judge still counts every shape equally and credits only its own verified links.</li>
+      <li><strong>No execution.</strong> "Answerable" means every concept links to existing columns and values and the tables connect. It does not prove a query returns a sensible result.</li>
+      <li><strong>Not yet run:</strong> the controlled check (edited list with an unanswerable question and a paraphrase), and the robustness runs on different data (TPC-H scale factor 0.01) and a different schema (TPC-DS).</li>
+    </ul>
+  </div>
+
+  <h2>Files</h2>
+  <div class="card">
+    <p>Each run folder (<code>runs/n5</code>, <code>runs/n10</code>, <code>runs/n15</code>) holds <code>questions.json</code>, <code>correctness.json/.md</code>, <code>coverage.json/.md</code>, the generation pool and pick log under <code>generation/</code>, and the <code>claude -p</code> logs under <code>logs/</code>. This page was built by hand from those JSON files.</p>
+  </div>
+</main>
+<div id="tip" role="tooltip"></div>
+
+<script type="application/json" id="data">{"meta": {"model": "claude-opus-5-5", "claude": "2.1.331 (Claude Code)", "db": {"url": "duckdb:///data/tpch_sf01.duckdb", "engine": "duckdb", "engine_version": "2.0.1", "file_sha256": "9a6859c7dad2fbf6fea4085b95ce1d453e29582b55d11bf2625ef5ce0ba734ee", "tables": 8, "columns": 61}, "docs": ["semantic_docs/tpch/glossary.md", "semantic_docs/tpch/spec/clause1_database_design.md", "semantic_docs/tpch/spec/clause4_data_generation.md"], "anchor": {"setting": "auto", "mode": "auto", "date": "1998-08-02"}, "generated": "2026-11-25T00:54:04+00:00"}, "runs": [{"n": 5, "correctness": {"n": 5, "counts": {"OFF_TOPIC": 0, "MISSING_DATA": 0, "AMBIGUOUS": 0, "ANSWERABLE": 5}, "score": 1.0, "formula": "(ANSWERABLE + 0.5 x AMBIGUOUS) / N", "calculation": "(5 + 0.5 x 0) / 5 = 1.0000", "verdicts_with_evidence_issues": 0}, "coverage": {"n": 5, "tables_pct": 100.0, "columns_pct": 22.95, "shapes_pct": 75.0, "score": 65.98, "formula": "(table % + column % + shape %) / 3", "calculation": "(100.0 + 22.95 + 75.0) / 3 = 65.98", "duplicate_pairs": 0, "questions_covering_nothing_unique": 0, "questions_without_credit": 0}, "budget_note": "N = 5. There are 8 tables, 61 columns and 8 shapes. A few questions that each combine several tables and shapes can cover all tables and shapes; columns can't be covered that way. Credited questions here link 3.8 columns on average, so even with no repetition at most about 19 of 61 columns (31%) could be covered at this N; 14 were. Read column coverage relative to N. 0 question(s) earned no credit (a concept not in the database, or tables that don't connect) and 0 ambiguous phrase(s) earned nothing.", "repetition": {"duplicate_pairs": [], "nothing_unique": [], "no_credit": []}, "dims": {"tables": {"covered": {"customer": ["q01", "q05"], "lineitem": ["q01", "q02", "q03", "q05"], "nation": ["q01", "q02", "q05"], "orders": ["q01", "q05"], "part": ["q01", "q04"], "partsupp": ["q01"], "region": ["q03"], "supplier": ["q02", "q03"]}, "uncovered": {}, "eligible": 8, "pct": 100.0, "covered_count": 8}, "columns": {"covered": {"lineitem.l_quantity": ["q01"], "lineitem.l_extendedprice": ["q01", "q05"], "lineitem.l_discount": ["q01", "q05"], "lineitem.l_returnflag": ["q03"], "lineitem.l_commitdate": ["q02"], "lineitem.l_receiptdate": ["q02"], "nation.n_name": ["q01", "q02", "q05"], "orders.o_orderdate": ["q01", "q05"], "part.p_brand": ["q04"], "part.p_type": ["q01"], "part.p_size": ["q04"], "part.p_retailprice": ["q04"], "partsupp.ps_supplycost": ["q01"], "region.r_name": ["q03"]}, "uncovered": {"customer.c_custkey": "not asked", "customer.c_name": "not asked", "customer.c_address": "not asked", "customer.c_nationkey": "not asked", "customer.c_phone": "not asked", "customer.c_acctbal": "not asked", "customer.c_mktsegment": "not asked", "customer.c_comment": "not asked", "lineitem.l_orderkey": "not asked", "lineitem.l_partkey": "not asked", "lineitem.l_suppkey": "not asked", "lineitem.l_linenumber": "not asked", "lineitem.l_tax": "not asked", "lineitem.l_linestatus": "not asked", "lineitem.l_shipdate": "not asked", "lineitem.l_shipinstruct": "not asked", "lineitem.l_shipmode": "not asked", "lineitem.l_comment": "not asked", "nation.n_nationkey": "not asked", "nation.n_regionkey": "not asked", "nation.n_comment": "not asked", "orders.o_orderkey": "not asked", "orders.o_custkey": "not asked", "orders.o_orderstatus": "not asked", "orders.o_totalprice": "not asked", "orders.o_orderpriority": "not asked", "orders.o_clerk": "not asked", "orders.o_shippriority": "not asked (constant in this data)", "orders.o_comment": "not asked", "part.p_partkey": "not asked", "part.p_name": "not asked", "part.p_mfgr": "not asked", "part.p_container": "not asked", "part.p_comment": "not asked", "partsupp.ps_partkey": "not asked", "partsupp.ps_suppkey": "not asked", "partsupp.ps_availqty": "not asked", "partsupp.ps_comment": "not asked", "region.r_regionkey": "not asked", "region.r_comment": "not asked", "supplier.s_suppkey": "not asked", "supplier.s_name": "not asked", "supplier.s_address": "not asked", "supplier.s_nationkey": "not asked", "supplier.s_phone": "not asked", "supplier.s_acctbal": "not asked", "supplier.s_comment": "not asked"}, "eligible": 61, "pct": 22.95, "covered_count": 14}, "shapes": {"covered": {"aggregation": ["q01", "q02", "q04", "q05"], "multi_join": ["q01", "q02", "q03", "q05"], "ranking": ["q04"], "time_trend": ["q02"], "ratio": ["q03"], "vs_aggregate": ["q05"]}, "uncovered": {"lookup": "not asked", "anti_join": "not asked"}, "eligible": 8, "pct": 75.0, "covered_count": 6}}, "questions": [{"id": "q01", "text": "What was the total profit on MEDIUM BRUSHED COPPER parts ordered by customers in JAPAN during 1995?", "verdict": "ANSWERABLE", "rationale": "Profit is defined in the glossary as l_extendedprice*(1-l_discount) - ps_supplycost*l_quantity; the part filter is p_type = 'MEDIUM BRUSHED COPPER', customers are filtered by nation.n_name = 'JAPAN', and 'ordered during 1995' maps to o_orderdate in 1995.", "shapes": ["aggregation", "multi_join"], "tables": ["customer", "lineitem", "nation", "orders", "part", "partsupp"], "columns": ["lineitem.l_discount", "lineitem.l_extendedprice", "lineitem.l_quantity", "nation.n_name", "orders.o_orderdate", "part.p_type", "partsupp.ps_supplycost"], "unique": ["tables:partsupp", "columns:lineitem.l_quantity", "columns:part.p_type", "columns:partsupp.ps_supplycost"], "pick_gain": 0.349167, "labels_confirmed": 15, "labels_total": 15}, {"id": "q02", "text": "How many line items from suppliers in BRAZIL were delivered late in each year from 1993 to 1997?", "verdict": "ANSWERABLE", "rationale": "Late delivery is defined in the glossary as l_receiptdate > l_commitdate; suppliers are filtered by nation.n_name = 'BRAZIL', and 'delivered late in each year' groups by the delivery (receipt) year, l_receiptdate, over 1993-1997.", "shapes": ["aggregation", "multi_join", "time_trend"], "tables": ["lineitem", "nation", "supplier"], "columns": ["lineitem.l_commitdate", "lineitem.l_receiptdate", "nation.n_name"], "unique": ["columns:lineitem.l_commitdate", "columns:lineitem.l_receiptdate", "shapes:time_trend"], "pick_gain": 0.175085, "labels_confirmed": 9, "labels_total": 9}, {"id": "q03", "text": "What percentage of line items from suppliers in the AMERICA region were returned?", "verdict": "ANSWERABLE", "rationale": "The glossary's coded-columns section defines l_returnflag = 'R' as returned; the share is R line items over all line items whose supplier's nation is in region.r_name = 'AMERICA'.", "shapes": ["multi_join", "ratio"], "tables": ["lineitem", "region", "supplier"], "columns": ["lineitem.l_returnflag", "region.r_name"], "unique": ["tables:region", "columns:lineitem.l_returnflag", "columns:region.r_name", "shapes:ratio"], "pick_gain": 0.125883, "labels_confirmed": 7, "labels_total": 7}, {"id": "q04", "text": "Which 3 brands have the highest average retail price among parts of size 50?", "verdict": "ANSWERABLE", "rationale": "Group parts with p_size = 50 by p_brand, average p_retailprice, and take the top 3; all columns are in the part table.", "shapes": ["aggregation", "ranking"], "tables": ["part"], "columns": ["part.p_brand", "part.p_retailprice", "part.p_size"], "unique": ["columns:part.p_brand", "columns:part.p_retailprice", "columns:part.p_size", "shapes:ranking"], "pick_gain": 0.092082, "labels_confirmed": 6, "labels_total": 6}, {"id": "q05", "text": "Which nations had total revenue from their customers' orders in 1996 above the average across all nations?", "verdict": "ANSWERABLE", "rationale": "Revenue is the glossary convention l_extendedprice*(1-l_discount); total it per customer nation (customer.c_nationkey -> nation) for orders with o_orderdate in 1996, then keep nations whose total exceeds the average of the per-nation totals.", "shapes": ["aggregation", "multi_join", "vs_aggregate"], "tables": ["customer", "lineitem", "nation", "orders"], "columns": ["lineitem.l_discount", "lineitem.l_extendedprice", "nation.n_name", "orders.o_orderdate"], "unique": ["shapes:vs_aggregate"], "pick_gain": 0.075133, "labels_confirmed": 10, "labels_total": 10}], "pool": {"size": 21, "selected": 5, "not selected": 16, "duplicate": 0, "dropped": 0}, "cost": {"generator": {"cost_usd": 0.981, "seconds": 177, "turns": 13}, "correctness": {"cost_usd": 0.523, "seconds": 60, "turns": 10}, "coverage": {"cost_usd": 0.527, "seconds": 65, "turns": 10}}, "label_checks": {"correctness": {"confirmed": 47, "not supported": 0, "not labeled": 0}, "coverage": {"confirmed": 47, "not supported": 0, "not labeled": 1}}}, {"n": 10, "correctness": {"n": 10, "counts": {"OFF_TOPIC": 0, "MISSING_DATA": 0, "AMBIGUOUS": 0, "ANSWERABLE": 10}, "score": 1.0, "formula": "(ANSWERABLE + 0.5 x AMBIGUOUS) / N", "calculation": "(10 + 0.5 x 0) / 10 = 1.0000", "verdicts_with_evidence_issues": 0}, "coverage": {"n": 10, "tables_pct": 100.0, "columns_pct": 31.15, "shapes_pct": 100.0, "score": 77.05, "formula": "(table % + column % + shape %) / 3", "calculation": "(100.0 + 31.15 + 100.0) / 3 = 77.05", "duplicate_pairs": 0, "questions_covering_nothing_unique": 2, "questions_without_credit": 0}, "budget_note": "N = 10. There are 8 tables, 61 columns and 8 shapes. A few questions that each combine several tables and shapes can cover all tables and shapes; columns can't be covered that way. Credited questions here link 3.4 columns on average, so even with no repetition at most about 34 of 61 columns (56%) could be covered at this N; 19 were. Read column coverage relative to N. 0 question(s) earned no credit (a concept not in the database, or tables that don't connect) and 0 ambiguous phrase(s) earned nothing.", "repetition": {"duplicate_pairs": [], "nothing_unique": ["q05", "q07"], "no_credit": []}, "dims": {"tables": {"covered": {"customer": ["q02", "q05", "q07", "q08"], "lineitem": ["q01", "q03", "q04", "q05", "q08", "q09"], "nation": ["q01", "q07", "q08", "q10"], "orders": ["q02", "q05", "q06", "q07", "q08"], "part": ["q03", "q09"], "partsupp": ["q01"], "region": ["q02", "q04", "q05"], "supplier": ["q01", "q04", "q10"]}, "uncovered": {}, "eligible": 8, "pct": 100.0, "covered_count": 8}, "columns": {"covered": {"customer.c_mktsegment": ["q02"], "lineitem.l_quantity": ["q01"], "lineitem.l_extendedprice": ["q01", "q03", "q05", "q09"], "lineitem.l_discount": ["q01", "q03", "q05", "q09"], "lineitem.l_shipdate": ["q01", "q03", "q09"], "lineitem.l_commitdate": ["q04"], "lineitem.l_receiptdate": ["q04"], "lineitem.l_shipinstruct": ["q08"], "nation.n_name": ["q01", "q07", "q08"], "orders.o_orderstatus": ["q06"], "orders.o_totalprice": ["q06", "q07"], "orders.o_orderdate": ["q05", "q06", "q07", "q08"], "orders.o_orderpriority": ["q06"], "orders.o_clerk": ["q06"], "part.p_mfgr": ["q03"], "part.p_container": ["q09"], "partsupp.ps_supplycost": ["q01"], "region.r_name": ["q02", "q04"], "supplier.s_acctbal": ["q10"]}, "uncovered": {"customer.c_custkey": "not asked", "customer.c_name": "not asked", "customer.c_address": "not asked", "customer.c_nationkey": "not asked", "customer.c_phone": "not asked", "customer.c_acctbal": "not asked", "customer.c_comment": "not asked", "lineitem.l_orderkey": "not asked", "lineitem.l_partkey": "not asked", "lineitem.l_suppkey": "not asked", "lineitem.l_linenumber": "not asked", "lineitem.l_tax": "not asked", "lineitem.l_returnflag": "not asked", "lineitem.l_linestatus": "not asked", "lineitem.l_shipmode": "not asked", "lineitem.l_comment": "not asked", "nation.n_nationkey": "not asked", "nation.n_regionkey": "not asked", "nation.n_comment": "not asked", "orders.o_orderkey": "not asked", "orders.o_custkey": "not asked", "orders.o_shippriority": "not asked (constant in this data)", "orders.o_comment": "not asked", "part.p_partkey": "not asked", "part.p_name": "not asked", "part.p_brand": "not asked", "part.p_type": "not asked", "part.p_size": "not asked", "part.p_retailprice": "not asked", "part.p_comment": "not asked", "partsupp.ps_partkey": "not asked", "partsupp.ps_suppkey": "not asked", "partsupp.ps_availqty": "not asked", "partsupp.ps_comment": "not asked", "region.r_regionkey": "not asked", "region.r_comment": "not asked", "supplier.s_suppkey": "not asked", "supplier.s_name": "not asked", "supplier.s_address": "not asked", "supplier.s_nationkey": "not asked", "supplier.s_phone": "not asked", "supplier.s_comment": "not asked"}, "eligible": 61, "pct": 31.15, "covered_count": 19}, "shapes": {"covered": {"lookup": ["q06"], "aggregation": ["q01", "q02", "q03", "q05", "q07", "q09", "q10"], "multi_join": ["q01", "q02", "q04", "q05", "q07", "q08"], "ranking": ["q01", "q09"], "time_trend": ["q03", "q07"], "ratio": ["q04", "q08"], "vs_aggregate": ["q05", "q10"], "anti_join": ["q02"]}, "uncovered": {}, "eligible": 8, "pct": 100.0, "covered_count": 8}}, "questions": [{"id": "q01", "text": "Which 5 suppliers in RUSSIA earned the highest total profit on items shipped in 1996?", "verdict": "ANSWERABLE", "rationale": "Profit is defined in the glossary as l_extendedprice*(1-l_discount) - ps_supplycost*l_quantity; supplier nation via supplier.s_nationkey -> nation.n_name = RUSSIA, filtered on lineitem.l_shipdate in 1996 and ranked by summed profit.", "shapes": ["aggregation", "multi_join", "ranking"], "tables": ["lineitem", "nation", "partsupp", "supplier"], "columns": ["lineitem.l_discount", "lineitem.l_extendedprice", "lineitem.l_quantity", "lineitem.l_shipdate", "nation.n_name", "partsupp.ps_supplycost"], "unique": ["tables:partsupp", "columns:lineitem.l_quantity", "columns:partsupp.ps_supplycost"], "pick_gain": 0.346399, "labels_confirmed": 13, "labels_total": 13}, {"id": "q02", "text": "How many MACHINERY customers in the ASIA region have never placed an order?", "verdict": "ANSWERABLE", "rationale": "Count customers with customer.c_mktsegment = MACHINERY whose nation is in region.r_name = ASIA and who have no row in orders (o_custkey); clause 1.4 notes a third of customers have no orders.", "shapes": ["aggregation", "anti_join", "multi_join"], "tables": ["customer", "orders", "region"], "columns": ["customer.c_mktsegment", "region.r_name"], "unique": ["columns:customer.c_mktsegment", "shapes:anti_join"], "pick_gain": 0.226947, "labels_confirmed": 8, "labels_total": 8}, {"id": "q03", "text": "How did total revenue from Manufacturer#4 parts change year by year for items shipped between 1993 and 1997?", "verdict": "ANSWERABLE", "rationale": "Revenue is the glossary's l_extendedprice*(1-l_discount), restricted to part.p_mfgr = Manufacturer#4 and lineitem.l_shipdate in 1993..1997, grouped by ship year.", "shapes": ["aggregation", "time_trend"], "tables": ["lineitem", "part"], "columns": ["lineitem.l_discount", "lineitem.l_extendedprice", "lineitem.l_shipdate", "part.p_mfgr"], "unique": ["columns:part.p_mfgr"], "pick_gain": 0.120455, "labels_confirmed": 8, "labels_total": 8}, {"id": "q04", "text": "What proportion of line items received in 1995 from suppliers in the MIDDLE EAST region were delivered late?", "verdict": "ANSWERABLE", "rationale": "Late delivery is defined in the glossary as l_receiptdate > l_commitdate; the population is line items with l_receiptdate in 1995 whose supplier's nation is in region MIDDLE EAST, and the answer is late lines divided by all such lines.", "shapes": ["multi_join", "ratio"], "tables": ["lineitem", "region", "supplier"], "columns": ["lineitem.l_commitdate", "lineitem.l_receiptdate", "region.r_name"], "unique": ["columns:lineitem.l_commitdate", "columns:lineitem.l_receiptdate"], "pick_gain": 0.094633, "labels_confirmed": 8, "labels_total": 8}, {"id": "q05", "text": "Which regions generated more revenue from their customers' orders placed in 1997 than the average region?", "verdict": "ANSWERABLE", "rationale": "Revenue is the glossary's l_extendedprice*(1-l_discount) (distinct from order value), attributed to regions through the customer's nation, for orders with o_orderdate in 1997; regions whose total exceeds the mean of the five regional totals qualify.", "shapes": ["aggregation", "multi_join", "vs_aggregate"], "tables": ["customer", "lineitem", "orders", "region"], "columns": ["lineitem.l_discount", "lineitem.l_extendedprice", "orders.o_orderdate"], "unique": [], "pick_gain": 0.071253, "labels_confirmed": 9, "labels_total": 9}, {"id": "q06", "text": "List the clerk, order value and status of each 5-LOW priority order placed on 1 July 1998.", "verdict": "ANSWERABLE", "rationale": "Direct lookup on orders: o_clerk, o_totalprice (glossary: order value) and o_orderstatus for rows with o_orderpriority = 5-LOW and o_orderdate = 1998-07-01.", "shapes": ["lookup"], "tables": ["orders"], "columns": ["orders.o_clerk", "orders.o_orderdate", "orders.o_orderpriority", "orders.o_orderstatus", "orders.o_totalprice"], "unique": ["columns:orders.o_clerk", "columns:orders.o_orderpriority", "columns:orders.o_orderstatus", "shapes:lookup"], "pick_gain": 0.064266, "labels_confirmed": 7, "labels_total": 7}, {"id": "q07", "text": "How did the total order value from customers in BRAZIL change quarter by quarter in 1997?", "verdict": "ANSWERABLE", "rationale": "Order value is o_totalprice per the glossary; sum it for customers whose nation is BRAZIL, for orders with o_orderdate in 1997, grouped by quarter of o_orderdate.", "shapes": ["aggregation", "multi_join", "time_trend"], "tables": ["customer", "nation", "orders"], "columns": ["nation.n_name", "orders.o_orderdate", "orders.o_totalprice"], "unique": [], "pick_gain": 0.046875, "labels_confirmed": 9, "labels_total": 9}, {"id": "q08", "text": "What percentage of the line items ordered by customers in KENYA during 1997 carried the shipping instruction COLLECT COD?", "verdict": "ANSWERABLE", "rationale": "Population: line items of orders with o_orderdate in 1997 placed by customers whose nation is KENYA; the answer is the share of those with lineitem.l_shipinstruct = COLLECT COD.", "shapes": ["multi_join", "ratio"], "tables": ["customer", "lineitem", "nation", "orders"], "columns": ["lineitem.l_shipinstruct", "nation.n_name", "orders.o_orderdate"], "unique": ["columns:lineitem.l_shipinstruct"], "pick_gain": 0.040834, "labels_confirmed": 9, "labels_total": 9}, {"id": "q09", "text": "Which 5 parts packed in LG CASE containers brought in the highest total revenue from items shipped in 1996?", "verdict": "ANSWERABLE", "rationale": "Parts with part.p_container = LG CASE (a valid container per clause 4.2.2.13), ranked by summed glossary revenue l_extendedprice*(1-l_discount) over line items with l_shipdate in 1996.", "shapes": ["aggregation", "ranking"], "tables": ["lineitem", "part"], "columns": ["lineitem.l_discount", "lineitem.l_extendedprice", "lineitem.l_shipdate", "part.p_container"], "unique": ["columns:part.p_container"], "pick_gain": 0.040003, "labels_confirmed": 8, "labels_total": 8}, {"id": "q10", "text": "Which nations have a mean supplier account balance higher than the average across all suppliers?", "verdict": "ANSWERABLE", "rationale": "Average supplier.s_acctbal per nation (via s_nationkey) compared with the overall average s_acctbal across all suppliers; the overall baseline is stated explicitly.", "shapes": ["aggregation", "vs_aggregate"], "tables": ["nation", "supplier"], "columns": ["supplier.s_acctbal"], "unique": ["columns:supplier.s_acctbal"], "pick_gain": 0.035348, "labels_confirmed": 5, "labels_total": 5}], "pool": {"size": 30, "selected": 10, "not selected": 20, "duplicate": 0, "dropped": 0}, "cost": {"generator": {"cost_usd": 1.179, "seconds": 234, "turns": 11}, "correctness": {"cost_usd": 0.577, "seconds": 71, "turns": 10}, "coverage": {"cost_usd": 0.546, "seconds": 63, "turns": 10}}, "label_checks": {"correctness": {"confirmed": 84, "not supported": 0, "not labeled": 0}, "coverage": {"confirmed": 84, "not supported": 0, "not labeled": 1}}}, {"n": 15, "correctness": {"n": 15, "counts": {"OFF_TOPIC": 0, "MISSING_DATA": 0, "AMBIGUOUS": 0, "ANSWERABLE": 15}, "score": 1.0, "formula": "(ANSWERABLE + 0.5 x AMBIGUOUS) / N", "calculation": "(15 + 0.5 x 0) / 15 = 1.0000", "verdicts_with_evidence_issues": 0}, "coverage": {"n": 15, "tables_pct": 100.0, "columns_pct": 49.18, "shapes_pct": 100.0, "score": 83.06, "formula": "(table % + column % + shape %) / 3", "calculation": "(100.0 + 49.18 + 100.0) / 3 = 83.06", "duplicate_pairs": 0, "questions_covering_nothing_unique": 5, "questions_without_credit": 0}, "budget_note": "N = 15. There are 8 tables, 61 columns and 8 shapes. A few questions that each combine several tables and shapes can cover all tables and shapes; columns can't be covered that way. Credited questions here link 3.2 columns on average, so even with no repetition at most about 48 of 61 columns (79%) could be covered at this N; 30 were. Read column coverage relative to N. 0 question(s) earned no credit (a concept not in the database, or tables that don't connect) and 0 ambiguous phrase(s) earned nothing.", "repetition": {"duplicate_pairs": [], "nothing_unique": ["q03", "q04", "q08", "q10", "q12"], "no_credit": []}, "dims": {"tables": {"covered": {"customer": ["q02", "q04", "q08", "q09"], "lineitem": ["q01", "q05", "q08", "q11", "q12", "q13"], "nation": ["q01", "q02", "q04", "q09", "q11"], "orders": ["q02", "q04", "q14"], "part": ["q03", "q06", "q07"], "partsupp": ["q01", "q07", "q10"], "region": ["q03", "q05", "q08"], "supplier": ["q01", "q03", "q05", "q07", "q10", "q11", "q15"]}, "uncovered": {}, "eligible": 8, "pct": 100.0, "covered_count": 8}, "columns": {"covered": {"customer.c_name": ["q09"], "customer.c_phone": ["q09"], "customer.c_acctbal": ["q09"], "customer.c_mktsegment": ["q09"], "lineitem.l_quantity": ["q01"], "lineitem.l_extendedprice": ["q01", "q12"], "lineitem.l_discount": ["q01"], "lineitem.l_returnflag": ["q05"], "lineitem.l_shipdate": ["q01", "q08", "q11", "q12", "q13"], "lineitem.l_commitdate": ["q13"], "lineitem.l_receiptdate": ["q05", "q13"], "lineitem.l_shipinstruct": ["q11"], "lineitem.l_shipmode": ["q08", "q13"], "nation.n_name": ["q01", "q02", "q09", "q11"], "orders.o_totalprice": ["q04", "q14"], "orders.o_orderdate": ["q02", "q04", "q14"], "orders.o_orderpriority": ["q02"], "orders.o_clerk": ["q14"], "part.p_name": ["q06"], "part.p_brand": ["q03", "q06"], "part.p_type": ["q07"], "part.p_size": ["q06"], "part.p_container": ["q06"], "part.p_retailprice": ["q06"], "partsupp.ps_availqty": ["q07", "q10"], "partsupp.ps_supplycost": ["q01"], "region.r_name": ["q03", "q05", "q08"], "supplier.s_name": ["q15"], "supplier.s_phone": ["q15"], "supplier.s_acctbal": ["q10", "q15"]}, "uncovered": {"customer.c_custkey": "not asked", "customer.c_address": "not asked", "customer.c_nationkey": "not asked", "customer.c_comment": "not asked", "lineitem.l_orderkey": "not asked", "lineitem.l_partkey": "not asked", "lineitem.l_suppkey": "not asked", "lineitem.l_linenumber": "not asked", "lineitem.l_tax": "not asked", "lineitem.l_linestatus": "not asked", "lineitem.l_comment": "not asked", "nation.n_nationkey": "not asked", "nation.n_regionkey": "not asked", "nation.n_comment": "not asked", "orders.o_orderkey": "not asked", "orders.o_custkey": "not asked", "orders.o_orderstatus": "not asked", "orders.o_shippriority": "not asked (constant in this data)", "orders.o_comment": "not asked", "part.p_partkey": "not asked", "part.p_mfgr": "not asked", "part.p_comment": "not asked", "partsupp.ps_partkey": "not asked", "partsupp.ps_suppkey": "not asked", "partsupp.ps_comment": "not asked", "region.r_regionkey": "not asked", "region.r_comment": "not asked", "supplier.s_suppkey": "not asked", "supplier.s_address": "not asked", "supplier.s_nationkey": "not asked", "supplier.s_comment": "not asked"}, "eligible": 61, "pct": 49.18, "covered_count": 30}, "shapes": {"covered": {"lookup": ["q06", "q09", "q15"], "aggregation": ["q01", "q02", "q04", "q07", "q08", "q10", "q12", "q14"], "multi_join": ["q01", "q02", "q03", "q04", "q05", "q07", "q08", "q11"], "ranking": ["q02", "q07", "q14"], "time_trend": ["q01", "q08"], "ratio": ["q05", "q10", "q13"], "vs_aggregate": ["q04", "q12"], "anti_join": ["q03", "q11"]}, "uncovered": {}, "eligible": 8, "pct": 100.0, "covered_count": 8}}, "questions": [{"id": "q01", "text": "How did the total profit on items supplied by suppliers in FRANCE change year by year for shipments between 1993 and 1997?", "verdict": "ANSWERABLE", "rationale": "Profit is defined in the glossary (l_extendedprice*(1-l_discount) - ps_supplycost*l_quantity); suppliers in FRANCE via supplier.s_nationkey -> nation.n_name, grouped by year of lineitem.l_shipdate within 1993..1997.", "shapes": ["aggregation", "multi_join", "time_trend"], "tables": ["lineitem", "nation", "partsupp", "supplier"], "columns": ["lineitem.l_discount", "lineitem.l_extendedprice", "lineitem.l_quantity", "lineitem.l_shipdate", "nation.n_name", "partsupp.ps_supplycost"], "unique": ["columns:lineitem.l_discount", "columns:lineitem.l_quantity", "columns:partsupp.ps_supplycost"], "pick_gain": 0.351718, "labels_confirmed": 13, "labels_total": 13}, {"id": "q02", "text": "Which 5 customers in INDIA placed the largest number of 1-URGENT orders in 1997?", "verdict": "ANSWERABLE", "rationale": "Count orders with orders.o_orderpriority = '1-URGENT' and o_orderdate in 1997 per customer whose nation (customer.c_nationkey -> nation.n_name) is INDIA, then take the top 5.", "shapes": ["aggregation", "multi_join", "ranking"], "tables": ["customer", "nation", "orders"], "columns": ["nation.n_name", "orders.o_orderdate", "orders.o_orderpriority"], "unique": ["columns:orders.o_orderpriority"], "pick_gain": 0.201016, "labels_confirmed": 9, "labels_total": 9}, {"id": "q03", "text": "Which Brand#23 parts have no supplier located in the ASIA region?", "verdict": "ANSWERABLE", "rationale": "Parts with part.p_brand = 'Brand#23' for which no partsupp supplier sits in a nation of region.r_name = 'ASIA'; the glossary defines the part-supplier relationship through partsupp.", "shapes": ["anti_join", "multi_join"], "tables": ["part", "region", "supplier"], "columns": ["part.p_brand", "region.r_name"], "unique": [], "pick_gain": 0.146495, "labels_confirmed": 7, "labels_total": 7}, {"id": "q04", "text": "Which nations had a total order value from their customers in 1995 above the average across all nations?", "verdict": "ANSWERABLE", "rationale": "Order value is orders.o_totalprice (glossary); sum it per customer nation for o_orderdate in 1995 and keep nations whose total exceeds the mean of the per-nation totals.", "shapes": ["aggregation", "multi_join", "vs_aggregate"], "tables": ["customer", "nation", "orders"], "columns": ["orders.o_orderdate", "orders.o_totalprice"], "unique": [], "pick_gain": 0.08721, "labels_confirmed": 8, "labels_total": 8}, {"id": "q05", "text": "Of the line items received in 1994 from suppliers in the AFRICA region, what fraction were returned?", "verdict": "ANSWERABLE", "rationale": "Among line items with lineitem.l_receiptdate in 1994 whose supplier's nation is in region AFRICA, the share with l_returnflag = 'R' (glossary: R = returned; all 1994 receipts predate 1995-06-17 so they carry R or A).", "shapes": ["multi_join", "ratio"], "tables": ["lineitem", "region", "supplier"], "columns": ["lineitem.l_receiptdate", "lineitem.l_returnflag", "region.r_name"], "unique": ["columns:lineitem.l_returnflag"], "pick_gain": 0.081667, "labels_confirmed": 8, "labels_total": 8}, {"id": "q06", "text": "List the name, brand and retail price of every part of size 49 packed in an LG DRUM container.", "verdict": "ANSWERABLE", "rationale": "Direct lookup on part: p_name, p_brand, p_retailprice where p_size = 49 and p_container = 'LG DRUM'.", "shapes": ["lookup"], "tables": ["part"], "columns": ["part.p_brand", "part.p_container", "part.p_name", "part.p_retailprice", "part.p_size"], "unique": ["columns:part.p_container", "columns:part.p_name", "columns:part.p_retailprice", "columns:part.p_size"], "pick_gain": 0.064266, "labels_confirmed": 7, "labels_total": 7}, {"id": "q07", "text": "Which 5 suppliers hold the largest total available quantity of STEEL parts?", "verdict": "ANSWERABLE", "rationale": "Sum partsupp.ps_availqty per supplier over parts whose p_type material (last word, glossary: Part type) is STEEL, and take the top 5.", "shapes": ["aggregation", "multi_join", "ranking"], "tables": ["part", "partsupp", "supplier"], "columns": ["part.p_type", "partsupp.ps_availqty"], "unique": ["columns:part.p_type"], "pick_gain": 0.050251, "labels_confirmed": 8, "labels_total": 8}, {"id": "q08", "text": "How did the number of line items shipped by FOB to customers in the MIDDLE EAST region change quarter by quarter in 1996?", "verdict": "ANSWERABLE", "rationale": "Count line items with lineitem.l_shipmode = 'FOB' and l_shipdate in 1996, for orders whose customer's nation is in region MIDDLE EAST, grouped by quarter of l_shipdate.", "shapes": ["aggregation", "multi_join", "time_trend"], "tables": ["customer", "lineitem", "region"], "columns": ["lineitem.l_shipdate", "lineitem.l_shipmode", "region.r_name"], "unique": [], "pick_gain": 0.043743, "labels_confirmed": 9, "labels_total": 9}, {"id": "q09", "text": "List the name and phone number of customers in the AUTOMOBILE segment in CANADA with a negative account balance.", "verdict": "ANSWERABLE", "rationale": "Lookup of customer.c_name and c_phone where c_mktsegment = 'AUTOMOBILE', nation.n_name = 'CANADA' and c_acctbal < 0.", "shapes": ["lookup"], "tables": ["customer", "nation"], "columns": ["customer.c_acctbal", "customer.c_mktsegment", "customer.c_name", "customer.c_phone", "nation.n_name"], "unique": ["columns:customer.c_acctbal", "columns:customer.c_mktsegment", "columns:customer.c_name", "columns:customer.c_phone"], "pick_gain": 0.04033, "labels_confirmed": 8, "labels_total": 8}, {"id": "q10", "text": "What share of our suppliers' combined available quantity is held by suppliers with a negative account balance?", "verdict": "ANSWERABLE", "rationale": "Sum of partsupp.ps_availqty for suppliers with supplier.s_acctbal < 0 divided by the sum of ps_availqty over all suppliers.", "shapes": ["aggregation", "ratio"], "tables": ["partsupp", "supplier"], "columns": ["partsupp.ps_availqty", "supplier.s_acctbal"], "unique": [], "pick_gain": 0.038673, "labels_confirmed": 5, "labels_total": 5}, {"id": "q11", "text": "Which suppliers in PERU had no line items with the shipping instruction COLLECT COD shipped last month?", "verdict": "ANSWERABLE", "rationale": "Suppliers with nation.n_name = 'PERU' having no line item with lineitem.l_shipinstruct = 'COLLECT COD' and l_shipdate in last month, which the time anchor resolves to 1998-07.", "shapes": ["anti_join", "multi_join"], "tables": ["lineitem", "nation", "supplier"], "columns": ["lineitem.l_shipdate", "lineitem.l_shipinstruct", "nation.n_name"], "unique": ["columns:lineitem.l_shipinstruct"], "pick_gain": 0.033894, "labels_confirmed": 8, "labels_total": 8}, {"id": "q12", "text": "How many line items shipped in 1995 had a gross value above that year's average?", "verdict": "ANSWERABLE", "rationale": "Gross value is lineitem.l_extendedprice (glossary); count line items with l_shipdate in 1995 whose l_extendedprice exceeds the 1995 average of l_extendedprice.", "shapes": ["aggregation", "vs_aggregate"], "tables": ["lineitem"], "columns": ["lineitem.l_extendedprice", "lineitem.l_shipdate"], "unique": [], "pick_gain": 0.03125, "labels_confirmed": 5, "labels_total": 5}, {"id": "q13", "text": "What percentage of line items shipped by MAIL in 1996 were delivered late?", "verdict": "ANSWERABLE", "rationale": "Late delivery is l_receiptdate > l_commitdate (glossary); share of line items with l_shipmode = 'MAIL' and l_shipdate in 1996 that were late.", "shapes": ["ratio"], "tables": ["lineitem"], "columns": ["lineitem.l_commitdate", "lineitem.l_receiptdate", "lineitem.l_shipdate", "lineitem.l_shipmode"], "unique": ["columns:lineitem.l_commitdate"], "pick_gain": 0.021386, "labels_confirmed": 6, "labels_total": 6}, {"id": "q14", "text": "Which 10 clerks handled the highest total order value in 1996?", "verdict": "ANSWERABLE", "rationale": "Sum orders.o_totalprice (order value, glossary) per orders.o_clerk for o_orderdate in 1996 and take the top 10.", "shapes": ["aggregation", "ranking"], "tables": ["orders"], "columns": ["orders.o_clerk", "orders.o_orderdate", "orders.o_totalprice"], "unique": ["columns:orders.o_clerk"], "pick_gain": 0.021053, "labels_confirmed": 6, "labels_total": 6}, {"id": "q15", "text": "What is the phone number and account balance of Supplier#000000427?", "verdict": "ANSWERABLE", "rationale": "Direct lookup of supplier.s_phone and s_acctbal where s_name = 'Supplier#000000427'.", "shapes": ["lookup"], "tables": ["supplier"], "columns": ["supplier.s_acctbal", "supplier.s_name", "supplier.s_phone"], "unique": ["columns:supplier.s_name", "columns:supplier.s_phone"], "pick_gain": 0.020165, "labels_confirmed": 5, "labels_total": 5}], "pool": {"size": 45, "selected": 15, "not selected": 30, "duplicate": 0, "dropped": 0}, "cost": {"generator": {"cost_usd": 1.414, "seconds": 297, "turns": 11}, "correctness": {"cost_usd": 0.654, "seconds": 87, "turns": 12}, "coverage": {"cost_usd": 0.723, "seconds": 87, "turns": 17}}, "label_checks": {"correctness": {"confirmed": 112, "not supported": 0, "not labeled": 2}, "coverage": {"confirmed": 112, "not supported": 0, "not labeled": 1}}}], "smoke": [{"run": "smoke_n3", "label": "N=3, docs, anchor on", "questions": ["Which 5 suppliers earned the highest total profit on items shipped in 1997?", "How many customers in the MIDDLE EAST region have never placed an order?", "What share of revenue on orders placed in 1997 came from customers in the UNITED STATES?"], "docs": 3, "anchor": "auto", "cost": {"generator": {"cost_usd": 1.027, "seconds": 205, "turns": 10}, "correctness": {"cost_usd": 0.442, "seconds": 34, "turns": 10}, "coverage": {"cost_usd": 0.411, "seconds": 30, "turns": 10}}, "correctness": 1.0, "coverage": 54.37}, {"run": "smoke_n3_nodocs", "label": "N=3, no docs, anchor off", "questions": ["Which 10 customers received the largest total discount amount, measured as extended price times discount rate, on orders placed in 1997?", "Which 5 suppliers hold the largest total available quantity of parts of size 50?", "Which nations in the AMERICA region have an average customer account balance above the average for the region as a whole?"], "docs": "none", "anchor": "off", "cost": {"generator": {"cost_usd": 0.749, "seconds": 169, "turns": 6}, "correctness": null, "coverage": null}}]}</script>
+<script>
+const D = JSON.parse(document.getElementById("data").textContent);
+const RUNS = D.runs;
+const COLOR = { 5: "var(--n5)", 10: "var(--n10)", 15: "var(--n15)" };
+const SHAPE_NAMES = { lookup: "Simple lookup", aggregation: "Aggregation", multi_join: "Join (3+ tables)", ranking: "Ranking / top-K",
+  time_trend: "Time trend", ratio: "Ratio / share", vs_aggregate: "vs. aggregate", anti_join: "Anti-join" };
+const VERDICT_DOT = { ANSWERABLE: "var(--good)", AMBIGUOUS: "var(--warning)", MISSING_DATA: "var(--serious)", OFF_TOPIC: "var(--critical)" };
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const $ = id => document.getElementById(id);
+const money = x => "$" + x.toFixed(2);
+
+// ---- tooltip
+const tip = $("tip");
+document.addEventListener("mousemove", e => {
+  const t = e.target.closest("[data-tip]");
+  if (!t) { tip.style.display = "none"; return; }
+  tip.innerHTML = t.getAttribute("data-tip");
+  tip.style.display = "block";
+  const x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
+  const y = Math.min(e.clientY + 14, window.innerHeight - tip.offsetHeight - 8);
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+});
+
+// ---- header
+const m = D.meta;
+$("meta").textContent = `Model ${m.model} · ${m.claude} · ${m.db.engine} ${m.db.engine_version}, ${m.db.tables} tables, ${m.db.columns} columns · docs: ${m.docs.length} files · time anchor ${m.anchor.mode} (${m.anchor.date}) · last run ${m.generated.replace("T", " ").replace("+00:00", " UTC")}`;
+$("model").textContent = m.model;
+
+// ---- KPI tiles
+const totalCost = RUNS.reduce((s, r) => s + Object.values(r.cost).reduce((a, c) => a + (c ? c.cost_usd : 0), 0), 0);
+const kpis = [
+  ["Coverage score", RUNS.map(r => r.coverage.score.toFixed(1)).join(" → "), "N = 5 → 10 → 15, out of 100"],
+  ["Columns covered", RUNS.map(r => r.dims.columns.covered_count).join(" → "), "of 61"],
+  ["Correctness score", RUNS.map(r => r.correctness.score.toFixed(2)).join(" · "), "all 30 questions ANSWERABLE"],
+  ["Labels confirmed", "243 / 243", "by each judge, independently"],
+  ["Cost of the three runs", money(totalCost), "generation + both judges"],
+];
+$("kpis").innerHTML = kpis.map(([l, v, n]) => `<div class="kpi"><div class="label">${l}</div><div class="value">${v}</div><div class="note">${n}</div></div>`).join("");
+
+// ---- legends
+const legend = RUNS.map(r => `<span style="--sw:${COLOR[r.n]}">N = ${r.n}</span>`).join("");
+$("legend-bars").innerHTML = legend; $("legend-lines").innerHTML = legend;
+
+// ---- grouped bar chart
+(function bars() {
+  const dims = [["tables", "Tables (8)"], ["columns", "Columns (61)"], ["shapes", "Shapes (8)"]];
+  const W = 720, H = 300, ml = 44, mr = 8, mt = 22, mb = 36, pw = W - ml - mr, ph = H - mt - mb;
+  const gw = pw / dims.length, bw = 44, gap = 2;
+  const y = v => mt + ph - (v / 100) * ph;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Coverage percentage by dimension for each budget">`;
+  [0, 25, 50, 75, 100].forEach(t => {
+    s += `<line x1="${ml}" x2="${W - mr}" y1="${y(t)}" y2="${y(t)}" stroke="var(--grid)" stroke-width="1"/>`;
+    s += `<text class="axis-label" x="${ml - 8}" y="${y(t) + 4}" text-anchor="end">${t}%</text>`;
+  });
+  s += `<line x1="${ml}" x2="${W - mr}" y1="${y(0)}" y2="${y(0)}" stroke="var(--axis)" stroke-width="1"/>`;
+  dims.forEach(([d, label], gi) => {
+    const total = RUNS.length * bw + (RUNS.length - 1) * gap;
+    const x0 = ml + gi * gw + (gw - total) / 2;
+    RUNS.forEach((r, i) => {
+      const v = r.dims[d].pct, x = x0 + i * (bw + gap), top = y(v), h = y(0) - top, rr = Math.min(4, h);
+      const path = h <= 0 ? "" : `M${x},${y(0)} V${top + rr} Q${x},${top} ${x + rr},${top} H${x + bw - rr} Q${x + bw},${top} ${x + bw},${top + rr} V${y(0)} Z`;
+      const tipText = `<b>N = ${r.n} · ${label.split(" ")[0]}</b><br>${r.dims[d].covered_count} of ${r.dims[d].eligible} covered (${v}%)`;
+      s += `<g data-tip="${esc(tipText)}"><rect x="${x}" y="${mt}" width="${bw}" height="${ph}" fill="transparent"/><path d="${path}" fill="${COLOR[r.n]}"/></g>`;
+      s += `<text x="${x + bw / 2}" y="${top - 6}" text-anchor="middle">${Math.round(v)}%</text>`;
+    });
+    s += `<text x="${ml + gi * gw + gw / 2}" y="${H - 10}" text-anchor="middle" style="fill:var(--ink)">${label}</text>`;
+  });
+  $("bars").innerHTML = s + "</svg>";
+  $("cov-table").innerHTML = `<tr><th>N</th><th class="num">Tables</th><th class="num">Columns</th><th class="num">Shapes</th><th class="num">Coverage score</th><th>Calculation</th></tr>` +
+    RUNS.map(r => `<tr><td>${r.n}</td><td class="num">${r.dims.tables.covered_count}/8</td><td class="num">${r.dims.columns.covered_count}/61</td><td class="num">${r.dims.shapes.covered_count}/8</td><td class="num"><b>${r.coverage.score.toFixed(2)}</b></td><td>${esc(r.coverage.calculation)}</td></tr>`).join("");
+})();
+
+// ---- line chart: gain per pick
+(function lines() {
+  const W = 720, H = 280, ml = 44, mr = 56, mt = 16, mb = 36, pw = W - ml - mr, ph = H - mt - mb;
+  const maxN = Math.max(...RUNS.map(r => r.questions.length));
+  const maxG = 0.4;
+  const x = i => ml + ((i - 1) / (maxN - 1)) * pw, y = g => mt + ph - (g / maxG) * ph;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Marginal gain of each pick, by budget">`;
+  [0, 0.1, 0.2, 0.3, 0.4].forEach(t => {
+    s += `<line x1="${ml}" x2="${W - mr}" y1="${y(t)}" y2="${y(t)}" stroke="var(--grid)"/>`;
+    s += `<text class="axis-label" x="${ml - 8}" y="${y(t) + 4}" text-anchor="end">${t.toFixed(1)}</text>`;
+  });
+  s += `<line x1="${ml}" x2="${W - mr}" y1="${y(0)}" y2="${y(0)}" stroke="var(--axis)"/>`;
+  for (let i = 1; i <= maxN; i++) s += `<text class="axis-label" x="${x(i)}" y="${H - 16}" text-anchor="middle">${i}</text>`;
+  s += `<text class="axis-label" x="${ml + pw / 2}" y="${H - 1}" text-anchor="middle">pick</text>`;
+  RUNS.forEach(r => {
+    const pts = r.questions.map((q, i) => [x(i + 1), y(q.pick_gain)]);
+    s += `<polyline points="${pts.map(p => p.join(",")).join(" ")}" fill="none" stroke="${COLOR[r.n]}" stroke-width="2" stroke-linejoin="round"/>`;
+    r.questions.forEach((q, i) => {
+      const tipText = `<b>N = ${r.n}, pick ${i + 1} (${q.id})</b><br>gain ${q.pick_gain.toFixed(3)}<br>${esc(q.text)}`;
+      s += `<g data-tip="${esc(tipText)}"><circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="12" fill="transparent"/><circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="4" fill="${COLOR[r.n]}" stroke="var(--surface)" stroke-width="2"/></g>`;
+    });
+    const last = pts[pts.length - 1];
+    s += `<text x="${last[0] + 10}" y="${last[1] + (r.n === 10 ? -6 : r.n === 5 ? -10 : 4)}">N = ${r.n}</text>`;
+  });
+  $("lines").innerHTML = s + "</svg>";
+})();
+
+// ---- heatmaps
+function cell(r, dim, item) {
+  const ids = r.dims[dim].covered[item] || [];
+  if (!ids.length) {
+    const why = r.dims[dim].uncovered[item] || "not asked";
+    return `<td class="cell zero" data-tip="${esc(`<b>N = ${r.n}</b><br>${why}`)}">–</td>`;
+  }
+  const n = ids.length, c = n >= 6 ? 5 : n >= 4 ? 4 : n;
+  return `<td class="cell c${c}" data-tip="${esc(`<b>N = ${r.n}</b><br>${n} question${n > 1 ? "s" : ""}: ${ids.join(", ")}`)}">${n}</td>`;
+}
+const heatHead = `<tr><th>Item</th>${RUNS.map(r => `<th class="num" style="text-align:center">N = ${r.n}</th>`).join("")}</tr>`;
+(function heat() {
+  const r0 = RUNS[0];
+  let h = heatHead + `<tr class="group"><td colspan="4">Tables</td></tr>`;
+  Object.keys({ ...r0.dims.tables.covered, ...r0.dims.tables.uncovered }).sort().forEach(t => {
+    h += `<tr><td class="item">${t}</td>${RUNS.map(r => cell(r, "tables", t)).join("")}</tr>`;
+  });
+  h += `<tr class="group"><td colspan="4">Shapes</td></tr>`;
+  Object.keys(SHAPE_NAMES).forEach(s => {
+    h += `<tr><td>${SHAPE_NAMES[s]}</td>${RUNS.map(r => cell(r, "shapes", s)).join("")}</tr>`;
+  });
+  $("heat-main").innerHTML = h;
+  const cols = Object.keys({ ...r0.dims.columns.covered, ...r0.dims.columns.uncovered });
+  const byTable = {};
+  cols.forEach(c => { const t = c.split(".")[0]; (byTable[t] = byTable[t] || []).push(c); });
+  let hc = heatHead;
+  Object.keys(byTable).sort().forEach(t => {
+    const covered = RUNS.map(r => byTable[t].filter(c => r.dims.columns.covered[c]).length);
+    hc += `<tr class="group"><td colspan="4">${t} (${byTable[t].length} columns; covered ${covered.join(" / ")})</td></tr>`;
+    byTable[t].forEach(c => { hc += `<tr><td class="item">${c.split(".")[1]}</td>${RUNS.map(r => cell(r, "columns", c)).join("")}</tr>`; });
+  });
+  $("heat-cols").innerHTML = hc;
+})();
+
+// ---- repetition
+$("rep-table").innerHTML = `<tr><th>N</th><th>Duplicate pairs</th><th>Questions covering nothing unique</th><th>Questions earning no credit</th><th class="num">Column mentions → distinct columns</th></tr>` +
+  RUNS.map(r => {
+    const mentions = r.questions.reduce((a, q) => a + q.columns.length, 0);
+    return `<tr><td>${r.n}</td><td>${r.repetition.duplicate_pairs.map(p => p.join(" = ")).join(", ") || "none"}</td><td>${r.repetition.nothing_unique.join(", ") || "none"}</td><td>${r.repetition.no_credit.join(", ") || "none"}</td><td class="num">${mentions} → ${r.dims.columns.covered_count}</td></tr>`;
+  }).join("");
+
+// ---- budget notes
+$("budget-notes").innerHTML = RUNS.map(r => `<p><b>N = ${r.n}.</b> ${esc(r.budget_note.replace(/^N = \d+\. /, ""))}</p>`).join("");
+
+// ---- questions
+$("questions").innerHTML = RUNS.map((r, ri) => `
+  <details class="card"${ri === 0 ? " open" : ""}>
+    <summary>N = ${r.n}: ${r.questions.length} questions · correctness ${r.correctness.score.toFixed(2)} · coverage ${r.coverage.score.toFixed(2)}</summary>
+    <div class="scroll"><table>
+      <tr><th>ID</th><th>Question</th><th>Verdict</th><th>Shapes (credited)</th><th class="num">Unique items</th><th class="num">Labels confirmed</th></tr>
+      ${r.questions.map(q => `<tr>
+        <td>${q.id}</td>
+        <td>${esc(q.text)}<div class="meta" data-tip="${esc("<b>Correctness rationale</b><br>" + esc(q.rationale))}">rationale ⓘ</div></td>
+        <td><span class="badge" style="--dot:${VERDICT_DOT[q.verdict]}">${q.verdict}</span></td>
+        <td><div class="chips">${q.shapes.map(s => `<span class="chip">${SHAPE_NAMES[s] || s}</span>`).join("")}</div></td>
+        <td class="num" data-tip="${esc(q.unique.length ? q.unique.join("<br>") : "covers nothing no other question covers")}">${q.unique.length}</td>
+        <td class="num">${q.labels_confirmed}/${q.labels_total}</td>
+      </tr>`).join("")}
+    </table></div>
+  </details>`).join("");
+
+// ---- cost table
+const c = x => x ? `${money(x.cost_usd)} · ${x.seconds}s` : "–";
+$("cost-table").innerHTML = `<tr><th>N</th><th class="num">Pool</th><th class="num">Dropped</th><th class="num">Duplicates</th><th class="num">Selected</th><th class="num">Generator</th><th class="num">Correctness judge</th><th class="num">Coverage judge</th></tr>` +
+  RUNS.map(r => `<tr><td>${r.n}</td><td class="num">${r.pool.size}</td><td class="num">${r.pool.dropped}</td><td class="num">${r.pool.duplicate}</td><td class="num">${r.pool.selected}</td><td class="num">${c(r.cost.generator)}</td><td class="num">${c(r.cost.correctness)}</td><td class="num">${c(r.cost.coverage)}</td></tr>`).join("");
+
+// ---- smoke runs
+$("smoke-table").innerHTML = `<tr><th>Run</th><th>Settings</th><th>Questions</th><th class="num">Correctness</th><th class="num">Coverage</th><th class="num">Generator</th></tr>` +
+  D.smoke.map(s => `<tr><td><code>${s.run}</code></td><td>${s.label}</td><td>${s.questions.map(esc).join("<br>")}</td><td class="num">${s.correctness != null ? s.correctness.toFixed(2) : "–"}</td><td class="num">${s.coverage != null ? s.coverage.toFixed(2) : "–"}</td><td class="num">${c(s.cost.generator)}</td></tr>`).join("");
+</script>
+</body>
+</html>
